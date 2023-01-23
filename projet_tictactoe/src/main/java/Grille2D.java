@@ -34,56 +34,14 @@ public class Grille2D extends Grille {
     }
 
     public void placer(String joueur, String coordone) {
-        int c = coordone.charAt(0);
-        int x, y;
-        boolean caseValid = true;
+        int c = Integer.valueOf(coordone);
 
-        switch (c) {
-            case 1:
-                x = 0;
-                y = 0;
-                break;
-            case 2:
-                x = 1;
-                y = 0;
-                break;
-            case 3:
-                x = 2;
-                y = 0;
-                break;
-            case 4:
-                x = 0;
-                y = 1;
-                break;
-            case 5:
-                x = 1;
-                y = 1;
-                break;
-            case 6:
-                x = 2;
-                y = 1;
-                break;
-            case 7:
-                x = 0;
-                y = 2;
-                break;
-            case 8:
-                x = 1;
-                y = 2;
-                break;
-            case 9:
-                x = 2;
-                y = 2;
-                break;
-            default:
-                x = -1;
-                y = -1;
-                caseValid = false;
-                System.out.println("EREUR ! Le deuxième caractère des coordoné de la case est invalide");
-                break;
-        }
+        int x = c % this.taille;
+        int y = c / this.taille;
 
-        if (caseValid && this.grille[y][x].estVide()) {
+        if (x < 0 || x >= this.taille || y < 0 || y >= this.taille) {
+            System.out.println("EREUR ! Le deuxième caractère des coordoné de la case est invalide");
+        } else if (this.grille[y][x].estVide()) {
             this.grille[y][x].setValeur(joueur);
         }
     }
