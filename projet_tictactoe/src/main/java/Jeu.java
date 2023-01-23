@@ -14,7 +14,6 @@ public class Jeu {
         this.tailleGrille = tailleGrille;
     }
 
-<<<<<<< HEAD
     public void partie(){
         //Initialisation des paramètres
         switch(modeJeu){
@@ -44,30 +43,11 @@ public class Jeu {
                 tourJ1 = true;
                 break;
         }
-=======
-    public void partie() {
-        switch (modeJeu) {
-            case 0:
-                this.grille = new Grille2D(this.tailleGrille);
-                break;
-            case 1:
-                this.grille = new Grille3D(this.tailleGrille);
-                break;
-            default:
-                this.grille = new Grille2D(this.tailleGrille);
-                break;
-        }
->>>>>>> 8da70ceb7689d7bce123999c45b4c0d37110e41e
 
         
         jouerPartie(tourJ1);
     }
-<<<<<<< HEAD
     
-=======
-
-    private void demarrerPartie() {
->>>>>>> 8da70ceb7689d7bce123999c45b4c0d37110e41e
 
     private void jouerPartie(boolean tourJ1){
         //Initialisation
