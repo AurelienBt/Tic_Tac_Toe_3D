@@ -8,4 +8,12 @@ public class Grille {
     public void afficher() {
 
     }
+
+    public void placer(char joueur) {
+
+    }
+
+    public int getTaille() {
+        return this.taille;
+    }
 }
