@@ -14,12 +14,21 @@ public class Case {
         return this.estVide;
     }
 
+    public Case(int val) {
+        this.valeur = Integer.toString(val);
+        this.estSelectionnee = false;
+    }
+
     public void setSelectionnee(boolean select) {
         this.estSelectionnee = select;
     }
 
     public String getValeur() {
-        return this.valeur;
+        if (estSelectionnee) {
+            return ">" + this.valeur + "<";
+        } else {
+            return " " + this.valeur + " ";
+        }
     }
 
     public void setValeur(String val) {

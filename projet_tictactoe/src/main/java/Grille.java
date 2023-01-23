@@ -10,15 +10,9 @@ public abstract class Grille {
 
     public abstract void afficher();
 
-    public abstract void placer(char joueur);
+    public abstract void placer(String joueur, String coordone);
 
-    public int getTaille() {
-        return this.taille;
-    }
-
-    public void placer(char joueur, String coordone) {
-
-    }
+    public abstract void viderGrille();
 
     public int getTaille() {
         return this.taille;
