@@ -25,5 +25,5 @@ public class Case {
     public void setValeur(String val) {
         this.valeur = val;
     }
-    
+
 }

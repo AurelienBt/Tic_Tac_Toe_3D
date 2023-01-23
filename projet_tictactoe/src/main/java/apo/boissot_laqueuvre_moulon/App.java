@@ -1,4 +1,4 @@
-package apo.laqueuvre_moulon;
+package apo.boissot_laqueuvre_moulon;
 
 public class App {
     public static void main(String[] args) {
