@@ -1,5 +1,5 @@
 public abstract class Grille {
-    private int taille;
+    protected int taille;
 
     public Grille() {
     }
@@ -16,7 +16,7 @@ public abstract class Grille {
         return this.taille;
     }
 
-    public void placer(char joueur) {
+    public void placer(char joueur, String coordone) {
 
     }
 
