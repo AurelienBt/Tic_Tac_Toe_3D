@@ -19,8 +19,4 @@ public abstract class Grille {
     public void placer(char joueur, String coordone) {
 
     }
-
-    public int getTaille() {
-        return this.taille;
-    }
 }

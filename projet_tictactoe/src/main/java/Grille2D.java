@@ -31,9 +31,9 @@ public class Grille2D extends Grille {
     }
 
     public void placer(String joueur, String coordone) {
-        char lettre[] = new char[] {'a', 'b', 'c'}
+        char lettre[] = new char[] { 'a', 'b', 'c' };
 
-        int y = coordone.charAt(0);
+        int y = lettre[coordone.charAt(0)];
         int x = coordone.charAt(1);
 
         if (this.grille[y][x].estVide()) {
