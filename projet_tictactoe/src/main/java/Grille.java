@@ -1,5 +1,5 @@
 public class Grille {
-    private int taille;
+    protected int taille;
 
     public Grille(int taille) {
         this.taille = taille;
