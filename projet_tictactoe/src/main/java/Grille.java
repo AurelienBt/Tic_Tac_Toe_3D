@@ -12,6 +12,8 @@ public abstract class Grille {
 
     public abstract void placer(char joueur);
 
+    public abstract void viderGrille();
+
     public int getTaille() {
         return this.taille;
     }
