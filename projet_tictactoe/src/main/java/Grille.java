@@ -12,6 +12,8 @@ public abstract class Grille {
 
     public abstract void placer(char joueur);
 
+    public abstract boolean verifieCoup(String input);
+
     public int getTaille() {
         return this.taille;
     }
@@ -20,7 +22,4 @@ public abstract class Grille {
 
     }
 
-    public int getTaille() {
-        return this.taille;
-    }
 }
