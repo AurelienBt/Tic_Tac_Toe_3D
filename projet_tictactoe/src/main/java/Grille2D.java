@@ -75,4 +75,8 @@ public class Grille2D extends Grille {
         System.out.println("");
 
     }
+
+    public boolean verifieCoup(String input){
+        return true;
+    }
 }
