@@ -1,4 +1,5 @@
 package apo.boissot_laqueuvre_moulon;
+
 public class Case {
 
     private String valeur;
@@ -24,11 +25,26 @@ public class Case {
         this.estSelectionnee = select;
     }
 
-    public String getValeur() {
+    public String getValeur(double tailleMax) {
+        String surlignageGauche = ">";
+        String surlignageDroit = "<";
+        String espace = " ";
+
+        String espaceAvant = "";
+        String espaceApres = "";
+
+        for (int i = 0; i < tailleMax - this.valeur.length(); i++) {
+            if (i % 2 == 0) {
+                espaceApres = espaceApres + espace;
+            } else {
+                espaceAvant = espaceAvant + espace;
+            }
+        }
+
         if (estSelectionnee) {
-            return ">" + this.valeur + "<";
+            return espaceAvant + surlignageGauche + this.valeur + surlignageDroit + espaceApres;
         } else {
-            return " " + this.valeur + " ";
+            return espaceAvant + espace + this.valeur + espace + espaceApres;
         }
     }
 
