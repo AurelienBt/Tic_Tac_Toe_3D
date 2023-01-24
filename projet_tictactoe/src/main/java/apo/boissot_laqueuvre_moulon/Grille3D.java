@@ -26,13 +26,29 @@ public class Grille3D extends Grille {
     public void afficher() {
         // Affichage en-tête
         int nbChiffresMax = tailleEntier(this.taille*this.taille);
-        for(int i = 0; i<this.taille; i++) {
-            /*for(int j = 1; j<this.taille; j++) { ////////////////////////////// A modif
-                System.out.print(" ");
-            }*/
-            System.out.print("    ("+getLettre(i)+")            ");
+        String enTete = "";
+        if(this.taille%2==0) {
+            for(int l = 0; l<nbChiffresMax; l++) {
+                enTete += " ";
+            }
         }
-        System.out.println();
+        for(int i = 0; i<this.taille; i++) {
+            enTete += (this.taille==3)? " " : "  ";
+            for(int j = 0; j<(this.taille-1)/2; j++) {
+                for(int k = 0; k<nbChiffresMax+2; k++) {
+                    enTete += " ";
+                }
+            }
+            enTete += "("+getLettre(i)+")";
+            for(int j = 0; j<this.taille/2; j++) {
+                for(int k = 0; k<nbChiffresMax+2; k++) {
+                    enTete += " ";
+                }
+            }
+            enTete += " ";
+            enTete += (i==this.taille-1)? "" : "        ";
+        }
+        System.out.println(enTete);
 
         // Affichage grille
         for (int i = 0; i < this.taille; i++) {
@@ -41,7 +57,7 @@ public class Grille3D extends Grille {
                 for (int k = 0; k < this.taille; k++) {
                     System.out.print(this.grille[i][k][j].getValeur(nbChiffresMax));
                 }
-                System.out.print("|        ");
+                System.out.print((j==this.taille-1) ? "|" : "|        "); // gère la fin de ligne
             }
         System.out.println();
         }
@@ -55,7 +71,8 @@ public class Grille3D extends Grille {
     }
 
     private int tailleEntier(int n) {
-        return (int)Math.floor(Math.log10(n));
+        String nn = n + "";
+        return nn.length();
     }
 
     public void placer(String joueur, String coordonee) {
