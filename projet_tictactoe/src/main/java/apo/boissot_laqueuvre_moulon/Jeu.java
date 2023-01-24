@@ -1,3 +1,4 @@
+package apo.boissot_laqueuvre_moulon;
 public class Jeu {
     private int modeJeu;
     private int protagonistes;
