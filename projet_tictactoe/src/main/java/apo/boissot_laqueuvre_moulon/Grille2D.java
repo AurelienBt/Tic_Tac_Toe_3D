@@ -1,5 +1,4 @@
 package apo.boissot_laqueuvre_moulon;
-
 public class Grille2D extends Grille {
     private Case grille[][];
 
