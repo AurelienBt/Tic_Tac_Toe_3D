@@ -39,7 +39,7 @@ public class Grille3D extends Grille {
             for(int j = 0; j < this.taille; j++) { 
                 System.out.print("|");
                 for (int k = 0; k < this.taille; k++) {
-                    System.out.print(this.grille[i][k][j].getValeur());
+                    System.out.print(this.grille[i][k][j].getValeur(nbChiffresMax));
                 }
                 System.out.print("|        ");
             }
@@ -102,4 +102,7 @@ public class Grille3D extends Grille {
         System.out.println("");
 
     }*/
+    public boolean grilleGagnante(){return false;} // a modif
+
+    public boolean verifieCoup(String input){return false;}
 }

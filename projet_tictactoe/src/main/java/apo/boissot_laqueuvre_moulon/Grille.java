@@ -13,9 +13,16 @@ public abstract class Grille {
 
     public abstract void placer(String joueur, String coordone);
 
-    public abstract void viderGrille();
+    public abstract boolean verifieCoup(String input);
+    public abstract boolean grilleGagnante();
 
     public int getTaille() {
         return this.taille;
     }
+
+    public void placer(char joueur, String coordone) {
+
+    }
+    public abstract void viderGrille();
+
 }

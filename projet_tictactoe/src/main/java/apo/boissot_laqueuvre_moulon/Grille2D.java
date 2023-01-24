@@ -24,26 +24,37 @@ public class Grille2D extends Grille {
         }
     }
 
+    private int tailleEntier(int n) {
+        String nn = n + "";
+        return nn.length();
+    }
+
     public void afficher() {
         for (int i = 0; i < this.taille; i++) {
             System.out.print("|");
             for (int j = 0; j < this.taille; j++) {
-                System.out.print(this.grille[i][j].getValeur());
+                System.out.print(this.grille[i][j].getValeur(tailleEntier(this.taille * this.taille)));
             }
             System.out.println("|");
         }
     }
 
-    public void placer(String joueur, String coordone) {
-        int c = Integer.valueOf(coordone);
+    public boolean grilleGagnante() {
+        return false;
+    }
 
-        int x = c % this.taille;
-        int y = c / this.taille;
+    public void placer(String joueur, String numero) {
+        int num = Integer.valueOf(numero) - 1;
+
+        int x = num % this.taille;
+        int y = num / this.taille;
 
         if (x < 0 || x >= this.taille || y < 0 || y >= this.taille) {
-            System.out.println("EREUR ! Le deuxième caractère des coordoné de la case est invalide");
+            System.out.println("EREUR ! Le numéro de case " + num + " est invalide");
         } else if (this.grille[y][x].estVide()) {
             this.grille[y][x].setValeur(joueur);
+        } else {
+            System.out.println("EREUR ! La case " + num + " est déjà pleine");
         }
     }
 
@@ -76,4 +87,9 @@ public class Grille2D extends Grille {
         System.out.println("");
 
     }
+
+    public boolean verifieCoup(String input) {
+        return true;
+    }
+
 }

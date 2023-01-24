@@ -8,7 +8,7 @@ public class App {
 
         //g.testRegretion();
 
-        // Grille2D gg = new Grille2D(5);
+        Grille2D gg = new Grille2D(10);
 
         // gg.testRegretion();
     }
