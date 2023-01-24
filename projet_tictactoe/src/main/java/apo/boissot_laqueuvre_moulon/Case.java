@@ -12,13 +12,14 @@ public class Case {
         this.estVide = true;
     }
 
-    public boolean estVide() {
-        return this.estVide;
-    }
-
     public Case(int val) {
         this.valeur = Integer.toString(val);
         this.estSelectionnee = false;
+        this.estVide = true;
+    }
+
+    public boolean estVide() {
+        return this.estVide;
     }
 
     public void setSelectionnee(boolean select) {
@@ -50,6 +51,7 @@ public class Case {
 
     public void setValeur(String val) {
         this.valeur = val;
+        this.estVide = false;
     }
 
 }
