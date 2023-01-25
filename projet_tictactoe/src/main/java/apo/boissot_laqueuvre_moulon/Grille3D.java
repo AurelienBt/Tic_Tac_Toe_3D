@@ -97,63 +97,138 @@ public class Grille3D extends Grille {
         return coupPossible;
     }
 
-    public void placer(String joueur, String coordonee) {
-        /*
-         * int c = Integer.valueOf(coordonee);
-         * 
-         * int x = c % this.taille;
-         * int y = c / this.taille;
-         * int z=0;
-         * 
-         * if (x < 0 || x >= this.taille || y < 0 || y >= this.taille) {
-         * System.out.
-         * println("EREUR ! Le deuxième caractère des coordoné de la case est invalide"
-         * );
-         * } else if (this.grille[y][x][z].estVide()) {
-         * this.grille[y][x][z].setValeur(joueur);
-         * }
-         */
+    public void placer(String joueur, String numeroCase) {
+        if (verifierCoup(numeroCase)) {
+            int coord[] = getCoordonneesCase(numeroCase);
+            this.grille[coord[0]][coord[1]][coord[2]].setValeur(joueur);
+        }
     }
-
-    /*
-     * public void testRegretion() {
-     * 
-     * // Affichage
-     * System.out.println("Une grille vide :");
-     * afficher();
-     * System.out.println("");
-     * System.out.println("");
-     * 
-     * // Affichage et placer
-     * placer("X", "1");
-     * placer("O", "5");
-     * placer("X", "9");
-     * System.out.println("Une grille comme suis :");
-     * System.out.println("| X  2  3 |");
-     * System.out.println("| 4  O  6 |");
-     * System.out.println("| 7  8  X |");
-     * System.out.println("");
-     * afficher();
-     * System.out.println("");
-     * System.out.println("");
-     * 
-     * // ViderGrille
-     * viderGrille();
-     * System.out.println("Une grille vide :");
-     * afficher();
-     * System.out.println("");
-     * System.out.println("");
-     * 
-     * }
-     */
 
     // A faire
     public boolean grilleGagnante() {
         return false;
     }
 
-    // A faire
     public boolean verifierCoup(String input) {
-        return false;
+        int coord[] = getCoordonneesCase(input);
+
+        // On regarde si les coordonnées données sont valides (dans le tableau)
+        if (coord[0] < 0 || coord[0] >= this.taille || coord[1] < 0 || coord[1] >= this.taille || coord[2] < 0
+                || coord[2] >= this.taille) {
+            System.out.println("EREUR ! Le numéro de case " + input + " est invalide");
+            return false;
+        }
+        // On regarde si la case choisi est libre
+        else if (this.grille[coord[0]][coord[1]][coord[2]].estVide()) {
+            return true;
+        } else {
+            System.out.println("EREUR ! La case " + input + " est déjà pleine");
+            return false;
+        }
     }
+
+    private int[] getCoordonneesCase(String numeroCase) {
+        int coord[] = { -1, -1, -1 };
+
+        String lettres = "";
+        int numero = 0;
+        int z = 0;
+
+        // On récupère toute les lettres dans une nouvelle String
+        int i = 0;
+        while (!Character.isDigit(numeroCase.charAt(i))) {
+            lettres = lettres + numeroCase.charAt(i);
+            i++;
+        }
+
+        // i = nombre de lettre
+        for (int j = 0; j < i; j++) {
+            z = z * 26;
+            z += lettres.charAt(j) - 97;
+        }
+        coord[0] = z;
+
+        // On récupère tous les chiffres qu'on transforme en entier
+        while (i < numeroCase.length()) {
+            numero = numero * 10;
+            numero += Integer.valueOf(numeroCase.charAt(i));
+            i++;
+        }
+
+        coord[1] = (numero - 1) / this.taille;
+        coord[2] = (numero - 1) % this.taille;
+        return coord;
+    }
+
+    public void testRegretion() {
+        System.out.println("Test Regression pour une grille 3*3*3");
+
+        // getCoordonneesCase
+        System.out.println("z=0, y=0, x=0");
+        int c[] = getCoordonneesCase("a1");
+        System.out.println("z=" + c[0] + ", y=" + c[1] + ", x=" + c[2]);
+        System.out.println("z=2, y=2, x=2");
+        c = getCoordonneesCase("c9");
+        System.out.println("z=" + c[0] + ", y=" + c[1] + ", x=" + c[2]);
+        System.out.println("z=1, y=0, x=1");
+        c = getCoordonneesCase("b2");
+        System.out.println("z=" + c[0] + ", y=" + c[1] + ", x=" + c[2]);
+        System.out.println("");
+        System.out.println("");
+
+        // afficher
+        System.out.println("Une grille vide :");
+        afficher();
+        System.out.println("");
+        System.out.println("");
+
+        // verifieCoup
+        System.out.println("Vrai : " + verifierCoup("1"));
+        System.out.println("Vrai : " + verifierCoup("9"));
+        System.out.println("Vrai : " + verifierCoup("8"));
+
+        placer("X", "1");
+        placer("O", "5");
+        placer("X", "9");
+
+        System.out.println("Faux : " + verifierCoup("1"));
+        System.out.println("Faux : " + verifierCoup("5"));
+        System.out.println("Faux : " + verifierCoup("9"));
+        System.out.println("Faux : " + verifierCoup("800"));
+        System.out.println("Faux : " + verifierCoup("0"));
+        System.out.println("Faux : " + verifierCoup("-1"));
+        System.out.println("");
+        System.out.println("");
+
+        // afficher et placer
+        placer("X", "1");
+        placer("O", "5");
+        placer("X", "9");
+        this.grille[0][2][0].setSelectionnee(true);
+        System.out.println("Une grille comme suis :");
+        System.out.println("| X  2 >3<|");
+        System.out.println("| 4  O  6 |");
+        System.out.println("| 7  8  X |");
+        System.out.println("");
+        afficher();
+        System.out.println("");
+        System.out.println("");
+
+        // viderGrille
+        viderGrille();
+        System.out.println("Une grille vide :");
+        afficher();
+        System.out.println("");
+        System.out.println("");
+
+        // tailleEntier
+        System.out.println("1 : " + tailleEntier(5));
+        System.out.println("2 : " + tailleEntier(50));
+        System.out.println("3 : " + tailleEntier(508));
+        System.out.println("3 : " + tailleEntier(100));
+        System.out.println("4 : " + tailleEntier(5555));
+        System.out.println("");
+        System.out.println("");
+    }
+
 }
