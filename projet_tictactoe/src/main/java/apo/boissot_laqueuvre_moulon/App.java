@@ -3,8 +3,7 @@ package apo.boissot_laqueuvre_moulon;
 public class App {
     public static void main(String[] args) {
 
-        Grille3D g = new Grille3D(3);
-        g.afficher(); 
+        Grille2D g = new Grille2D(3);
 
         // g.testRegretion();
 
