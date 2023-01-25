@@ -15,6 +15,7 @@ public abstract class Grille {
 
     public abstract boolean verifieCoup(String input);
     public abstract boolean grilleGagnante();
+    public abstract boolean grilleEstPleine();
 
     public int getTaille() {
         return this.taille;
