@@ -23,6 +23,7 @@ public abstract class Grille {
     public abstract ArrayList<int[]> listerCoupPossible();
 
     public abstract boolean grilleGagnante();
+    public abstract boolean grilleEstPleine();
 
     public int getTaille() {
         return this.taille;

@@ -97,6 +97,17 @@ public class Grille3D extends Grille {
         return coupPossible;
     }
 
+    public boolean grilleEstPleine(){
+        for(int i = 0; i < this.taille; i++){
+            for(int j=0; j<this.taille; j++){
+                for(int k =0; k<this.taille; k++){
+                    if (this.grille[i][j][k].estVide()) return false;
+                }
+            }
+        }
+        return true;
+    }
+
     public void placer(String joueur, String numeroCase) {
         if (verifierCoup(numeroCase)) {
             int coord[] = getCoordonneesCase(numeroCase);

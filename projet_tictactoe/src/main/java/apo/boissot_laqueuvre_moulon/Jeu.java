@@ -77,19 +77,29 @@ public class Jeu {
     private void jouerPartie(boolean tourJ1) {
         // Initialisation
         boolean partieEnCours = true;
-
-        int IA = this.protagonistes;
-
-        // Boucle d'application
-        while (partieEnCours) {
+        
+        //Boucle d'application
+        while (partieEnCours){
             jouerTour(tourJ1);
-            if (this.grille.grilleGagnante()) {
 
+            //Vérification de la grille
+            if(this.grille.grilleGagnante()){
+                if(tourJ1){
+                    System.out.println("Le gagnant est Joueur 1");
+                }else{
+                    System.out.println("Le gagnant est joueur 2");
+                }
             }
-
+            else if (this.grille.grilleEstPleine()){
+                System.out.println("Égalité !");
+            }
+            tourJ1 = !tourJ1;
         }
 
+        //Fin de partie 
+        
     }
+
 
     private void jouerTour(boolean tourJ1) {
         boolean IA = false; // A REMPLACER
