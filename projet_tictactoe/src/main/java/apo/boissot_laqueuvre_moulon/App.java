@@ -6,7 +6,7 @@ public class App {
         Grille3D g = new Grille3D(3);
         g.afficher();
 
-        //g.testRegretion();
+        // g.testRegretion();
 
         Grille2D gg = new Grille2D(10);
 
