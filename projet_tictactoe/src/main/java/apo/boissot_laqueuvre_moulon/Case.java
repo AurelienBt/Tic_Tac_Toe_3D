@@ -27,6 +27,10 @@ public class Case {
     }
 
     public String getValeur(double tailleMax) {
+        return this.valeur;
+    }
+
+    public String afficher(double tailleMax) {
         String surlignageGauche = ">";
         String surlignageDroit = "<";
         String espace = " ";

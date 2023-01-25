@@ -1,4 +1,7 @@
 package apo.boissot_laqueuvre_moulon;
+
+import java.util.ArrayList;
+
 public class Grille2D extends Grille {
     private Case grille[][];
 
@@ -9,53 +12,34 @@ public class Grille2D extends Grille {
     }
 
     public void viderGrille() {
-        this.grille = new Case[taille][];
+        this.grille = new Case[taille][taille];
 
-        Case[] ligne;
         Case c;
 
         for (int i = 0; i < this.taille; i++) {
-            ligne = new Case[taille];
             for (int j = 0; j < this.taille; j++) {
                 c = new Case(i * this.taille + j + 1);
-                ligne[j] = c;
+                this.grille[i][j] = c;
             }
-            this.grille[i] = ligne;
         }
-    }
-
-    private int tailleEntier(int n) {
-        String nn = n + "";
-        return nn.length();
     }
 
     public void afficher() {
         for (int i = 0; i < this.taille; i++) {
             System.out.print("|");
             for (int j = 0; j < this.taille; j++) {
-                System.out.print(this.grille[i][j].getValeur(tailleEntier(this.taille * this.taille)));
+                System.out.print(this.grille[i][j].afficher(tailleEntier(this.taille * this.taille)));
             }
             System.out.println("|");
         }
     }
 
+    // A faire
     public boolean grilleGagnante() {
         return false;
     }
 
-    private int getXCase(String numeroCase) {
-        int numero = Integer.valueOf(numeroCase) - 1;
-        int x = numero % this.taille;
-        return x;
-    }
-
-    private int getYCase(String numeroCase) {
-        int numero = Integer.valueOf(numeroCase) - 1;
-        int y = numero / this.taille;
-        return y;
-    }
-
-    public boolean verifieCoup(String input) {
+    public boolean verifierCoup(String input) {
         int numeroCase = Integer.valueOf(input) - 1;
         int x = getXCase(input);
         int y = getYCase(input);
@@ -72,9 +56,27 @@ public class Grille2D extends Grille {
     }
 
     public void placer(String joueur, String numeroCase) {
-        if (verifieCoup(numeroCase)) {
+        if (verifierCoup(numeroCase)) {
             this.grille[getYCase(numeroCase)][getXCase(numeroCase)].setValeur(joueur);
         }
+    }
+
+    public ArrayList<int[]> listerCoupPossible() {
+        ArrayList<int[]> coupPossible = new ArrayList<int[]>();
+
+        int c[] = { -1, -1 };
+
+        for (int i = 0; i < this.taille; i++) {
+            for (int j = 0; j < this.taille; j++) {
+                if (this.grille[i][j].estVide()) {
+                    c[0] = i;
+                    c[1] = j;
+                    coupPossible.add(c);
+                }
+            }
+        }
+
+        return coupPossible;
     }
 
     public void testRegretion() {
@@ -87,20 +89,20 @@ public class Grille2D extends Grille {
         System.out.println("");
 
         // verifieCoup
-        System.out.println("Vrai : " + verifieCoup("1"));
-        System.out.println("Vrai : " + verifieCoup("9"));
-        System.out.println("Vrai : " + verifieCoup("8"));
+        System.out.println("Vrai : " + verifierCoup("1"));
+        System.out.println("Vrai : " + verifierCoup("9"));
+        System.out.println("Vrai : " + verifierCoup("8"));
 
         placer("X", "1");
         placer("O", "5");
         placer("X", "9");
 
-        System.out.println("Faux : " + verifieCoup("1"));
-        System.out.println("Faux : " + verifieCoup("5"));
-        System.out.println("Faux : " + verifieCoup("9"));
-        System.out.println("Faux : " + verifieCoup("800"));
-        System.out.println("Faux : " + verifieCoup("0"));
-        System.out.println("Faux : " + verifieCoup("-1"));
+        System.out.println("Faux : " + verifierCoup("1"));
+        System.out.println("Faux : " + verifierCoup("5"));
+        System.out.println("Faux : " + verifierCoup("9"));
+        System.out.println("Faux : " + verifierCoup("800"));
+        System.out.println("Faux : " + verifierCoup("0"));
+        System.out.println("Faux : " + verifierCoup("-1"));
         System.out.println("");
         System.out.println("");
 
@@ -135,4 +137,27 @@ public class Grille2D extends Grille {
         System.out.println("");
 
     }
+
+    private int getYCase(String numeroCase) {
+        int numero = Integer.valueOf(numeroCase) - 1;
+        int y = numero / this.taille;
+        return y;
+    }
+
+    private int getXCase(String numeroCase) {
+        int numero = Integer.valueOf(numeroCase) - 1;
+        int x = numero % this.taille;
+        return x;
+    }
+
+    private int getYCase(int numeroCase) {
+        int y = (numeroCase - 1) / this.taille;
+        return y;
+    }
+
+    private int getXCase(int numeroCase) {
+        int x = (numeroCase - 1) % this.taille;
+        return x;
+    }
+
 }

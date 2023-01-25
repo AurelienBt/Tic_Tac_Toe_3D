@@ -1,4 +1,5 @@
 package apo.boissot_laqueuvre_moulon;
+
 import java.util.Random;
 
 public class Jeu {
@@ -18,106 +19,105 @@ public class Jeu {
         this.tailleGrille = tailleGrille;
     }
 
-    public void partie(){
-        //Initialisation des paramètres
-        switch(modeJeu){
-            case 0 :
+    public void partie() {
+        // Initialisation des paramètres
+        switch (modeJeu) {
+            case 0:
                 this.grille = new Grille2D(this.tailleGrille);
                 break;
-            /*case 1 : 
-                this.grille = new Grille3D(this.tailleGrille);
-                break;*/
-            default : 
+            /*
+             * case 1 :
+             * this.grille = new Grille3D(this.tailleGrille);
+             * break;
+             */
+            default:
                 this.grille = new Grille2D(this.tailleGrille);
                 break;
         }
         boolean tourJ1;
-        switch(quiCommence){
-            case 0 :
+        switch (quiCommence) {
+            case 0:
                 Random r = new Random();
                 tourJ1 = r.nextBoolean();
                 break;
-            case 1 : 
+            case 1:
                 tourJ1 = true;
                 break;
-            case 2 : 
+            case 2:
                 tourJ1 = false;
                 break;
-            default : 
+            default:
                 tourJ1 = true;
                 break;
         }
-        switch(protagonistes){
-            case 0 : 
+        switch (protagonistes) {
+            case 0:
                 this.j1 = new JoueurHumain();
                 this.j2 = new JoueurHumain();
                 break;
-            case 1 : 
-                if (tourJ1){ //A REMPLACER 
+            case 1:
+                if (tourJ1) { // A REMPLACER
                     this.j1 = new JoueurHumain();
                     this.j2 = new JoueurHumain();
-                }else {
+                } else {
                     this.j1 = new JoueurHumain();
                     this.j2 = new JoueurHumain();
                 }
                 break;
-            default : 
+            default:
                 this.j1 = new JoueurHumain();
                 this.j2 = new JoueurHumain();
                 break;
 
         }
 
-        
         jouerPartie(tourJ1);
     }
-    
 
-    private void jouerPartie(boolean tourJ1){
-        //Initialisation
+    private void jouerPartie(boolean tourJ1) {
+        // Initialisation
         boolean partieEnCours = true;
-        
+
         int IA = this.protagonistes;
 
-        //Boucle d'application
-        while (partieEnCours){
+        // Boucle d'application
+        while (partieEnCours) {
             jouerTour(tourJ1);
-            if(this.grille.grilleGagnante()){
+            if (this.grille.grilleGagnante()) {
 
             }
-            
+
         }
-        
 
     }
 
-    private void jouerTour(boolean tourJ1){
-        boolean IA = false; //A REMPLACER
+    private void jouerTour(boolean tourJ1) {
+        boolean IA = false; // A REMPLACER
         String text = "Choisissez coordonée";
-        String input ="";
+        String input = "";
         boolean coupValide = false;
-        if(tourJ1){
-            if(IA){
+        if (tourJ1) {
+            if (IA) {
                 input = this.j1.choisirCoup("");
-            }else{
-                do{
+            } else {
+                do {
                     input = this.j1.choisirCoup(text);
                     text = "Coup invalide, recommencez svp";
-                    coupValide = grille.verifieCoup(input);
-                }while(!coupValide);
+                    coupValide = grille.verifierCoup(input);
+                } while (!coupValide);
             }
-            this.grille.placer('X',input);
-        }else{
-            if(IA){
+            this.grille.placer('X', input);
+        } else {
+            if (IA) {
                 input = this.j2.choisirCoup("");
-            }else{
-                do{
+            } else {
+                do {
                     input = this.j1.choisirCoup(text);
                     text = "Coup invalide, recommencez svp";
-                    coupValide = grille.verifieCoup(input);
-                }while(!coupValide);
+                    coupValide = grille.verifierCoup(input);
+                } while (!coupValide);
             }
-            this.grille.placer('O',input);
+            this.grille.placer('O', input);
         }
     }
 }
