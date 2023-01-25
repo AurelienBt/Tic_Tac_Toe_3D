@@ -1,15 +1,15 @@
 package apo.boissot_laqueuvre_moulon;
 
-
 public class App {
     public static void main(String[] args) {
 
-        Grille2D g = new Grille2D(3);
+        Grille3D g = new Grille3D(3);
+        g.afficher(); 
 
-        g.testRegretion();
+        // g.testRegretion();
 
-        Grille2D gg = new Grille2D(5);
+        //Grille2D gg = new Grille2D(10);
 
-        gg.testRegretion();
+        // gg.testRegretion();
     }
 }
