@@ -26,7 +26,11 @@ public class Case {
         this.estSelectionnee = select;
     }
 
-    public String getValeur(double tailleMax) {
+    public String getValeur() {
+        return this.valeur;
+    }
+
+    public String afficher(double tailleMax) {
         String surlignageGauche = ">";
         String surlignageDroit = "<";
         String espace = " ";
