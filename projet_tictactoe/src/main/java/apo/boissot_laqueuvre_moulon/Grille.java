@@ -1,4 +1,7 @@
 package apo.boissot_laqueuvre_moulon;
+
+import java.util.ArrayList;
+
 public abstract class Grille {
     protected int taille;
 
@@ -13,7 +16,10 @@ public abstract class Grille {
 
     public abstract void placer(String joueur, String coordone);
 
-    public abstract boolean verifieCoup(String input);
+    public abstract boolean verifierCoup(String input);
+
+    public abstract ArrayList<int[]> listerCoupPossible();
+
     public abstract boolean grilleGagnante();
     public abstract boolean grilleEstPleine();
 
@@ -24,6 +30,11 @@ public abstract class Grille {
     public void placer(char joueur, String coordone) {
 
     }
+
     public abstract void viderGrille();
 
+    protected int tailleEntier(int n) {
+        String nn = n + "";
+        return nn.length();
+    }
 }
