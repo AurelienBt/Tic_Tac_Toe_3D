@@ -45,10 +45,13 @@ public class Grille2D extends Grille {
         int x = getXCase(input);
         int y = getYCase(input);
 
+        // On regarde si les coordonnées données sont valides (dans le tableau)
         if (x < 0 || x >= this.taille || y < 0 || y >= this.taille) {
             System.out.println("EREUR ! Le numéro de case " + numeroCase + " est invalide");
             return false;
-        } else if (this.grille[y][x].estVide()) {
+        }
+        // On regarde si la case choisi est libre
+        else if (this.grille[y][x].estVide()) {
             return true;
         } else {
             System.out.println("EREUR ! La case " + numeroCase + " est déjà pleine");
