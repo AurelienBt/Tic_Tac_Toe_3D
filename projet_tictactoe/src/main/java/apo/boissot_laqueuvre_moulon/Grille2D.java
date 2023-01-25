@@ -40,21 +40,25 @@ public class Grille2D extends Grille {
     }
 
     public boolean verifierCoup(String input) {
-        int numeroCase = Integer.valueOf(input) - 1;
-        int x = getXCase(input);
-        int y = getYCase(input);
-
-        // On regarde si les coordonnées données sont valides (dans le tableau)
-        if (x < 0 || x >= this.taille || y < 0 || y >= this.taille) {
-            System.out.println("EREUR ! Le numéro de case " + numeroCase + " est invalide");
+        if (!verifierInput(input)) {
             return false;
-        }
-        // On regarde si la case choisi est libre
-        else if (this.grille[y][x].estVide()) {
-            return true;
         } else {
-            System.out.println("EREUR ! La case " + numeroCase + " est déjà pleine");
-            return false;
+            int numeroCase = Integer.valueOf(input) - 1;
+            int x = getXCase(input);
+            int y = getYCase(input);
+
+            // On regarde si les coordonnées données sont valides (dans le tableau)
+            if (x < 0 || x >= this.taille || y < 0 || y >= this.taille) {
+                System.out.println("EREUR ! Le numéro de case " + numeroCase + " est invalide");
+                return false;
+            }
+            // On regarde si la case choisi est libre
+            else if (this.grille[y][x].estVide()) {
+                return true;
+            } else {
+                System.out.println("EREUR ! La case " + numeroCase + " est déjà pleine");
+                return false;
+            }
         }
     }
 
@@ -82,12 +86,47 @@ public class Grille2D extends Grille {
         return coupPossible;
     }
 
+    public boolean verifierInput(String input) {
+        // On vérifie que l'input ne soit pas vide
+        if (input.length() <= 0) {
+            System.out.println("EREUR ! L'input est vide");
+            return false;
+        }
+
+        // On vérifie que l'input ne contient que des chiffres
+        for (int i = 0; i < input.length(); i++) {
+            if (!Character.isDigit(input.charAt(i))) {
+                System.out.println("EREUR ! L'input " + input + " n'est pas un chiffre");
+                return false;
+            }
+        }
+        // On vérifie que le chiffre correspond à une case
+        if (Integer.valueOf(input) > this.taille * this.taille || Integer.valueOf(input) <= 0) {
+            System.out.println("EREUR ! L'input " + input + " n'est pas une case du tableau");
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     public void testRegretion() {
-        System.out.println("Test Regression pour une grille 3*3");
+        System.out.println("Test Regression pour une grille2D 3*3");
 
         // afficher
         System.out.println("Une grille vide :");
         afficher();
+        System.out.println("");
+        System.out.println("");
+
+        // verifierInput
+        System.out.println("Faux : " + verifierInput("a"));
+        System.out.println("Faux : " + verifierInput("2a"));
+        System.out.println("Faux : " + verifierInput(""));
+        System.out.println("Faux : " + verifierInput("111"));
+        System.out.println("Faux : " + verifierInput("0"));
+        System.out.println("Faux : " + verifierInput("-5"));
+        System.out.println("Vrai : " + verifierInput("1"));
+        System.out.println("Vrai : " + verifierInput("6"));
         System.out.println("");
         System.out.println("");
 

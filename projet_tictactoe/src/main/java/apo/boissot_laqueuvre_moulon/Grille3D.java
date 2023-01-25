@@ -110,20 +110,24 @@ public class Grille3D extends Grille {
     }
 
     public boolean verifierCoup(String input) {
-        int coord[] = getCoordonneesCase(input);
-
-        // On regarde si les coordonnées données sont valides (dans le tableau)
-        if (coord[0] < 0 || coord[0] >= this.taille || coord[1] < 0 || coord[1] >= this.taille || coord[2] < 0
-                || coord[2] >= this.taille) {
-            System.out.println("EREUR ! Le numéro de case " + input + " est invalide");
+        if (!verifierInput(input)) {
             return false;
-        }
-        // On regarde si la case choisi est libre
-        else if (this.grille[coord[0]][coord[1]][coord[2]].estVide()) {
-            return true;
         } else {
-            System.out.println("EREUR ! La case " + input + " est déjà pleine");
-            return false;
+            int coord[] = getCoordonneesCase(input);
+
+            // On regarde si les coordonnées données sont valides (dans le tableau)
+            if (coord[0] < 0 || coord[0] >= this.taille || coord[1] < 0 || coord[1] >= this.taille || coord[2] < 0
+                    || coord[2] >= this.taille) {
+                System.out.println("EREUR ! Le numéro de case " + input + " est invalide");
+                return false;
+            }
+            // On regarde si la case choisi est libre
+            else if (this.grille[coord[0]][coord[1]][coord[2]].estVide()) {
+                return true;
+            } else {
+                System.out.println("EREUR ! La case " + input + " est déjà pleine");
+                return false;
+            }
         }
     }
 
@@ -151,7 +155,7 @@ public class Grille3D extends Grille {
         // On récupère tous les chiffres qu'on transforme en entier
         while (i < numeroCase.length()) {
             numero = numero * 10;
-            numero += Integer.valueOf(numeroCase.charAt(i));
+            numero += Integer.valueOf(numeroCase.charAt(i)) - 48;
             i++;
         }
 
@@ -160,8 +164,79 @@ public class Grille3D extends Grille {
         return coord;
     }
 
+    public boolean verifierInput(String input) {
+        // On vérifie que l'input ne soit pas vide
+        if (input.length() <= 0) {
+            System.out.println("EREUR ! L'input est vide");
+            return false;
+        }
+
+        String lettres = "";
+        int numero = 0;
+        int z = 0;
+
+        // On récupère toute les lettres dans une nouvelle String
+        int i = 0;
+        while (i < input.length() && !Character.isDigit(input.charAt(i))) {
+            lettres = lettres + input.charAt(i);
+            i++;
+        }
+
+        // i = nombre de lettre
+        for (int j = 0; j < i; j++) {
+            z = z * 26;
+            z += lettres.charAt(j) - 97;
+        }
+
+        // On vérifie que la profondeur indiquer par le goupe de lettre soit dans le
+        // tableau
+        if (z < 0 || z > taille) {
+            System.out.println("EREUR ! Les lettres " + lettres + " ne sont invalides");
+            return false;
+        }
+
+        // On récupère tous les chiffres qu'on transforme en entier
+        while (i < input.length()) {
+            numero = numero * 10;
+            // On vérifie que la fin de la chaine ne contient pas de lettre
+            if (Character.isDigit(input.charAt(i))) {
+                numero += Integer.valueOf(input.charAt(i)) - 48;
+            } else {
+                System.out.println("EREUR ! Il y a la lettres " + input.charAt(i) + " au milieu des chiffres");
+                return false;
+            }
+            i++;
+        }
+
+        // On vérifie que le chiffre correspond à une case
+        if (numero > this.taille * this.taille || numero <= 0) {
+            System.out.println("EREUR ! Le numéro " + numero + " n'est pas une case du tableau");
+            return false;
+        }
+
+        return true;
+    }
+
     public void testRegretion() {
-        System.out.println("Test Regression pour une grille 3*3*3");
+        System.out.println("Test Regression pour une grille3D 3*3*3");
+
+        // verifierInput
+        System.out.println("Faux : " + verifierInput("a"));
+        System.out.println("Faux : " + verifierInput("1"));
+        System.out.println("Faux : " + verifierInput("aa"));
+        System.out.println("Faux : " + verifierInput("11"));
+        System.out.println("Faux : " + verifierInput(""));
+        System.out.println("Faux : " + verifierInput("a100"));
+        System.out.println("Faux : " + verifierInput("f1"));
+        System.out.println("Faux : " + verifierInput("e0"));
+        System.out.println("Faux : " + verifierInput("a0"));
+        System.out.println("Faux : " + verifierInput("a1e"));
+        System.out.println("Faux : " + verifierInput("1a"));
+        System.out.println("Vrai : " + verifierInput("a1"));
+        System.out.println("Vrai : " + verifierInput("b3"));
+        System.out.println("Vrai : " + verifierInput("c9"));
+        System.out.println("");
+        System.out.println("");
 
         // getCoordonneesCase
         System.out.println("z=0, y=0, x=0");
