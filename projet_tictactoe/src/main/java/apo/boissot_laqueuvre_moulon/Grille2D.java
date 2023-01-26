@@ -269,7 +269,7 @@ public class Grille2D extends Grille {
         gagnante = verifieDiagonale(coup);
         if(gagnante) return true;
         gagnante = verifieX(coup);
-        if(gagnante) return gagnante;
+        if(gagnante) return true;
         gagnante = verifieY(coup);
 
         return gagnante;
@@ -311,9 +311,9 @@ public class Grille2D extends Grille {
 
     private boolean verifieY(String coup){
         boolean aligne = true;
-        int i =0;
-        String val = this.grille[0][this.taille-1].getValeur();
+        int i = 1;
         int coordFixe = getXCase(coup);
+        String val = this.grille[coordFixe][0].getValeur();
         do{
             aligne = val == this.grille[coordFixe][i].getValeur();
             i++;
@@ -323,9 +323,10 @@ public class Grille2D extends Grille {
 
     private boolean verifieX(String coup){
         boolean aligne = true;
-        int i =0;
-        String val = this.grille[0][this.taille-1].getValeur();
+        int i = 1 ;
         int coordFixe = getYCase(coup);
+        String val = this.grille[0][coordFixe].getValeur();
+        
         do{
             aligne = val == this.grille[i][coordFixe].getValeur();
             i++;

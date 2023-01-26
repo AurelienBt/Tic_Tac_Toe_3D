@@ -80,11 +80,12 @@ public class Jeu {
         boolean partieEnCours = true;
         
         //Boucle d'application
-        while (partieEnCours){
+        while (partieEnCours && !this.grille.grilleEstPleine()){
             String coup = jouerTour(tourJ1, scanner);
 
             //Vérification de la grille
-            if(this.grille.grilleGagnante(coup)){
+            partieEnCours = this.grille.grilleGagnante(coup);
+            if(!partieEnCours){
                 if(tourJ1){
                     System.out.println("Le gagnant est Joueur 1");
                 }else{
@@ -96,9 +97,7 @@ public class Jeu {
             }
             tourJ1 = !tourJ1;
         }
-
         //Fin de partie 
-        
     }
 
 
