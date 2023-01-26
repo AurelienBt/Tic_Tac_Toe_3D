@@ -1,6 +1,7 @@
 package apo.boissot_laqueuvre_moulon;
 
 import java.util.Random;
+import java.util.Scanner;
 
 public class Jeu {
     private int modeJeu;
@@ -19,7 +20,7 @@ public class Jeu {
         this.tailleGrille = tailleGrille;
     }
 
-    public void partie() {
+    public void partie(Scanner scanner) {
         // Initialisation des paramètres
         switch (modeJeu) {
             case 0:
@@ -71,16 +72,16 @@ public class Jeu {
 
         }
 
-        jouerPartie(tourJ1);
+        jouerPartie(tourJ1, scanner);
     }
 
-    private void jouerPartie(boolean tourJ1) {
+    private void jouerPartie(boolean tourJ1, Scanner scanner) {
         // Initialisation
         boolean partieEnCours = true;
         
         //Boucle d'application
         while (partieEnCours){
-            String coup = jouerTour(tourJ1);
+            String coup = jouerTour(tourJ1, scanner);
 
             //Vérification de la grille
             if(this.grille.grilleGagnante(coup)){
@@ -101,7 +102,7 @@ public class Jeu {
     }
 
 
-    private String jouerTour(boolean tourJ1) {
+    private String jouerTour(boolean tourJ1, Scanner scanner) {
         boolean IA = false; // A REMPLACER
         String text = "Choisissez coordonée";
         String input = "";
@@ -111,11 +112,11 @@ public class Jeu {
         if (tourJ1) {
             if (IA) {
                 System.out.println("Ordinateur :");
-                input = this.j1.choisirCoup("");
+                input = this.j1.choisirCoup("", scanner);
             } else {
                 do {
                     System.out.println("Joueur 1 :");
-                    input = this.j1.choisirCoup(text);
+                    input = this.j1.choisirCoup(text, scanner);
                     text = "Coup invalide, recommencez svp";
                     coupValide = grille.verifierCoup(input);
                 } while (!coupValide);
@@ -124,11 +125,11 @@ public class Jeu {
         } else {
             if (IA) {
                 System.out.println("Ordinateur :");
-                input = this.j2.choisirCoup("");
+                input = this.j2.choisirCoup("", scanner);
             } else {
                 do {
                     System.out.println("Joueur 2 :");
-                    input = this.j1.choisirCoup(text);
+                    input = this.j1.choisirCoup(text, scanner);
                     text = "Coup invalide, recommencez svp";
                     coupValide = grille.verifierCoup(input);
                 } while (!coupValide);
