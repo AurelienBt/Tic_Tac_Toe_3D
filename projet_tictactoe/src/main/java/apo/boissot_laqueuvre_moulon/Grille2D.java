@@ -1,6 +1,5 @@
 package apo.boissot_laqueuvre_moulon;
 
-import java.util.*;
 import java.util.ArrayList;
 
 public class Grille2D extends Grille {
@@ -39,6 +38,7 @@ public class Grille2D extends Grille {
     public boolean grilleGagnante() {
         return false;
     }
+
 
     public boolean verifierCoup(String input) {
         if (!verifierInput(input)) {
@@ -154,7 +154,7 @@ public class Grille2D extends Grille {
         placer("O", "5");
         placer("X", "9");
         this.grille[0][2].setSelectionnee(true);
-        System.out.println("Une grille comme suis :");
+        System.out.println("Une grille comme suit :");
         System.out.println("| X  2 >3<|");
         System.out.println("| 4  O  6 |");
         System.out.println("| 7  8  X |");
@@ -169,6 +169,77 @@ public class Grille2D extends Grille {
         afficher();
         System.out.println("");
         System.out.println("");
+
+        viderGrille();
+        //Verifier Diagonale
+        placer("X", "1");
+        placer("X", "5");
+        placer("X", "9");
+        afficher();
+        System.out.println("Résultat attendu : ");
+        System.out.println("Diagonale : True");
+        System.out.println("Ligne : false");
+        System.out.println("Colonne : false");
+        System.out.println("---------------------");
+        System.out.println("Diagonale : "+this.verifieDiagonale("9"));
+        System.out.println("Ligne : "+this.verifieY("9"));
+        System.out.println("Colonne : "+this.verifieX("9"));
+        System.out.println("=======================");
+        System.out.println("=======================");
+
+        viderGrille();
+
+        //Verifier Diagonale inverse
+        placer("X", "3");
+        placer("X", "5");
+        placer("X", "7");
+        afficher();
+        System.out.println("Résultat attendu : ");
+        System.out.println("Diagonale : True");
+        System.out.println("Ligne : false");
+        System.out.println("Colonne : false");
+        System.out.println("---------------------");
+        System.out.println("Diagonale : "+this.verifieDiagonale("5"));
+        System.out.println("Ligne : "+this.verifieY("5"));
+        System.out.println("Colonne : "+this.verifieX("5"));
+        System.out.println("=======================");
+        System.out.println("=======================");
+
+        viderGrille();
+        //Verifier ligne
+        placer("X", "1");
+        placer("X", "2");
+        placer("X", "3");
+        afficher();
+        System.out.println("Résultat attendu : ");
+        System.out.println("Diagonale : false");
+        System.out.println("Ligne : true");
+        System.out.println("Colonne : false");
+        System.out.println("---------------------");
+        System.out.println("Diagonale : "+this.verifieDiagonale("1"));
+        System.out.println("Ligne : "+this.verifieY("1"));
+        System.out.println("Colonne : "+this.verifieX("1"));
+        System.out.println("=======================");
+        System.out.println("=======================");
+
+        viderGrille();
+        //Verifier colonne
+        placer("X", "1");
+        placer("X", "4");
+        placer("X", "7");
+        afficher();
+        System.out.println("Résultat attendu : ");
+        System.out.println("Diagonale : false");
+        System.out.println("Ligne : true");
+        System.out.println("Colonne : false");
+        System.out.println("---------------------");
+        System.out.println("Diagonale : "+this.verifieDiagonale("1"));
+        System.out.println("Ligne : "+this.verifieY("1"));
+        System.out.println("Colonne : "+this.verifieX("1"));
+        System.out.println("=======================");
+        System.out.println("=======================");
+
+
 
         // tailleEntier
         System.out.println("1 : " + tailleEntier(5));
@@ -191,46 +262,44 @@ public class Grille2D extends Grille {
         return true;
     }
     
+    //Fonction pour la vérification d'une grille 
     public boolean grilleGagnante(String coup){
         boolean gagnante = false;
-        int[] coord = convertCoup(coup);
-        if (estDansDiagonale(coord)){
-            gagnante = verifieDiagonale(coord);
-        }
-        /*if (coordEstCentre(coup)){
-            gagnant = verifieAdjacentCentre();
-        }*/
-        return true;
+        gagnante = verifieDiagonale(coup);
+        if(gagnante) return gagnante;
+        gagnante = verifieX(coup);
+        if(gagnante) return gagnante;
+        gagnante = verifieY(coup);
+
+        return gagnante;
     }
 
     //Vérifie si une case appartient à une diagonale, 
     //Le cas échéant il vérifie la diagonale associée
-    private boolean verifieDiagonale(int[] coord){
+    private boolean verifieDiagonale(String coup){
         boolean gagnante = false;
         boolean aligne = true;
         int i=0;
-
+        System.out.println(coup);
+        int[] coord = convertCoup(coup);
+        System.out.println(coord[0]+"     "+coord[1]);
         //Diagonale numéro 1
         if(coord[0]==coord[1]) { 
             String val = this.grille[0][0].getValeur();
-            //String valEnCours = val;
-            //ajouter if taille =1;
             do{
-                i++;
                 aligne = val == this.grille[i][i].getValeur();
+                i++;
             }while(i<this.taille && aligne);
             gagnante = aligne;            
         }
         if(gagnante) return true;
 
-        //Diagonale numéro 1
+        //Diagonale numéro 2
         if(coord[0] + coord[1] == this.taille - 1) { 
             String val = this.grille[0][this.taille-1].getValeur();
-            //String valEnCours = val;
-            //ajouter if taille =1;
             do{
-                i++;
                 aligne = val == this.grille[i][taille-1-i].getValeur();
+                i++;
             }while(i<this.taille && aligne);
             gagnante = aligne;            
         }
@@ -238,9 +307,33 @@ public class Grille2D extends Grille {
         return gagnante;
     }
 
+    private boolean verifieY(String coup){
+        boolean aligne = true;
+        int i =0;
+        String val = this.grille[0][this.taille-1].getValeur();
+        int coordFixe = getXCase(coup);
+        do{
+            aligne = val == this.grille[coordFixe][i].getValeur();
+            i++;
+        }while(i<this.taille && aligne);
+        return aligne; 
+    }
+
+    private boolean verifieX(String coup){
+        boolean aligne = true;
+        int i =0;
+        String val = this.grille[0][this.taille-1].getValeur();
+        int coordFixe = getYCase(coup);
+        do{
+            aligne = val == this.grille[i][coordFixe].getValeur();
+            i++;
+        }while(i<this.taille && aligne);
+        return aligne;
+    }
+
     private int[] convertCoup(String coup){
         int[] tmp = new int[2];
-        int c = Integer.valueOf(coup);
+        int c = Integer.valueOf(coup)-1;
         int x = c % this.taille;
         int y = c / this.taille;
         tmp[0] = x;
@@ -250,30 +343,7 @@ public class Grille2D extends Grille {
 
     
 
-    private boolean estDansDiagonale(int[] coord){
-        return(coord[0]==coord[1] || coord[0]+coord[1]==(this.taille - 1));
-    }
-
-    /*
-    private boolean verifieAdjacentCentre(){
-        int[][] listeCoordonne = new int[9][];
-        for(int i = 0; i<9; i++){
-            
-        }
-
-        verifieAlignement(null, null, null);
-    }*/
-
-    private boolean verifieAlignement(int[] coord1, int[] coord2, int[] coord3){
-        
-        return true;
-    }
-    /*
-    private boolean coordEstCentre(String coup){
-        int coord = Integer.parseInt(coup);
-        if (coord == 5) return true;
-        return false;
-    }*/
+    
 
 
     private int getYCase(String numeroCase) {
