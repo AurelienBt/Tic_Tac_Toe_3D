@@ -8,15 +8,16 @@ public class InterfaceJeu {
     }
 
     public void choixPartie() {
-        int modeJeu = choixMode();
-        int joueurs = choixJoueurs();
-        int tailleGrille = choixTaille();
+        Scanner scanner = new Scanner(System.in);
+        int modeJeu = choixMode(scanner);
+        int joueurs = choixJoueurs(scanner);
+        int tailleGrille = choixTaille(scanner);
         Jeu jeu = new Jeu(modeJeu, joueurs, 0, tailleGrille);
-        jeu.partie();
+        jeu.partie(scanner);
+        scanner.close();
         }
  
-    private int choixMode() {
-        Scanner scanner = new Scanner(System.in);
+    private int choixMode(Scanner scanner) {
         int choix = -1;
         boolean inputCorrect = false;
         do {
@@ -29,35 +30,16 @@ public class InterfaceJeu {
                 if(choix == 0 || choix == 1) inputCorrect = true;
             }
             else scanner.nextLine();
-            if(!inputCorrect) System.out.println(); System.out.println("Saisie incorrecte.");
-            
-        } while(!inputCorrect);
-
-        scanner.close();
-        return choix;
-    }
-
-    private int choixJoueurs() {
-        Scanner scanner = new Scanner(System.in);
-        int choix = -1;
-        while(true) {
-            System.out.println();
-            System.out.println("Veuillez choisir les joueurs de la partie : ");
-            System.out.println("0 : Joueur vs Joueur");
-            System.out.println("1 : Joueur vs IA");
-            System.out.println("2 : IA vs IA");
-            if(scanner.hasNextInt()) choix = scanner.nextInt();
-            if (choix == 0 || choix == 1 || choix == 2) {
-                break;
-            } else {
-                System.out.println();
+            if(!inputCorrect) {
+                System.out.println(); 
                 System.out.println("Saisie incorrecte.");
             }
-        }
-        scanner.close();
+        } while(!inputCorrect);
+
         return choix;
+    }
 
-        /*Scanner scanner = new Scanner(System.in);
+    private int choixJoueurs(Scanner scanner) {
         int choix = -1;
         boolean inputCorrect = false;
         do {
@@ -66,37 +48,22 @@ public class InterfaceJeu {
             System.out.println("0 : Joueur vs Joueur");
             System.out.println("1 : Joueur vs IA");
             System.out.println("2 : IA vs IA");
-            if(scanner.hasNextInt()) choix = scanner.nextInt();
-            scanner.nextLine();
-        }while(scanner.hasNextInt() && !inputCorrect);
-        scanner.close();
-        return choix;*/
-
-        /*Scanner scandgner = new Scanner(System.in);
-        int choix = -1;
-        boolean inputCorrect = false;
-        do {
-            System.out.println();
-            System.out.println("Veuillez choisir les joueurs de la partie : ");
-            System.out.println("0 : Joueur vs Joueur");
-            System.out.println("1 : Joueur vs IA");
-            System.out.println("2 : IA vs IA");
-            if(scandgner.hasNextInt()) {
-                choix = scandgner.nextInt(); 
-                if(choix == 0 || choix == 1 || choix == 2) inputCorrect = true;
+            if(scanner.hasNextInt()) {
+                choix = scanner.nextInt(); 
+                if(choix == 0 || choix == 1|| choix == 2) inputCorrect = true;
             }
-            scandgner.nextLine();
-            //else if(scandgner.hasNextLine())scandgner.nextLine();
-            if(!inputCorrect) System.out.println("Saisie incorrecte.");
+            else scanner.nextLine();
+            if(!inputCorrect) {
+                System.out.println(); 
+                System.out.println("Saisie incorrecte.");
+            }
             
         } while(!inputCorrect);
 
-        scandgner.close();
-        return choix;*/
+        return choix;
     }
 
-    private int choixTaille() {
-        Scanner scanner = new Scanner(System.in);
+    private int choixTaille(Scanner scanner) {
         int choix = -1;
         boolean inputCorrect = false;
         do {
@@ -108,11 +75,13 @@ public class InterfaceJeu {
             }
             scanner.nextLine();
             //else scanner.nextLine();
-            if(!inputCorrect) System.out.println("Saisie incorrecte.");
+            if(!inputCorrect) {
+                System.out.println();
+                System.out.println("Saisie incorrecte.");
+            }
             
         } while(!inputCorrect);
 
-        scanner.close();
         return choix;
     }
 }
