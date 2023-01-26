@@ -27,9 +27,8 @@ public abstract class Grille {
         return this.taille;
     }
 
-    public void placer(char joueur, String coordone) {
-
-    }
+    /*public abstract void placer(char joueur, String coordone) 
+    }*/
 
     public abstract void viderGrille();
 

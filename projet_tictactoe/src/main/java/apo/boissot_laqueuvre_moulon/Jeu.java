@@ -106,28 +106,35 @@ public class Jeu {
         String text = "Choisissez coordonée";
         String input = "";
         boolean coupValide = false;
+
+        this.grille.afficher();
         if (tourJ1) {
             if (IA) {
+                System.out.println("Ordinateur :");
                 input = this.j1.choisirCoup("");
             } else {
                 do {
+                    System.out.println("Joueur 1 :");
                     input = this.j1.choisirCoup(text);
                     text = "Coup invalide, recommencez svp";
                     coupValide = grille.verifierCoup(input);
                 } while (!coupValide);
             }
-            this.grille.placer('X', input);
+            this.grille.placer("X", input);
         } else {
             if (IA) {
+                System.out.println("Ordinateur :");
                 input = this.j2.choisirCoup("");
             } else {
                 do {
+                    System.out.println("Joueur 2 :");
                     input = this.j1.choisirCoup(text);
                     text = "Coup invalide, recommencez svp";
                     coupValide = grille.verifierCoup(input);
                 } while (!coupValide);
             }
-            this.grille.placer('O', input);
+            //this.grille.verifieCoup(input);
+            this.grille.placer("O", input);
         }
     }
 }

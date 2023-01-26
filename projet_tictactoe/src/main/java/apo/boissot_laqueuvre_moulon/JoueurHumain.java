@@ -3,25 +3,19 @@ import java.util.Scanner;
 
 public class JoueurHumain extends Joueur {
     public String choisirCoup(String text){
-    
-        Scanner scanner = new Scanner(System.in);
         String choix = "";
-        boolean inputCorrect = false;
-        System.out.println();
-        System.out.println(text);
-        do {
-            choix = scanner.nextLine();
-            if(choix.equals("")) inputCorrect = false;
-
         
-            else scanner.nextLine();
-            if(!inputCorrect) System.out.println("Saisie incorrecte.");
-            
-        } while(!inputCorrect);
-
+        Scanner scanner = new Scanner(System.in);
+        System.out.println(text);
+        System.out.println(scanner.hasNext());
+        /*while(!scanner.hasNextLine()){
+            scanner.nextInt();
+            System.out.println("Clearing...");
+        } */
+        if (scanner.hasNextLine()) choix = scanner.nextLine();
+        
         scanner.close();
         return choix;
-        
     }
 
 }
