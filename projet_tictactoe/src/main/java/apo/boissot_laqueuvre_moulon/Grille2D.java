@@ -296,6 +296,7 @@ public class Grille2D extends Grille {
         if(gagnante) return true;
 
         //Diagonale numéro 2
+        i = 0;
         if(coord[0] + coord[1] == this.taille - 1) { 
             String val = this.grille[0][this.taille-1].getValeur();
             do{
