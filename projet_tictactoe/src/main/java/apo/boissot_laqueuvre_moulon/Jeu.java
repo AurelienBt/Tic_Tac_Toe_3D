@@ -80,10 +80,10 @@ public class Jeu {
         
         //Boucle d'application
         while (partieEnCours){
-            jouerTour(tourJ1);
+            String coup = jouerTour(tourJ1);
 
             //Vérification de la grille
-            if(this.grille.grilleGagnante()){
+            if(this.grille.grilleGagnante(coup)){
                 if(tourJ1){
                     System.out.println("Le gagnant est Joueur 1");
                 }else{
@@ -101,7 +101,7 @@ public class Jeu {
     }
 
 
-    private void jouerTour(boolean tourJ1) {
+    private String jouerTour(boolean tourJ1) {
         boolean IA = false; // A REMPLACER
         String text = "Choisissez coordonée";
         String input = "";
@@ -135,6 +135,8 @@ public class Jeu {
             }
             //this.grille.verifieCoup(input);
             this.grille.placer("O", input);
+            
         }
+        return input;
     }
 }

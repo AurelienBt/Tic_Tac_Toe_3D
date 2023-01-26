@@ -116,7 +116,7 @@ public class Grille3D extends Grille {
     }
 
     // A faire
-    public boolean grilleGagnante() {
+    public boolean grilleGagnante(String coup) {
         return false;
     }
 

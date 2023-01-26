@@ -184,6 +184,7 @@ public class Grille2D extends Grille {
         System.out.println("Diagonale : "+this.verifieDiagonale("9"));
         System.out.println("Ligne : "+this.verifieY("9"));
         System.out.println("Colonne : "+this.verifieX("9"));
+        System.out.println("Grille gagnante : "+this.grilleGagnante("9"));
         System.out.println("=======================");
         System.out.println("=======================");
 
@@ -266,7 +267,7 @@ public class Grille2D extends Grille {
     public boolean grilleGagnante(String coup){
         boolean gagnante = false;
         gagnante = verifieDiagonale(coup);
-        if(gagnante) return gagnante;
+        if(gagnante) return true;
         gagnante = verifieX(coup);
         if(gagnante) return gagnante;
         gagnante = verifieY(coup);
