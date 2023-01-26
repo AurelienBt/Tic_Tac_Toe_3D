@@ -16,6 +16,8 @@ public abstract class Grille {
 
     public abstract void placer(String joueur, String coordone);
 
+    public abstract boolean verifierInput(String input);
+
     public abstract boolean verifierCoup(String input);
 
     public abstract ArrayList<int[]> listerCoupPossible();

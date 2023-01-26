@@ -7,9 +7,15 @@ public class App {
         //Jeu j = new Jeu(0, 0, 0, 3);
         //j.partie();
         g.testRegretion();
+        //InterfaceJeu iJeu = new InterfaceJeu();
+        //iJeu.choixPartie();
 
-        //Grille2D gg = new Grille2D(10);
+        //Grille3D g = new Grille3D(8);
+        //g.afficher(); 
 
-        // gg.testRegretion();
+        // g.testRegretion();
+
+        Grille3D gg = new Grille3D(3);
+        gg.testRegretion();
     }
 }
