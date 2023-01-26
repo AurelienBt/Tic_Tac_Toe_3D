@@ -50,14 +50,14 @@ public class Grille2D extends Grille {
 
             // On regarde si les coordonnées données sont valides (dans le tableau)
             if (x < 0 || x >= this.taille || y < 0 || y >= this.taille) {
-                System.out.println("EREUR ! Le numéro de case " + numeroCase + " est invalide");
+                System.out.println("ERREUR ! Le numéro de case " + numeroCase + " est invalide");
                 return false;
             }
             // On regarde si la case choisi est libre
             else if (this.grille[y][x].estVide()) {
                 return true;
             } else {
-                System.out.println("EREUR ! La case " + numeroCase + " est déjà pleine");
+                System.out.println("ERREUR ! La case " + numeroCase + " est déjà pleine");
                 return false;
             }
         }
@@ -90,20 +90,20 @@ public class Grille2D extends Grille {
     public boolean verifierInput(String input) {
         // On vérifie que l'input ne soit pas vide
         if (input.length() <= 0) {
-            System.out.println("EREUR ! L'input est vide");
+            System.out.println("ERREUR ! L'input est vide");
             return false;
         }
 
         // On vérifie que l'input ne contient que des chiffres
         for (int i = 0; i < input.length(); i++) {
             if (!Character.isDigit(input.charAt(i))) {
-                System.out.println("EREUR ! L'input " + input + " n'est pas un chiffre");
+                System.out.println("ERREUR ! L'input " + input + " n'est pas un chiffre");
                 return false;
             }
         }
         // On vérifie que le chiffre correspond à une case
         if (Integer.valueOf(input) > this.taille * this.taille || Integer.valueOf(input) <= 0) {
-            System.out.println("EREUR ! L'input " + input + " n'est pas une case du tableau");
+            System.out.println("ERREUR ! L'input " + input + " n'est pas une case du tableau");
             return false;
         } else {
             return true;
