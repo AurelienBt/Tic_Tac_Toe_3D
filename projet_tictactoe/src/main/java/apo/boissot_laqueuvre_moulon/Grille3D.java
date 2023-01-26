@@ -129,14 +129,14 @@ public class Grille3D extends Grille {
             // On regarde si les coordonnées données sont valides (dans le tableau)
             if (coord[0] < 0 || coord[0] >= this.taille || coord[1] < 0 || coord[1] >= this.taille || coord[2] < 0
                     || coord[2] >= this.taille) {
-                System.out.println("EREUR ! Le numéro de case " + input + " est invalide");
+                System.out.println("ERREUR ! Le numéro de case " + input + " est invalide");
                 return false;
             }
             // On regarde si la case choisi est libre
             else if (this.grille[coord[0]][coord[1]][coord[2]].estVide()) {
                 return true;
             } else {
-                System.out.println("EREUR ! La case " + input + " est déjà pleine");
+                System.out.println("ERREUR ! La case " + input + " est déjà pleine");
                 return false;
             }
         }
