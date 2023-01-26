@@ -1,8 +1,14 @@
 package apo.boissot_laqueuvre_moulon;
+
 import java.util.Scanner;
 
+/***
+ * La class InterfaceJeu centralise tout les échange homme/machine.
+ * Elle est donc responsable de demander les cases à jouer et d'afficher les
+ * grilles de jeu
+ */
 public class InterfaceJeu {
-    
+
     public InterfaceJeu() {
 
     }
@@ -15,8 +21,8 @@ public class InterfaceJeu {
         Jeu jeu = new Jeu(modeJeu, joueurs, 0, tailleGrille);
         jeu.partie(scanner);
         scanner.close();
-        }
- 
+    }
+
     private int choixMode(Scanner scanner) {
         int choix = -1;
         boolean inputCorrect = false;
@@ -25,16 +31,17 @@ public class InterfaceJeu {
             System.out.println("Veuillez choisir un mode de jeu : ");
             System.out.println("0 : 2D");
             System.out.println("1 : 3D");
-            if(scanner.hasNextInt()) {
-                choix = scanner.nextInt(); 
-                if(choix == 0 || choix == 1) inputCorrect = true;
-            }
-            else scanner.nextLine();
-            if(!inputCorrect) {
-                System.out.println(); 
+            if (scanner.hasNextInt()) {
+                choix = scanner.nextInt();
+                if (choix == 0 || choix == 1)
+                    inputCorrect = true;
+            } else
+                scanner.nextLine();
+            if (!inputCorrect) {
+                System.out.println();
                 System.out.println("Saisie incorrecte.");
             }
-        } while(!inputCorrect);
+        } while (!inputCorrect);
 
         return choix;
     }
@@ -48,17 +55,18 @@ public class InterfaceJeu {
             System.out.println("0 : Joueur vs Joueur");
             System.out.println("1 : Joueur vs IA");
             System.out.println("2 : IA vs IA");
-            if(scanner.hasNextInt()) {
-                choix = scanner.nextInt(); 
-                if(choix == 0 || choix == 1|| choix == 2) inputCorrect = true;
-            }
-            else scanner.nextLine();
-            if(!inputCorrect) {
-                System.out.println(); 
+            if (scanner.hasNextInt()) {
+                choix = scanner.nextInt();
+                if (choix == 0 || choix == 1 || choix == 2)
+                    inputCorrect = true;
+            } else
+                scanner.nextLine();
+            if (!inputCorrect) {
+                System.out.println();
                 System.out.println("Saisie incorrecte.");
             }
-            
-        } while(!inputCorrect);
+
+        } while (!inputCorrect);
 
         return choix;
     }
@@ -69,18 +77,19 @@ public class InterfaceJeu {
         do {
             System.out.println();
             System.out.println("Veuillez entrer la taille de la grille : ");
-            if(scanner.hasNextInt()) {
-                choix = scanner.nextInt(); 
-                if(choix >= 3) inputCorrect = true;
+            if (scanner.hasNextInt()) {
+                choix = scanner.nextInt();
+                if (choix >= 3)
+                    inputCorrect = true;
             }
             scanner.nextLine();
-            //else scanner.nextLine();
-            if(!inputCorrect) {
+            // else scanner.nextLine();
+            if (!inputCorrect) {
                 System.out.println();
                 System.out.println("Saisie incorrecte.");
             }
-            
-        } while(!inputCorrect);
+
+        } while (!inputCorrect);
 
         return choix;
     }
