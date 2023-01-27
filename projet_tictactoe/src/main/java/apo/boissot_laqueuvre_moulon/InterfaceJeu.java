@@ -12,7 +12,7 @@ public class InterfaceJeu {
         int modeJeu = choixMode(scanner);
         int joueurs = choixJoueurs(scanner);
         int tailleGrille = choixTaille(scanner);
-        Jeu jeu = new Jeu(modeJeu, joueurs, 0, tailleGrille);
+        Jeu jeu = new Jeu(modeJeu, joueurs, 1, tailleGrille);
         jeu.partie(scanner);
         scanner.close();
         }

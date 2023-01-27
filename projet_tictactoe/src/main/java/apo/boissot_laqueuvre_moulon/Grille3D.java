@@ -1,6 +1,7 @@
 package apo.boissot_laqueuvre_moulon;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Grille3D extends Grille {
     private Case grille[][][];
@@ -178,7 +179,7 @@ public class Grille3D extends Grille {
     public boolean verifierInput(String input) {
         // On vérifie que l'input ne soit pas vide
         if (input.length() <= 0) {
-            System.out.println("EREUR ! L'input est vide");
+            System.out.println("ERREUR ! L'input est vide");
             return false;
         }
 
@@ -202,7 +203,7 @@ public class Grille3D extends Grille {
         // On vérifie que la profondeur indiquer par le goupe de lettre soit dans le
         // tableau
         if (z < 0 || z > taille) {
-            System.out.println("EREUR ! Les lettres " + lettres + " ne sont invalides");
+            System.out.println("ERREUR ! Les lettres " + lettres + " ne sont invalides");
             return false;
         }
 
@@ -213,7 +214,7 @@ public class Grille3D extends Grille {
             if (Character.isDigit(input.charAt(i))) {
                 numero += Integer.valueOf(input.charAt(i)) - 48;
             } else {
-                System.out.println("EREUR ! Il y a la lettres " + input.charAt(i) + " au milieu des chiffres");
+                System.out.println("ERREUR ! Il y a la lettres " + input.charAt(i) + " au milieu des chiffres");
                 return false;
             }
             i++;
@@ -221,11 +222,24 @@ public class Grille3D extends Grille {
 
         // On vérifie que le chiffre correspond à une case
         if (numero > this.taille * this.taille || numero <= 0) {
-            System.out.println("EREUR ! Le numéro " + numero + " n'est pas une case du tableau");
+            System.out.println("ERREUR ! Le numéro " + numero + " n'est pas une case du tableau");
             return false;
         }
 
         return true;
+    }
+
+    public String validerCoup(String input, Scanner scanner) {
+        /*System.out.println();
+        System.out.println("Appuyer sur Entrée pour valider votre coup, ou entrez un autre coup");
+        int x = getXCase(input);
+        int y = getYCase(input);
+        grille[y][x].setSelectionnee(true);
+        afficher();
+        String choix = scanner.nextLine();
+        if (choix != "") grille[y][x].setSelectionnee(false);
+        return choix;*/
+        return "";
     }
 
     public void testRegretion() {

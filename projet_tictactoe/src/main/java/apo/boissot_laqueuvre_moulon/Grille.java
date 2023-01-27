@@ -1,6 +1,7 @@
 package apo.boissot_laqueuvre_moulon;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public abstract class Grille {
     protected int taille;
@@ -19,6 +20,8 @@ public abstract class Grille {
     public abstract boolean verifierInput(String input);
 
     public abstract boolean verifierCoup(String input);
+
+    public abstract String validerCoup(String input, Scanner scanner);
 
     public abstract ArrayList<int[]> listerCoupPossible();
 

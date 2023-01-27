@@ -1,6 +1,7 @@
 package apo.boissot_laqueuvre_moulon;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Grille2D extends Grille {
     private Case grille[][];
@@ -61,6 +62,18 @@ public class Grille2D extends Grille {
                 return false;
             }
         }
+    }
+
+    public String validerCoup(String input, Scanner scanner) {
+        System.out.println();
+        System.out.println("Appuyer sur Entrée pour valider votre coup, ou entrez un autre coup");
+        int x = getXCase(input);
+        int y = getYCase(input);
+        grille[y][x].setSelectionnee(true);
+        afficher();
+        String choix = scanner.nextLine();
+        grille[y][x].setSelectionnee(false);
+        return choix;
     }
 
     public void placer(String joueur, String numeroCase) {
@@ -265,14 +278,11 @@ public class Grille2D extends Grille {
     
     //Fonction pour la vérification d'une grille 
     public boolean grilleGagnante(String coup){
-        boolean gagnante = false;
-        gagnante = verifieDiagonale(coup);
-        if(gagnante) return true;
-        gagnante = verifieX(coup);
-        if(gagnante) return true;
-        gagnante = verifieY(coup);
+        if(verifieDiagonale(coup)) return true;
+        if(verifieX(coup))return true;
+        if(verifieY(coup)) return true;
 
-        return gagnante;
+        return false;
     }
 
     //Vérifie si une case appartient à une diagonale, 
@@ -311,11 +321,11 @@ public class Grille2D extends Grille {
 
     private boolean verifieY(String coup){
         boolean aligne = true;
-        int i = 1;
-        int coordFixe = getXCase(coup);
+        int i = 0;
+        int coordFixe = getYCase(coup);
         String val = this.grille[coordFixe][0].getValeur();
         do{
-            aligne = val == this.grille[coordFixe][i].getValeur();
+            aligne = val.equals(this.grille[coordFixe][i].getValeur());
             i++;
         }while(i<this.taille && aligne);
         return aligne; 
@@ -323,12 +333,12 @@ public class Grille2D extends Grille {
 
     private boolean verifieX(String coup){
         boolean aligne = true;
-        int i = 1 ;
-        int coordFixe = getYCase(coup);
+        int i = 0;
+        int coordFixe = getXCase(coup);
         String val = this.grille[0][coordFixe].getValeur();
         
         do{
-            aligne = val == this.grille[i][coordFixe].getValeur();
+            aligne = val.equals(this.grille[i][coordFixe].getValeur());
             i++;
         }while(i<this.taille && aligne);
         return aligne;
