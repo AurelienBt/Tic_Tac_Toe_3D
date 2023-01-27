@@ -3,6 +3,10 @@ package apo.boissot_laqueuvre_moulon;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/***
+ * Grille2D extends Grille
+ * Représente une grille de morpion en 2 dimension de taille variable
+ */
 public class Grille2D extends Grille {
     private Case grille[][];
 
@@ -12,6 +16,10 @@ public class Grille2D extends Grille {
         viderGrille();
     }
 
+    /***
+     * Vide la grille en remplaçant toute les cases par des cases vides (avec leur
+     * numéro et pas des "X" "O")
+     */
     public void viderGrille() {
         this.grille = new Case[taille][taille];
 
@@ -25,6 +33,9 @@ public class Grille2D extends Grille {
         }
     }
 
+    /***
+     * Affiche la grille dans la console
+     */
     public void afficher() {
         for (int i = 0; i < this.taille; i++) {
             System.out.print("|");
@@ -40,7 +51,12 @@ public class Grille2D extends Grille {
         return false;
     }
 
-
+    /***
+     * 
+     * @param input l'id de la case
+     *              ex : "1" "69"
+     * @return true si le coup est valide, false sinon
+     */
     public boolean verifierCoup(String input) {
         if (!verifierInput(input)) {
             return false;
@@ -76,12 +92,25 @@ public class Grille2D extends Grille {
         return choix;
     }
 
+    /***
+     * Place un symbole de joueur à la case dont l'id est coordone si c'est possible
+     * 
+     * @param joueur   le symbole du joueur
+     *                 ex : "O" , "X" ou autre
+     * @param coordone l'id de la case
+     *                 ex : "3" "19"
+     */
     public void placer(String joueur, String numeroCase) {
         if (verifierCoup(numeroCase)) {
             this.grille[getYCase(numeroCase)][getXCase(numeroCase)].setValeur(joueur);
         }
     }
 
+    /***
+     * 
+     * @return tableau contenant la liste des coups valides possible
+     *         chaque coup est représenté par un tableau de 2 entiers [y,x]
+     */
     public ArrayList<int[]> listerCoupPossible() {
         ArrayList<int[]> coupPossible = new ArrayList<int[]>();
 
@@ -100,6 +129,11 @@ public class Grille2D extends Grille {
         return coupPossible;
     }
 
+    /***
+     * 
+     * @param input l'input saisie par le joueur
+     * @return true si l'input est valide, false sinon
+     */
     public boolean verifierInput(String input) {
         // On vérifie que l'input ne soit pas vide
         if (input.length() <= 0) {
@@ -123,6 +157,39 @@ public class Grille2D extends Grille {
         }
     }
 
+    /***
+     * 
+     * @return true si la grille est pleine, false sinon
+     */
+    public boolean grilleEstPleine() {
+        for (int i = 0; i < this.taille; i++) {
+            for (int j = 0; j < this.taille; j++) {
+                if (grille[i][j].estVide())
+                    return false;
+            }
+        }
+        return true;
+    }
+    
+    /***
+     * Verifie si la grille est gagnante. Pour alléger les calculs on regarde
+     * uniquement en fct du dernier coup.
+     * 
+     * @param coup l'id de la case du dernier coup
+     *             ex : "3" "89"
+     * @return true si la grille est gagnante, false sinon
+     */
+    public boolean grilleGagnante(String coup){
+        if(verifieDiagonale(coup)) return true;
+        if(verifieX(coup))return true;
+        if(verifieY(coup)) return true;
+
+        return false;
+    }
+
+    /***
+     * Un test unitaire de toute les fonctionnalité de Grille2D
+     */
     public void testRegretion() {
         System.out.println("Test Regression pour une grille2D 3*3");
 
@@ -184,7 +251,7 @@ public class Grille2D extends Grille {
         System.out.println("");
 
         viderGrille();
-        //Verifier Diagonale
+        // Verifier Diagonale
         placer("X", "1");
         placer("X", "5");
         placer("X", "9");
@@ -194,16 +261,16 @@ public class Grille2D extends Grille {
         System.out.println("Ligne : false");
         System.out.println("Colonne : false");
         System.out.println("---------------------");
-        System.out.println("Diagonale : "+this.verifieDiagonale("9"));
-        System.out.println("Ligne : "+this.verifieY("9"));
-        System.out.println("Colonne : "+this.verifieX("9"));
-        System.out.println("Grille gagnante : "+this.grilleGagnante("9"));
+        System.out.println("Diagonale : " + this.verifieDiagonale("9"));
+        System.out.println("Ligne : " + this.verifieY("9"));
+        System.out.println("Colonne : " + this.verifieX("9"));
+        System.out.println("Grille gagnante : " + this.grilleGagnante("9"));
         System.out.println("=======================");
         System.out.println("=======================");
 
         viderGrille();
 
-        //Verifier Diagonale inverse
+        // Verifier Diagonale inverse
         placer("X", "3");
         placer("X", "5");
         placer("X", "7");
@@ -213,14 +280,14 @@ public class Grille2D extends Grille {
         System.out.println("Ligne : false");
         System.out.println("Colonne : false");
         System.out.println("---------------------");
-        System.out.println("Diagonale : "+this.verifieDiagonale("5"));
-        System.out.println("Ligne : "+this.verifieY("5"));
-        System.out.println("Colonne : "+this.verifieX("5"));
+        System.out.println("Diagonale : " + this.verifieDiagonale("5"));
+        System.out.println("Ligne : " + this.verifieY("5"));
+        System.out.println("Colonne : " + this.verifieX("5"));
         System.out.println("=======================");
         System.out.println("=======================");
 
         viderGrille();
-        //Verifier ligne
+        // Verifier ligne
         placer("X", "1");
         placer("X", "2");
         placer("X", "3");
@@ -230,14 +297,14 @@ public class Grille2D extends Grille {
         System.out.println("Ligne : true");
         System.out.println("Colonne : false");
         System.out.println("---------------------");
-        System.out.println("Diagonale : "+this.verifieDiagonale("1"));
-        System.out.println("Ligne : "+this.verifieY("1"));
-        System.out.println("Colonne : "+this.verifieX("1"));
+        System.out.println("Diagonale : " + this.verifieDiagonale("1"));
+        System.out.println("Ligne : " + this.verifieY("1"));
+        System.out.println("Colonne : " + this.verifieX("1"));
         System.out.println("=======================");
         System.out.println("=======================");
 
         viderGrille();
-        //Verifier colonne
+        // Verifier colonne
         placer("X", "1");
         placer("X", "4");
         placer("X", "7");
@@ -247,13 +314,11 @@ public class Grille2D extends Grille {
         System.out.println("Ligne : true");
         System.out.println("Colonne : false");
         System.out.println("---------------------");
-        System.out.println("Diagonale : "+this.verifieDiagonale("1"));
-        System.out.println("Ligne : "+this.verifieY("1"));
-        System.out.println("Colonne : "+this.verifieX("1"));
+        System.out.println("Diagonale : " + this.verifieDiagonale("1"));
+        System.out.println("Ligne : " + this.verifieY("1"));
+        System.out.println("Colonne : " + this.verifieX("1"));
         System.out.println("=======================");
         System.out.println("=======================");
-
-
 
         // tailleEntier
         System.out.println("1 : " + tailleEntier(5));
@@ -267,59 +332,55 @@ public class Grille2D extends Grille {
     }
 
 
-    public boolean grilleEstPleine(){
-        for (int i = 0; i<this.taille; i++){
-            for (int j=0; j<this.taille; j++){
-                if(grille[i][j].estVide()) return false;
-            }
-        }
-        return true;
-    }
-    
-    //Fonction pour la vérification d'une grille 
-    public boolean grilleGagnante(String coup){
-        if(verifieDiagonale(coup)) return true;
-        if(verifieX(coup))return true;
-        if(verifieY(coup)) return true;
 
-        return false;
-    }
-
-    //Vérifie si une case appartient à une diagonale, 
-    //Le cas échéant il vérifie la diagonale associée
-    private boolean verifieDiagonale(String coup){
+    /***
+     * Vérifie si une case appartient à une diagonale, le cas échéant il vérifie si
+     * la diagonale associée fait ganer la partie
+     * 
+     * @param coup l'id de la case
+     * @return true si la case appartient à une diagonale qui fait ganer la partie,
+     *         false sinon
+     */
+    private boolean verifieDiagonale(String coup) {
         boolean gagnante = false;
         boolean aligne = true;
-        int i=0;
+        int i = 0;
         System.out.println(coup);
         int[] coord = convertCoup(coup);
-        System.out.println(coord[0]+"     "+coord[1]);
-        //Diagonale numéro 1
-        if(coord[0]==coord[1]) { 
+        System.out.println(coord[0] + "     " + coord[1]);
+        // Diagonale numéro 1
+        if (coord[0] == coord[1]) {
             String val = this.grille[0][0].getValeur();
-            do{
+            do {
                 aligne = val == this.grille[i][i].getValeur();
                 i++;
-            }while(i<this.taille && aligne);
-            gagnante = aligne;            
+            } while (i < this.taille && aligne);
+            gagnante = aligne;
         }
-        if(gagnante) return true;
+        if (gagnante)
+            return true;
 
-        //Diagonale numéro 2
+        // Diagonale numéro 2
         i = 0;
-        if(coord[0] + coord[1] == this.taille - 1) { 
-            String val = this.grille[0][this.taille-1].getValeur();
-            do{
-                aligne = val == this.grille[i][taille-1-i].getValeur();
+        if (coord[0] + coord[1] == this.taille - 1) {
+            String val = this.grille[0][this.taille - 1].getValeur();
+            do {
+                aligne = val == this.grille[i][taille - 1 - i].getValeur();
                 i++;
-            }while(i<this.taille && aligne);
-            gagnante = aligne;            
+            } while (i < this.taille && aligne);
+            gagnante = aligne;
         }
-        if(gagnante) return true;
         return gagnante;
     }
 
-    private boolean verifieY(String coup){
+    /***
+     * Vérifie si une case la colone de la case fait ganer la partie
+     * 
+     * @param coup l'id de la case
+     * @return true si la colone de la case fait ganer la partie,
+     *         false sinon
+     */
+    private boolean verifieY(String coup) {
         boolean aligne = true;
         int i = 0;
         int coordFixe = getYCase(coup);
@@ -331,6 +392,13 @@ public class Grille2D extends Grille {
         return aligne; 
     }
 
+    /***
+     * Vérifie si une case la ligne de la case fait ganer la partie
+     * 
+     * @param coup l'id de la case
+     * @return true si la ligne de la case fait ganer la partie,
+     *         false sinon
+     */
     private boolean verifieX(String coup){
         boolean aligne = true;
         int i = 0;
@@ -344,9 +412,15 @@ public class Grille2D extends Grille {
         return aligne;
     }
 
-    private int[] convertCoup(String coup){
+    /***
+     * Transforme l'id d'une case en ses coordonnées x et y
+     * 
+     * @param coup l'id de la case
+     * @return un tableau de 2 entiers [x, y]
+     */
+    private int[] convertCoup(String coup) {
         int[] tmp = new int[2];
-        int c = Integer.valueOf(coup)-1;
+        int c = Integer.valueOf(coup) - 1;
         int x = c % this.taille;
         int y = c / this.taille;
         tmp[0] = x;
@@ -354,31 +428,25 @@ public class Grille2D extends Grille {
         return tmp;
     }
 
-    
-
-    
-
-
+    /***
+     * 
+     * @param numeroCase l'id de la case
+     * @return l'ordonnée de la case
+     */
     private int getYCase(String numeroCase) {
         int numero = Integer.valueOf(numeroCase) - 1;
         int y = numero / this.taille;
         return y;
     }
 
+    /***
+     * 
+     * @param numeroCase l'id de la case
+     * @return l'abcsisse de la case
+     */
     private int getXCase(String numeroCase) {
         int numero = Integer.valueOf(numeroCase) - 1;
         int x = numero % this.taille;
         return x;
     }
-
-    private int getYCase(int numeroCase) {
-        int y = (numeroCase - 1) / this.taille;
-        return y;
-    }
-
-    private int getXCase(int numeroCase) {
-        int x = (numeroCase - 1) % this.taille;
-        return x;
-    }
-
 }

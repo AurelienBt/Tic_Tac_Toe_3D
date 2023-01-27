@@ -3,6 +3,9 @@ package apo.boissot_laqueuvre_moulon;
 import java.util.Random;
 import java.util.Scanner;
 
+/***
+ * La clas Jeu centralise toute la logique d'une partie de morpion.
+ */
 public class Jeu {
     private int modeJeu;
     private int protagonistes;
@@ -78,9 +81,9 @@ public class Jeu {
     private void jouerPartie(boolean tourJ1, Scanner scanner) {
         // Initialisation
         boolean partieEnCours = true;
-        
-        //Boucle d'application
-        while (partieEnCours && !this.grille.grilleEstPleine()){
+
+        // Boucle d'application
+        while (partieEnCours && !this.grille.grilleEstPleine()) {
             String coup = jouerTour(tourJ1, scanner);
 
             //Vérification de la grille
@@ -88,16 +91,15 @@ public class Jeu {
             if(!partieEnCours){
                 if(tourJ1){
                     System.out.println("Le gagnant est Joueur 1");
-                }else{
+                } else {
                     System.out.println("Le gagnant est joueur 2");
                 }
-            }
-            else if (this.grille.grilleEstPleine()){
+            } else if (this.grille.grilleEstPleine()) {
                 System.out.println("Égalité !");
             }
             tourJ1 = !tourJ1;
         }
-        //Fin de partie 
+        // Fin de partie
     }
 
     private String jouerTour(boolean tourJ1, Scanner scanner) {
@@ -143,9 +145,9 @@ public class Jeu {
                 prochainCoup = grille.validerCoup(input, scanner);
                 if (prochainCoup.compareTo("")!=0) return jouerTour(tourJ1, scanner, prochainCoup);
             }
-            //this.grille.verifieCoup(input);
+            // this.grille.verifieCoup(input);
             this.grille.placer("O", input);
-            
+
         }
         return input;
     }

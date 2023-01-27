@@ -12,6 +12,10 @@ public class Grille3D extends Grille {
         viderGrille();
     }
 
+    /***
+     * Vide la grille en remplaçant toute les cases par des cases vides (avec leur
+     * numéro et pas des "X" "O")
+     */
     public void viderGrille() {
         this.grille = new Case[taille][taille][taille];
 
@@ -27,6 +31,9 @@ public class Grille3D extends Grille {
         }
     }
 
+    /***
+     * Affiche la grille dans la console
+     */
     public void afficher() {
         // Affichage en-tête
         int nbChiffresMax = tailleEntier(this.taille * this.taille);
@@ -67,16 +74,11 @@ public class Grille3D extends Grille {
         }
     }
 
-    private String getLettre(int nb) {
-        if (nb >= 0) {
-            if (nb / 26 == 0)
-                return String.valueOf((char) (nb + 'a'));
-            else
-                return String.valueOf((char) (nb / 26 - 1 + 'a')) + String.valueOf((char) (nb % 26 + 'a'));
-        } else
-            return null;
-    }
-
+    /***
+     * 
+     * @return tableau contenant la liste des coups valides possible
+     *         chaque coup est représenté par un tableau de 3 entiers [z,y,x]
+     */
     public ArrayList<int[]> listerCoupPossible() {
         ArrayList<int[]> coupPossible = new ArrayList<int[]>();
 
@@ -98,17 +100,30 @@ public class Grille3D extends Grille {
         return coupPossible;
     }
 
-    public boolean grilleEstPleine(){
-        for(int i = 0; i < this.taille; i++){
-            for(int j=0; j<this.taille; j++){
-                for(int k =0; k<this.taille; k++){
-                    if (this.grille[i][j][k].estVide()) return false;
+    /***
+     * 
+     * @return true si la grille est pleine, false sinon
+     */
+    public boolean grilleEstPleine() {
+        for (int i = 0; i < this.taille; i++) {
+            for (int j = 0; j < this.taille; j++) {
+                for (int k = 0; k < this.taille; k++) {
+                    if (this.grille[i][j][k].estVide())
+                        return false;
                 }
             }
         }
         return true;
     }
 
+    /***
+     * Place un symbole de joueur à la case dont l'id est coordone si c'est possible
+     * 
+     * @param joueur   le symbole du joueur
+     *                 ex : "O" , "X" ou autre
+     * @param coordone l'id de la case
+     *                 ex : "c1" "az69"
+     */
     public void placer(String joueur, String numeroCase) {
         if (verifierCoup(numeroCase)) {
             int coord[] = getCoordonneesCase(numeroCase);
@@ -117,10 +132,24 @@ public class Grille3D extends Grille {
     }
 
     // A faire
+    /***
+     * Verifie si la grille est gagnante. Pour alléger les calculs on regarde
+     * uniquement en fct du dernier coup.
+     * 
+     * @param coup l'id de la case du dernier coup
+     *             ex : "a1" "ez69"
+     * @return true si la grille est gagnante, false sinon
+     */
     public boolean grilleGagnante(String coup) {
         return false;
     }
 
+    /***
+     * 
+     * @param input l'id de la case
+     *              ex : "a1" "ez69"
+     * @return true si le coup est valide, false sinon
+     */
     public boolean verifierCoup(String input) {
         if (!verifierInput(input)) {
             return false;
@@ -143,39 +172,11 @@ public class Grille3D extends Grille {
         }
     }
 
-    private int[] getCoordonneesCase(String numeroCase) {
-        int coord[] = { -1, -1, -1 };
-
-        String lettres = "";
-        int numero = 0;
-        int z = 0;
-
-        // On récupère toute les lettres dans une nouvelle String
-        int i = 0;
-        while (!Character.isDigit(numeroCase.charAt(i))) {
-            lettres = lettres + numeroCase.charAt(i);
-            i++;
-        }
-
-        // i = nombre de lettre
-        for (int j = 0; j < i; j++) {
-            z = z * 26;
-            z += lettres.charAt(j) - 97;
-        }
-        coord[0] = z;
-
-        // On récupère tous les chiffres qu'on transforme en entier
-        while (i < numeroCase.length()) {
-            numero = numero * 10;
-            numero += Integer.valueOf(numeroCase.charAt(i)) - 48;
-            i++;
-        }
-
-        coord[1] = (numero - 1) / this.taille;
-        coord[2] = (numero - 1) % this.taille;
-        return coord;
-    }
-
+    /***
+     * 
+     * @param input l'input saisie par le joueur
+     * @return true si l'input est valide, false sinon
+     */
     public boolean verifierInput(String input) {
         // On vérifie que l'input ne soit pas vide
         if (input.length() <= 0) {
@@ -242,6 +243,9 @@ public class Grille3D extends Grille {
         return "";
     }
 
+    /***
+     * Un test unitaire de toute les fonctionnalité de Grille2D
+     */
     public void testRegretion() {
         System.out.println("Test Regression pour une grille3D 3*3*3");
 
@@ -331,4 +335,59 @@ public class Grille3D extends Grille {
         System.out.println("");
     }
 
+    /***
+     * Renvoie les lettres de l'id d'une case qui à pour profondeur nb
+     * ex : 3 donne 'c' et 30 donne 'ad'
+     * 
+     * @param nb la profondeur de la case
+     * @return les lettres de l'id de la case
+     */
+    private String getLettre(int nb) {
+        if (nb >= 0) {
+            if (nb / 26 == 0)
+                return String.valueOf((char) (nb + 'a'));
+            else
+                return String.valueOf((char) (nb / 26 - 1 + 'a')) + String.valueOf((char) (nb % 26 + 'a'));
+        } else
+            return null;
+    }
+
+    /***
+     * 
+     * @param numeroCase l'id de la case
+     *                   ex : "a1" "ez69"
+     * @return un tableau de 3 entiers représenté les coordonnées de la case [z,y,x]
+     */
+    private int[] getCoordonneesCase(String numeroCase) {
+        int coord[] = { -1, -1, -1 };
+
+        String lettres = "";
+        int numero = 0;
+        int z = 0;
+
+        // On récupère toute les lettres dans une nouvelle String
+        int i = 0;
+        while (!Character.isDigit(numeroCase.charAt(i))) {
+            lettres = lettres + numeroCase.charAt(i);
+            i++;
+        }
+
+        // i = nombre de lettre
+        for (int j = 0; j < i; j++) {
+            z = z * 26;
+            z += lettres.charAt(j) - 97;
+        }
+        coord[0] = z;
+
+        // On récupère tous les chiffres qu'on transforme en entier
+        while (i < numeroCase.length()) {
+            numero = numero * 10;
+            numero += Integer.valueOf(numeroCase.charAt(i)) - 48;
+            i++;
+        }
+
+        coord[1] = (numero - 1) / this.taille;
+        coord[2] = (numero - 1) % this.taille;
+        return coord;
+    }
 }
