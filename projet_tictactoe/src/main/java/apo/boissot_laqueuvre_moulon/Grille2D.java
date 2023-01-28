@@ -53,17 +53,17 @@ public class Grille2D extends Grille {
 
     /***
      * 
-     * @param input l'id de la case
-     *              ex : "1" "69"
+     * @param coup l'id de la case
+     *             ex : "1" "69"
      * @return true si le coup est valide, false sinon
      */
-    public boolean verifierCoup(String input) {
-        if (!verifierInput(input)) {
+    public boolean verifierCoup(String coup) {
+        if (!verifierInput(coup)) {
             return false;
         } else {
-            int numeroCase = Integer.valueOf(input) - 1;
-            int x = getXCase(input);
-            int y = getYCase(input);
+            int numeroCase = Integer.valueOf(coup) - 1;
+            int x = getXCase(coup);
+            int y = getYCase(coup);
 
             // On regarde si les coordonnées données sont valides (dans le tableau)
             if (x < 0 || x >= this.taille || y < 0 || y >= this.taille) {
@@ -80,11 +80,18 @@ public class Grille2D extends Grille {
         }
     }
 
-    public String validerCoup(String input, Scanner scanner) {
+    /***
+     * 
+     * @param coup    l'id de la case
+     *                ex : "1" "69"
+     * @param scanner
+     * @return une String a afficher pour la suite du jeu
+     */
+    public String validerCoup(String coup, Scanner scanner) {
         System.out.println();
         System.out.println("Appuyer sur Entrée pour valider votre coup, ou entrez un autre coup");
-        int x = getXCase(input);
-        int y = getYCase(input);
+        int x = getXCase(coup);
+        int y = getYCase(coup);
         grille[y][x].setSelectionnee(true);
         afficher();
         String choix = scanner.nextLine();
@@ -170,7 +177,7 @@ public class Grille2D extends Grille {
         }
         return true;
     }
-    
+
     /***
      * Verifie si la grille est gagnante. Pour alléger les calculs on regarde
      * uniquement en fct du dernier coup.
@@ -179,12 +186,26 @@ public class Grille2D extends Grille {
      *             ex : "3" "89"
      * @return true si la grille est gagnante, false sinon
      */
-    public boolean grilleGagnante(String coup){
-        if(verifieDiagonale(coup)) return true;
-        if(verifieX(coup))return true;
-        if(verifieY(coup)) return true;
+    public boolean grilleGagnante(String coup) {
+        if (verifieDiagonale(coup))
+            return true;
+        if (verifieX(coup))
+            return true;
+        if (verifieY(coup))
+            return true;
 
         return false;
+    }
+
+    /***
+     * Place un symbole de joueur à la case dont l'id est coordone si c'est possible
+     * 
+     * @param joueur   1 ou 2, pour joueur 1 ou joueur 2
+     * @param coordone les coordonnées de la case sous forme [y,x]
+     */
+    public void jouerCoup(int joueur, int[] coordone) {
+        String[] symbole = { "X", "O" };
+        this.grille[coordone[0]][coordone[1]].setValeur(symbole[joueur - 1]);
     }
 
     /***
@@ -331,8 +352,6 @@ public class Grille2D extends Grille {
 
     }
 
-
-
     /***
      * Vérifie si une case appartient à une diagonale, le cas échéant il vérifie si
      * la diagonale associée fait ganer la partie
@@ -385,11 +404,11 @@ public class Grille2D extends Grille {
         int i = 0;
         int coordFixe = getYCase(coup);
         String val = this.grille[coordFixe][0].getValeur();
-        do{
+        do {
             aligne = val.equals(this.grille[coordFixe][i].getValeur());
             i++;
-        }while(i<this.taille && aligne);
-        return aligne; 
+        } while (i < this.taille && aligne);
+        return aligne;
     }
 
     /***
@@ -399,16 +418,16 @@ public class Grille2D extends Grille {
      * @return true si la ligne de la case fait ganer la partie,
      *         false sinon
      */
-    private boolean verifieX(String coup){
+    private boolean verifieX(String coup) {
         boolean aligne = true;
         int i = 0;
         int coordFixe = getXCase(coup);
         String val = this.grille[0][coordFixe].getValeur();
-        
-        do{
+
+        do {
             aligne = val.equals(this.grille[i][coordFixe].getValeur());
             i++;
-        }while(i<this.taille && aligne);
+        } while (i < this.taille && aligne);
         return aligne;
     }
 

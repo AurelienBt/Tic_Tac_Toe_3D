@@ -86,10 +86,10 @@ public class Jeu {
         while (partieEnCours && !this.grille.grilleEstPleine()) {
             String coup = jouerTour(tourJ1, scanner);
 
-            //Vérification de la grille
-            partieEnCours = !this.grille.grilleGagnante(coup);
-            if(!partieEnCours){
-                if(tourJ1){
+            // Vérification de la grille
+            partieEnCours = this.grille.grilleGagnante(coup);
+            if (!partieEnCours) {
+                if (tourJ1) {
                     System.out.println("Le gagnant est Joueur 1");
                 } else {
                     System.out.println("Le gagnant est joueur 2");
@@ -103,14 +103,11 @@ public class Jeu {
     }
 
     private String jouerTour(boolean tourJ1, Scanner scanner) {
-        return jouerTour(tourJ1, scanner, "");
-    }
-    
-    private String jouerTour(boolean tourJ1, Scanner scanner, String prochainCoup) {
         boolean IA = false; // A REMPLACER
         String text = "Choisissez coordonée";
         String input = "";
         boolean coupValide = false;
+
         this.grille.afficher();
         if (tourJ1) {
             if (IA) {
@@ -119,35 +116,26 @@ public class Jeu {
             } else {
                 do {
                     System.out.println("Joueur 1 :");
-                    if(prochainCoup.compareTo("")==0) input = this.j1.choisirCoup(text, scanner);
-                    else input = prochainCoup;
-                    prochainCoup = "";
+                    input = this.j1.choisirCoup(text, scanner);
                     text = "Coup invalide, recommencez svp";
                     coupValide = grille.verifierCoup(input);
                 } while (!coupValide);
-                prochainCoup = grille.validerCoup(input, scanner);
-                if (prochainCoup.compareTo("")!=0) return jouerTour(tourJ1, scanner, prochainCoup);
             }
             this.grille.placer("X", input);
-        } else { // A modif comme dans le if
+        } else {
             if (IA) {
                 System.out.println("Ordinateur :");
                 input = this.j2.choisirCoup("", scanner);
             } else {
                 do {
                     System.out.println("Joueur 2 :");
-                    if(prochainCoup.compareTo("")==0) input = this.j2.choisirCoup(text, scanner);
-                    else input = prochainCoup;
-                    prochainCoup = "";
+                    input = this.j1.choisirCoup(text, scanner);
                     text = "Coup invalide, recommencez svp";
                     coupValide = grille.verifierCoup(input);
                 } while (!coupValide);
-                prochainCoup = grille.validerCoup(input, scanner);
-                if (prochainCoup.compareTo("")!=0) return jouerTour(tourJ1, scanner, prochainCoup);
             }
             // this.grille.verifieCoup(input);
             this.grille.placer("O", input);
-
         }
         return input;
     }

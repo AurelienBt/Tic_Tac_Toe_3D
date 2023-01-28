@@ -18,11 +18,12 @@ public class Case {
 
     /***
      * 
-     * @param val contenue de la case à la création, un entier qui représente l'id
-     *            de la case pour que le joueur puisse la choisir
+     * @param valeur contenue de la case à la création, un entier qui représente
+     *               l'id
+     *               de la case pour que le joueur puisse la choisir
      */
-    public Case(int val) {
-        this.valeur = Integer.toString(val);
+    public Case(int valeur) {
+        this.valeur = Integer.toString(valeur);
         this.estSelectionnee = false;
         this.estVide = true;
     }

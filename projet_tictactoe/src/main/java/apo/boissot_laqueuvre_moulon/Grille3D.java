@@ -146,30 +146,41 @@ public class Grille3D extends Grille {
 
     /***
      * 
-     * @param input l'id de la case
-     *              ex : "a1" "ez69"
+     * @param coup l'id de la case
+     *             ex : "a1" "ez69"
      * @return true si le coup est valide, false sinon
      */
-    public boolean verifierCoup(String input) {
-        if (!verifierInput(input)) {
+    public boolean verifierCoup(String coup) {
+        if (!verifierInput(coup)) {
             return false;
         } else {
-            int coord[] = getCoordonneesCase(input);
+            int coord[] = getCoordonneesCase(coup);
 
             // On regarde si les coordonnées données sont valides (dans le tableau)
             if (coord[0] < 0 || coord[0] >= this.taille || coord[1] < 0 || coord[1] >= this.taille || coord[2] < 0
                     || coord[2] >= this.taille) {
-                System.out.println("ERREUR ! Le numéro de case " + input + " est invalide");
+                System.out.println("ERREUR ! Le numéro de case " + coup + " est invalide");
                 return false;
             }
             // On regarde si la case choisi est libre
             else if (this.grille[coord[0]][coord[1]][coord[2]].estVide()) {
                 return true;
             } else {
-                System.out.println("ERREUR ! La case " + input + " est déjà pleine");
+                System.out.println("ERREUR ! La case " + coup + " est déjà pleine");
                 return false;
             }
         }
+    }
+
+    /***
+     * Place un symbole de joueur à la case dont l'id est coordone si c'est possible
+     * 
+     * @param joueur   1 ou 2, pour joueur 1 ou joueur 2
+     * @param coordone les coordonnées de la case sous forme [y,x]
+     */
+    public void jouerCoup(int joueur, int[] coordone) {
+        String[] symbole = { "X", "O" };
+        this.grille[coordone[0]][coordone[1]][coordone[2]].setValeur(symbole[joueur - 1]);
     }
 
     /***
@@ -231,15 +242,19 @@ public class Grille3D extends Grille {
     }
 
     public String validerCoup(String input, Scanner scanner) {
-        /*System.out.println();
-        System.out.println("Appuyer sur Entrée pour valider votre coup, ou entrez un autre coup");
-        int x = getXCase(input);
-        int y = getYCase(input);
-        grille[y][x].setSelectionnee(true);
-        afficher();
-        String choix = scanner.nextLine();
-        if (choix != "") grille[y][x].setSelectionnee(false);
-        return choix;*/
+        /*
+         * System.out.println();
+         * System.out.
+         * println("Appuyer sur Entrée pour valider votre coup, ou entrez un autre coup"
+         * );
+         * int x = getXCase(input);
+         * int y = getYCase(input);
+         * grille[y][x].setSelectionnee(true);
+         * afficher();
+         * String choix = scanner.nextLine();
+         * if (choix != "") grille[y][x].setSelectionnee(false);
+         * return choix;
+         */
         return "";
     }
 
