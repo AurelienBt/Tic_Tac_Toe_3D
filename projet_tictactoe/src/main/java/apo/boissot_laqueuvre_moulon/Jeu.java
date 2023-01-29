@@ -84,7 +84,7 @@ public class Jeu {
             String coup = jouerTour(tourJ1, scanner);
 
             //Vérification de la grille
-            partieEnCours = this.grille.grilleGagnante(coup);
+            partieEnCours = !this.grille.grilleGagnante(coup);
             if(!partieEnCours){
                 if(tourJ1){
                     System.out.println("Le gagnant est Joueur 1");

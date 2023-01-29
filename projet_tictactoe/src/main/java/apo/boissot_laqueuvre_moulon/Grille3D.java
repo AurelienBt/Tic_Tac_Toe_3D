@@ -117,8 +117,223 @@ public class Grille3D extends Grille {
 
     // A faire
     public boolean grilleGagnante(String coup) {
+        if(verifieDiagonale(coup)) return true;
+        if(verifieDiagPlanX(coup)) return true;
+        if(verifieDiagPlanY(coup)) return true;
+        if(verifieDiagPlanZ(coup)) return true;
+        if(verifieX(coup)) return true;
+        if(verifieY(coup)) return true;
+        if(verifieZ(coup)) return true;
+
         return false;
     }
+
+    private boolean verifieDiagonale(String coup){
+        boolean gagnante = false;
+        boolean aligne = true;
+        int i=0;
+        int[] coord = getCoordonneesCase(coup);
+        // 4 gde Diagonale 
+        //Grande diagonale 1
+        if(coord[0]==coord[1] && coord[1]==coord[2]) { 
+            String val = this.grille[0][0][0].getValeur();
+            do{
+                aligne = val == this.grille[i][i][i].getValeur();
+                i++;
+            }while(i<this.taille && aligne);
+            gagnante = aligne;            
+        }
+        if(gagnante) return true;
+
+         
+        //diagonale haute droite
+        i=0;
+        String val = this.grille[0][0][this.taille-1].getValeur();
+        do{
+            aligne = val == this.grille[i][i][this.taille-1-i].getValeur();
+            i++;
+        }while(i<this.taille && aligne);
+        gagnante = aligne;
+
+        if (gagnante) return true;
+        
+        //diagonale bas droite
+        i=0;      
+        val = this.grille[0][this.taille-1][this.taille-1].getValeur();
+        do{
+            aligne = val == this.grille[i][this.taille-1-i][this.taille-1-i].getValeur();
+            i++;
+        }while(i<this.taille && aligne);
+        gagnante = aligne;
+
+        if (gagnante) return true;
+
+        //diagonale bas gauche
+        i=0;      
+        val = this.grille[0][this.taille-1][0].getValeur();
+        do{
+            aligne = val == this.grille[i][this.taille-1-i][i].getValeur();
+            i++;
+        }while(i<this.taille && aligne);
+        gagnante = aligne;
+
+        return gagnante;
+    }
+
+
+
+    private boolean verifieDiagPlanX(String coup){
+        boolean aligne = true;
+        boolean gagnante = false;
+        int i = 0;
+        int[] coord = getCoordonneesCase(coup);
+        int coordX = coord[2];
+
+        //z==y
+        if(coord[0] == coord[1]) { 
+            String val = this.grille[0][0][coordX].getValeur();
+            do{
+                aligne = val == this.grille[i][i][coordX].getValeur();
+                i++;
+            }while(i<this.taille && aligne);
+            gagnante = aligne;            
+        }
+        if(gagnante) return true;
+
+        //z+y=t-1
+        if(coord[0] + coord[1] == this.taille-1){
+            i=0;
+            String val = this.grille[0][this.taille-1][coordX].getValeur();
+            do{
+                aligne = val == this.grille[i][taille-1-i][coordX].getValeur();
+                i++;
+            }while(i<this.taille && aligne);
+            gagnante = aligne;  
+        }
+
+        return gagnante;
+    }
+
+
+    private boolean verifieDiagPlanY(String coup){
+        boolean aligne = true;
+        boolean gagnante = false;
+        int i = 0;
+        int[] coord = getCoordonneesCase(coup);
+        int coordY = coord[1];
+
+        //x==z
+        if(coord[0] == coord[2]) { 
+            String val = this.grille[0][coordY][0].getValeur();
+            do{
+                aligne = val == this.grille[i][coordY][i].getValeur();
+                i++;
+            }while(i<this.taille && aligne);
+            gagnante = aligne;            
+        }
+        if(gagnante) return true;
+
+        //x+z=t-1
+        if(coord[0] + coord[1] == this.taille-1){
+            i=0;
+            String val = this.grille[0][coordY][this.taille-1].getValeur();
+            do{
+                aligne = val == this.grille[i][coordY][taille-1-i].getValeur();
+                i++;
+            }while(i<this.taille && aligne);
+            gagnante = aligne;  
+        }
+
+        return gagnante;
+    }
+
+    private boolean verifieDiagPlanZ(String coup){
+        boolean aligne = true;
+        boolean gagnante = false;
+        int i = 0;
+        int[] coord = getCoordonneesCase(coup);
+        int coordZ = coord[0];
+
+        //y==x
+        if(coord[1] == coord[2]) { 
+            String val = this.grille[coordZ][0][0].getValeur();
+            do{
+                aligne = val == this.grille[coordZ][i][i].getValeur();
+                i++;
+            }while(i<this.taille && aligne);
+            gagnante = aligne;            
+        }
+        if(gagnante) return true;
+
+        //z+y=t-1
+        if(coord[0] + coord[1] == this.taille-1){
+            i=0;
+            String val = this.grille[coordZ][0][this.taille-1].getValeur();
+            do{
+                aligne = val == this.grille[coordZ][i][taille-1-i].getValeur();
+                i++;
+            }while(i<this.taille && aligne);
+            gagnante = aligne;  
+        }
+
+        return gagnante;
+    }
+
+    private boolean verifieX(String coup){
+        boolean aligne = true;
+        int i = 0;
+        int YFixe = getYCase(coup);
+        int ZFixe = getZCase(coup);
+        String val = this.grille[ZFixe][YFixe][0].getValeur();
+        do{
+            aligne = val.equals(this.grille[ZFixe][YFixe][i].getValeur());
+            i++;
+        }while(i<this.taille && aligne);
+        return aligne; 
+    }
+
+    private boolean verifieY(String coup){
+        boolean aligne = true;
+        int i = 0;
+        int XFixe = getXCase(coup);
+        int ZFixe = getZCase(coup);
+        String val = this.grille[ZFixe][0][XFixe].getValeur();
+        
+        do{
+            aligne = val.equals(this.grille[ZFixe][i][XFixe].getValeur());
+            i++;
+        }while(i<this.taille && aligne);
+        return aligne;
+    }
+
+    private boolean verifieZ(String coup){
+        boolean aligne = true;
+        int i = 0;
+        int YFixe = getYCase(coup);
+        int XFixe = getXCase(coup);
+        String val = this.grille[0][YFixe][XFixe].getValeur();
+        
+        do{
+            aligne = val.equals(this.grille[i][YFixe][XFixe].getValeur());
+            i++;
+        }while(i<this.taille && aligne);
+        return aligne;
+    }
+
+    private int getXCase(String coup){
+        return getCoordonneesCase(coup)[2];
+    }
+
+    private int getYCase(String coup){
+        return getCoordonneesCase(coup)[1];
+    }
+
+    private int getZCase(String coup){
+        return getCoordonneesCase(coup)[0];
+    }
+
+
+
 
     public boolean verifierCoup(String input) {
         if (!verifierInput(input)) {
@@ -286,6 +501,7 @@ public class Grille3D extends Grille {
         System.out.println("");
         System.out.println("");
 
+        /* 
         // afficher et placer
         placer("X", "1");
         placer("O", "5");
@@ -298,7 +514,7 @@ public class Grille3D extends Grille {
         System.out.println("");
         afficher();
         System.out.println("");
-        System.out.println("");
+        System.out.println("");*/
 
         // viderGrille
         viderGrille();
@@ -315,6 +531,174 @@ public class Grille3D extends Grille {
         System.out.println("4 : " + tailleEntier(5555));
         System.out.println("");
         System.out.println("");
+
+        //Test vérification des victoires
+        //diag haute gauche
+        viderGrille();
+        placer("X", "a1");
+        placer("X", "b5");
+        placer("X", "c9");
+        afficher();
+        System.out.println("Grille gagnante : "+grilleGagnante("b5"));
+        System.out.println("Diagonale : "+ verifieDiagonale("b5"));
+
+        System.out.println("Diagonale plan X : "+ verifieDiagPlanX("b5"));
+        System.out.println("Diagonale plan Y : "+ verifieDiagPlanY("b5"));
+        System.out.println("Diagonale plan Z : "+ verifieDiagPlanZ("b5"));
+        System.out.println("X : "+ verifieX("b5"));
+        System.out.println("Y : "+ verifieY("b5"));
+        System.out.println("Z : "+ verifieZ("b5"));
+        System.out.println("=============================");
+        System.out.println("=============================");
+
+        //diag haute droite
+        viderGrille();
+        System.out.println("Diagonale Haute Droite");
+        placer("X", "a3");
+        placer("X", "b5");
+        placer("X", "c7");
+        afficher();
+        System.out.println("Grille gagnante : "+grilleGagnante("b5"));
+        System.out.println("Diagonale : "+ verifieDiagonale("b5"));
+        System.out.println("=============================");
+        System.out.println("=============================");
+
+        //diag basse gauche
+        viderGrille();
+        System.out.println("Diagonale Basse Gauche");
+        placer("X", "a7");
+        placer("X", "b5");
+        placer("X", "c3");
+        afficher();
+        System.out.println("Grille gagnante : "+grilleGagnante("b5"));
+        System.out.println("Diagonale : "+ verifieDiagonale("b5"));
+        System.out.println("=============================");
+        System.out.println("=============================");
+
+         //diag basse droite
+         viderGrille();
+         System.out.println("Diagonale Basse Droite");
+         placer("X", "a3");
+         placer("X", "b5");
+         placer("X", "c7");
+         afficher();
+         System.out.println("Grille gagnante : "+grilleGagnante("b5"));
+         System.out.println("Diagonale : "+ verifieDiagonale("b5"));
+         
+        System.out.println("=============================");
+        System.out.println("=============================");
+ 
+ 
+         
+        //DiagPlanX:Y
+        viderGrille();
+        System.out.println("Diagonale Plan x:y");
+        placer("X", "a1");
+        placer("X", "a5");
+        placer("X", "a9");
+        afficher();
+        System.out.println("Grille gagnante : "+grilleGagnante("a5"));
+        System.out.println("Diagonale : "+ verifieDiagonale("a5"));
+ 
+ 
+        System.out.println("Diagonale plan X : "+ verifieDiagPlanX("a5"));
+        System.out.println("Diagonale plan Y : "+ verifieDiagPlanY("a5"));
+        System.out.println("Diagonale plan Z : "+ verifieDiagPlanZ("a5"));
+        System.out.println("X : "+ verifieX("a5"));
+        System.out.println("Y : "+ verifieY("a5"));
+        System.out.println("Z : "+ verifieZ("a5"));
+
+        System.out.println("=============================");
+        System.out.println("=============================");
+        //DiagPlanY:Z
+        viderGrille();
+        System.out.println("Diagonale plan y:z");
+        placer("X", "a1");
+        placer("X", "b4");
+        placer("X", "c7");
+        afficher();
+        System.out.println("Grille gagnante : "+grilleGagnante("b4"));
+        //System.out.println("Diagonale : "+ verifieDiagonale("b4"));
+        
+        System.out.println("Diagonale plan X : "+ verifieDiagPlanX("b4"));
+        System.out.println("Diagonale plan Y : "+ verifieDiagPlanY("b4"));
+        System.out.println("Diagonale plan Z : "+ verifieDiagPlanZ("b4"));
+        
+        System.out.println("=============================");
+        System.out.println("=============================");
+
+
+        //DiagPlanX:Z
+        viderGrille();
+        System.out.println("Diagonale plan x:z");
+        placer("X", "a1");
+        placer("X", "b2");
+        placer("X", "c3");
+        afficher();
+        System.out.println("Grille gagnante : "+grilleGagnante("b2"));
+        //System.out.println("Diagonale : "+ verifieDiagonale("b4"));
+        
+        System.out.println("Diagonale plan X : "+ verifieDiagPlanX("b2"));
+        System.out.println("Diagonale plan Y : "+ verifieDiagPlanY("b2"));
+        System.out.println("Diagonale plan Z : "+ verifieDiagPlanZ("b2"));
+        System.out.println("X : "+ verifieX("b2"));
+        System.out.println("Y : "+ verifieY("b2"));
+        System.out.println("Z : "+ verifieZ("b2"));
+
+        System.out.println("=============================");
+        System.out.println("=============================");
+        
+        //System.out.println("Diagonale plan X"+ verifieDiagPlanX("b5"));
+        //Ligne 
+        viderGrille();
+        System.out.println("Ligne");
+        placer("X", "a1");
+        placer("X", "a2");
+        placer("X", "a3");
+        afficher();
+        System.out.println("Grille gagnante : "+grilleGagnante("a2"));
+        //System.out.println("Diagonale : "+ verifieDiagonale("b4"));
+        
+        System.out.println("Diagonale plan X : "+ verifieDiagPlanX("a2"));
+        System.out.println("Diagonale plan Y : "+ verifieDiagPlanY("a2"));
+        System.out.println("Diagonale plan Z : "+ verifieDiagPlanZ("a2"));
+        System.out.println("Ligne : "+ verifieX("a2"));
+        System.out.println("Colonne : "+ verifieY("a2"));
+        System.out.println("Pronfodeur : "+ verifieZ("a2"));
+        System.out.println("=============================");
+        System.out.println("=============================");
+
+        //Colonne 
+        viderGrille();
+        System.out.println("Colonne");
+        placer("X", "a1");
+        placer("X", "a4");
+        placer("X", "a7");
+        afficher();
+        System.out.println("Grille gagnante : "+grilleGagnante("a4"));
+        System.out.println("Ligne : "+ verifieX("a4"));
+        System.out.println("Colonne : "+ verifieY("a4"));
+        System.out.println("Pronfodeur : "+ verifieZ("a4"));
+        System.out.println("=============================");
+        System.out.println("=============================");
+
+        //Profondeur 
+        viderGrille();
+        System.out.println("Profondeur");
+        placer("X", "a2");
+        placer("X", "b2");
+        placer("X", "c2");
+        afficher();
+        System.out.println("Grille gagnante : "+grilleGagnante("a2"));
+        System.out.println("Ligne : "+ verifieX("a2"));
+        System.out.println("Colonne : "+ verifieY("a2"));
+        System.out.println("Pronfodeur : "+ verifieZ("a2"));
+        System.out.println("=============================");
+        System.out.println("=============================");
+
+
+        System.out.println("=============================");
+
     }
 
 }
