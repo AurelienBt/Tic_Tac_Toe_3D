@@ -1,6 +1,7 @@
 package apo.boissot_laqueuvre_moulon;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Grille3D extends Grille {
     private Case grille[][][];
@@ -11,6 +12,10 @@ public class Grille3D extends Grille {
         viderGrille();
     }
 
+    /***
+     * Vide la grille en remplaçant toute les cases par des cases vides (avec leur
+     * numéro et pas des "X" "O")
+     */
     public void viderGrille() {
         this.grille = new Case[taille][taille][taille];
 
@@ -26,6 +31,9 @@ public class Grille3D extends Grille {
         }
     }
 
+    /***
+     * Affiche la grille dans la console
+     */
     public void afficher() {
         // Affichage en-tête
         int nbChiffresMax = tailleEntier(this.taille * this.taille);
@@ -66,16 +74,11 @@ public class Grille3D extends Grille {
         }
     }
 
-    private String getLettre(int nb) {
-        if (nb >= 0) {
-            if (nb / 26 == 0)
-                return String.valueOf((char) (nb + 'a'));
-            else
-                return String.valueOf((char) (nb / 26 - 1 + 'a')) + String.valueOf((char) (nb % 26 + 'a'));
-        } else
-            return null;
-    }
-
+    /***
+     * 
+     * @return tableau contenant la liste des coups valides possible
+     *         chaque coup est représenté par un tableau de 3 entiers [z,y,x]
+     */
     public ArrayList<int[]> listerCoupPossible() {
         ArrayList<int[]> coupPossible = new ArrayList<int[]>();
 
@@ -97,17 +100,30 @@ public class Grille3D extends Grille {
         return coupPossible;
     }
 
-    public boolean grilleEstPleine(){
-        for(int i = 0; i < this.taille; i++){
-            for(int j=0; j<this.taille; j++){
-                for(int k =0; k<this.taille; k++){
-                    if (this.grille[i][j][k].estVide()) return false;
+    /***
+     * 
+     * @return true si la grille est pleine, false sinon
+     */
+    public boolean grilleEstPleine() {
+        for (int i = 0; i < this.taille; i++) {
+            for (int j = 0; j < this.taille; j++) {
+                for (int k = 0; k < this.taille; k++) {
+                    if (this.grille[i][j][k].estVide())
+                        return false;
                 }
             }
         }
         return true;
     }
 
+    /***
+     * Place un symbole de joueur à la case dont l'id est coordone si c'est possible
+     * 
+     * @param joueur   le symbole du joueur
+     *                 ex : "O" , "X" ou autre
+     * @param coordone l'id de la case
+     *                 ex : "c1" "az69"
+     */
     public void placer(String joueur, String numeroCase) {
         if (verifierCoup(numeroCase)) {
             int coord[] = getCoordonneesCase(numeroCase);
@@ -116,6 +132,14 @@ public class Grille3D extends Grille {
     }
 
     // A faire
+    /***
+     * Verifie si la grille est gagnante. Pour alléger les calculs on regarde
+     * uniquement en fct du dernier coup.
+     * 
+     * @param coup l'id de la case du dernier coup
+     *             ex : "a1" "ez69"
+     * @return true si la grille est gagnante, false sinon
+     */
     public boolean grilleGagnante(String coup) {
         if(verifieDiagonale(coup)) return true;
         if(verifieDiagPlanX(coup)) return true;
@@ -335,65 +359,54 @@ public class Grille3D extends Grille {
 
 
 
-    public boolean verifierCoup(String input) {
-        if (!verifierInput(input)) {
+    /***
+     * 
+     * @param coup l'id de la case
+     *             ex : "a1" "ez69"
+     * @return true si le coup est valide, false sinon
+     */
+    public boolean verifierCoup(String coup) {
+        if (!verifierInput(coup)) {
             return false;
         } else {
-            int coord[] = getCoordonneesCase(input);
+            int coord[] = getCoordonneesCase(coup);
 
             // On regarde si les coordonnées données sont valides (dans le tableau)
             if (coord[0] < 0 || coord[0] >= this.taille || coord[1] < 0 || coord[1] >= this.taille || coord[2] < 0
                     || coord[2] >= this.taille) {
-                System.out.println("ERREUR ! Le numéro de case " + input + " est invalide");
+                System.out.println("ERREUR ! Le numéro de case " + coup + " est invalide");
                 return false;
             }
             // On regarde si la case choisi est libre
             else if (this.grille[coord[0]][coord[1]][coord[2]].estVide()) {
                 return true;
             } else {
-                System.out.println("ERREUR ! La case " + input + " est déjà pleine");
+                System.out.println("ERREUR ! La case " + coup + " est déjà pleine");
                 return false;
             }
         }
     }
 
-    private int[] getCoordonneesCase(String numeroCase) {
-        int coord[] = { -1, -1, -1 };
-
-        String lettres = "";
-        int numero = 0;
-        int z = 0;
-
-        // On récupère toute les lettres dans une nouvelle String
-        int i = 0;
-        while (!Character.isDigit(numeroCase.charAt(i))) {
-            lettres = lettres + numeroCase.charAt(i);
-            i++;
-        }
-
-        // i = nombre de lettre
-        for (int j = 0; j < i; j++) {
-            z = z * 26;
-            z += lettres.charAt(j) - 97;
-        }
-        coord[0] = z;
-
-        // On récupère tous les chiffres qu'on transforme en entier
-        while (i < numeroCase.length()) {
-            numero = numero * 10;
-            numero += Integer.valueOf(numeroCase.charAt(i)) - 48;
-            i++;
-        }
-
-        coord[1] = (numero - 1) / this.taille;
-        coord[2] = (numero - 1) % this.taille;
-        return coord;
+    /***
+     * Place un symbole de joueur à la case dont l'id est coordone si c'est possible
+     * 
+     * @param joueur   1 ou 2, pour joueur 1 ou joueur 2
+     * @param coordone les coordonnées de la case sous forme [y,x]
+     */
+    public void jouerCoup(int joueur, int[] coordone) {
+        String[] symbole = { "X", "O" };
+        this.grille[coordone[0]][coordone[1]][coordone[2]].setValeur(symbole[joueur - 1]);
     }
 
+    /***
+     * 
+     * @param input l'input saisie par le joueur
+     * @return true si l'input est valide, false sinon
+     */
     public boolean verifierInput(String input) {
         // On vérifie que l'input ne soit pas vide
         if (input.length() <= 0) {
-            System.out.println("EREUR ! L'input est vide");
+            System.out.println("ERREUR ! L'input est vide");
             return false;
         }
 
@@ -417,7 +430,7 @@ public class Grille3D extends Grille {
         // On vérifie que la profondeur indiquer par le goupe de lettre soit dans le
         // tableau
         if (z < 0 || z > taille) {
-            System.out.println("EREUR ! Les lettres " + lettres + " ne sont invalides");
+            System.out.println("ERREUR ! Les lettres " + lettres + " ne sont invalides");
             return false;
         }
 
@@ -428,7 +441,7 @@ public class Grille3D extends Grille {
             if (Character.isDigit(input.charAt(i))) {
                 numero += Integer.valueOf(input.charAt(i)) - 48;
             } else {
-                System.out.println("EREUR ! Il y a la lettres " + input.charAt(i) + " au milieu des chiffres");
+                System.out.println("ERREUR ! Il y a la lettres " + input.charAt(i) + " au milieu des chiffres");
                 return false;
             }
             i++;
@@ -436,13 +449,33 @@ public class Grille3D extends Grille {
 
         // On vérifie que le chiffre correspond à une case
         if (numero > this.taille * this.taille || numero <= 0) {
-            System.out.println("EREUR ! Le numéro " + numero + " n'est pas une case du tableau");
+            System.out.println("ERREUR ! Le numéro " + numero + " n'est pas une case du tableau");
             return false;
         }
 
         return true;
     }
 
+    public String validerCoup(String input, Scanner scanner) {
+        /*
+         * System.out.println();
+         * System.out.
+         * println("Appuyer sur Entrée pour valider votre coup, ou entrez un autre coup"
+         * );
+         * int x = getXCase(input);
+         * int y = getYCase(input);
+         * grille[y][x].setSelectionnee(true);
+         * afficher();
+         * String choix = scanner.nextLine();
+         * if (choix != "") grille[y][x].setSelectionnee(false);
+         * return choix;
+         */
+        return "";
+    }
+
+    /***
+     * Un test unitaire de toute les fonctionnalité de Grille2D
+     */
     public void testRegretion() {
         System.out.println("Test Regression pour une grille3D 3*3*3");
 
@@ -701,4 +734,59 @@ public class Grille3D extends Grille {
 
     }
 
+    /***
+     * Renvoie les lettres de l'id d'une case qui à pour profondeur nb
+     * ex : 3 donne 'c' et 30 donne 'ad'
+     * 
+     * @param nb la profondeur de la case
+     * @return les lettres de l'id de la case
+     */
+    private String getLettre(int nb) {
+        if (nb >= 0) {
+            if (nb / 26 == 0)
+                return String.valueOf((char) (nb + 'a'));
+            else
+                return String.valueOf((char) (nb / 26 - 1 + 'a')) + String.valueOf((char) (nb % 26 + 'a'));
+        } else
+            return null;
+    }
+
+    /***
+     * 
+     * @param numeroCase l'id de la case
+     *                   ex : "a1" "ez69"
+     * @return un tableau de 3 entiers représenté les coordonnées de la case [z,y,x]
+     */
+    private int[] getCoordonneesCase(String numeroCase) {
+        int coord[] = { -1, -1, -1 };
+
+        String lettres = "";
+        int numero = 0;
+        int z = 0;
+
+        // On récupère toute les lettres dans une nouvelle String
+        int i = 0;
+        while (!Character.isDigit(numeroCase.charAt(i))) {
+            lettres = lettres + numeroCase.charAt(i);
+            i++;
+        }
+
+        // i = nombre de lettre
+        for (int j = 0; j < i; j++) {
+            z = z * 26;
+            z += lettres.charAt(j) - 97;
+        }
+        coord[0] = z;
+
+        // On récupère tous les chiffres qu'on transforme en entier
+        while (i < numeroCase.length()) {
+            numero = numero * 10;
+            numero += Integer.valueOf(numeroCase.charAt(i)) - 48;
+            i++;
+        }
+
+        coord[1] = (numero - 1) / this.taille;
+        coord[2] = (numero - 1) % this.taille;
+        return coord;
+    }
 }
