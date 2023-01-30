@@ -46,10 +46,6 @@ public class Grille2D extends Grille {
         }
     }
 
-    // A faire
-    public boolean grilleGagnante() {
-        return false;
-    }
 
     /***
      * 
@@ -318,9 +314,9 @@ public class Grille2D extends Grille {
         System.out.println("Ligne : true");
         System.out.println("Colonne : false");
         System.out.println("---------------------");
-        System.out.println("Diagonale : " + this.verifieDiagonale("1"));
-        System.out.println("Ligne : " + this.verifieY("1"));
-        System.out.println("Colonne : " + this.verifieX("1"));
+        System.out.println("Diagonale : "+this.verifieDiagonale("2"));
+        System.out.println("Ligne : "+this.verifieY("2"));
+        System.out.println("Colonne : "+this.verifieX("2"));
         System.out.println("=======================");
         System.out.println("=======================");
 
@@ -351,6 +347,9 @@ public class Grille2D extends Grille {
         System.out.println("");
 
     }
+
+
+    
 
     /***
      * Vérifie si une case appartient à une diagonale, le cas échéant il vérifie si
@@ -396,7 +395,7 @@ public class Grille2D extends Grille {
      * Vérifie si une case la colone de la case fait ganer la partie
      * 
      * @param coup l'id de la case
-     * @return true si la colone de la case fait ganer la partie,
+     * @return true si la colone de la case fait gagner la partie,
      *         false sinon
      */
     private boolean verifieY(String coup) {
@@ -404,12 +403,14 @@ public class Grille2D extends Grille {
         int i = 0;
         int coordFixe = getYCase(coup);
         String val = this.grille[coordFixe][0].getValeur();
-        do {
+        do{
             aligne = val.equals(this.grille[coordFixe][i].getValeur());
             i++;
-        } while (i < this.taille && aligne);
-        return aligne;
+        }while(i<this.taille && aligne);
+        return aligne; 
     }
+
+    
 
     /***
      * Vérifie si une case la ligne de la case fait ganer la partie

@@ -90,10 +90,10 @@ public class Jeu {
         while (partieEnCours && !this.grille.grilleEstPleine()) {
             String coup = jouerTour(tourJ1, scanner);
 
-            // Vérification de la grille
-            partieEnCours = this.grille.grilleGagnante(coup);
-            if (!partieEnCours) {
-                if (tourJ1) {
+            //Vérification de la grille
+            partieEnCours = !this.grille.grilleGagnante(coup);
+            if(!partieEnCours){
+                if(tourJ1){
                     System.out.println("Le gagnant est Joueur 1");
                 } else {
                     System.out.println("Le gagnant est joueur 2");

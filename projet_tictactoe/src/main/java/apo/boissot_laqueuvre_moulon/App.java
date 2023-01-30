@@ -12,11 +12,7 @@ public class App {
         // InterfaceJeu iJeu = new InterfaceJeu();
         // iJeu.choixPartie();
 
-        Grille3D g = new Grille3D(3);
-        // g.afficher();
-
-        g.testRegretion();
-        // Grille3D gg = new Grille3D(3);
-        // gg.testRegretion();
+        Grille3D gg = new Grille3D(3);
+        gg.testRegretion();
     }
 }
