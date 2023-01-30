@@ -46,24 +46,20 @@ public class Grille2D extends Grille {
         }
     }
 
-    // A faire
-    public boolean grilleGagnante() {
-        return false;
-    }
 
     /***
      * 
-     * @param input l'id de la case
-     *              ex : "1" "69"
+     * @param coup l'id de la case
+     *             ex : "1" "69"
      * @return true si le coup est valide, false sinon
      */
-    public boolean verifierCoup(String input) {
-        if (!verifierInput(input)) {
+    public boolean verifierCoup(String coup) {
+        if (!verifierInput(coup)) {
             return false;
         } else {
-            int numeroCase = Integer.valueOf(input) - 1;
-            int x = getXCase(input);
-            int y = getYCase(input);
+            int numeroCase = Integer.valueOf(coup) - 1;
+            int x = getXCase(coup);
+            int y = getYCase(coup);
 
             // On regarde si les coordonnées données sont valides (dans le tableau)
             if (x < 0 || x >= this.taille || y < 0 || y >= this.taille) {
@@ -79,22 +75,23 @@ public class Grille2D extends Grille {
             }
         }
     }
-    
+
     /***
      * Permet de valider un coup avec Entrée ou de choisir un autre coup
      * 
-     * @param input l'input saisi par le joueur
+     * @param coup le coup saisi par le joueur
+     *             ex : "a6", "8"
      * 
      * @param scanner permet de récupérer les input de l'utilisateur
      * 
      * @return String du choix du joueur : une chaine vide pour valider le coup
      *         ou un input pour faire un autre coup
      */
-    public String validerCoup(String input, Scanner scanner) {
+    public String validerCoup(String coup, Scanner scanner) {
         System.out.println();
         System.out.println("Appuyer sur Entrée pour valider votre coup, ou entrez un autre coup");
-        int x = getXCase(input);
-        int y = getYCase(input);
+        int x = getXCase(coup);
+        int y = getYCase(coup);
         grille[y][x].setSelectionnee(true);
         afficher();
         String choix = scanner.nextLine();
@@ -180,7 +177,7 @@ public class Grille2D extends Grille {
         }
         return true;
     }
-    
+
     /***
      * Verifie si la grille est gagnante. Pour alléger les calculs on regarde
      * uniquement en fct du dernier coup.
@@ -189,12 +186,26 @@ public class Grille2D extends Grille {
      *             ex : "3" "89"
      * @return true si la grille est gagnante, false sinon
      */
-    public boolean grilleGagnante(String coup){
-        if(verifieDiagonale(coup)) return true;
-        if(verifieX(coup))return true;
-        if(verifieY(coup)) return true;
+    public boolean grilleGagnante(String coup) {
+        if (verifieDiagonale(coup))
+            return true;
+        if (verifieX(coup))
+            return true;
+        if (verifieY(coup))
+            return true;
 
         return false;
+    }
+
+    /***
+     * Place un symbole de joueur à la case dont l'id est coordone si c'est possible
+     * 
+     * @param joueur   1 ou 2, pour joueur 1 ou joueur 2
+     * @param coordone les coordonnées de la case sous forme [y,x]
+     */
+    public void jouerCoup(int joueur, int[] coordone) {
+        String[] symbole = { "X", "O" };
+        this.grille[coordone[0]][coordone[1]].setValeur(symbole[joueur - 1]);
     }
 
     /***
@@ -307,9 +318,9 @@ public class Grille2D extends Grille {
         System.out.println("Ligne : true");
         System.out.println("Colonne : false");
         System.out.println("---------------------");
-        System.out.println("Diagonale : " + this.verifieDiagonale("1"));
-        System.out.println("Ligne : " + this.verifieY("1"));
-        System.out.println("Colonne : " + this.verifieX("1"));
+        System.out.println("Diagonale : "+this.verifieDiagonale("2"));
+        System.out.println("Ligne : "+this.verifieY("2"));
+        System.out.println("Colonne : "+this.verifieX("2"));
         System.out.println("=======================");
         System.out.println("=======================");
 
@@ -342,6 +353,7 @@ public class Grille2D extends Grille {
     }
 
 
+    
 
     /***
      * Vérifie si une case appartient à une diagonale, le cas échéant il vérifie si
@@ -387,7 +399,7 @@ public class Grille2D extends Grille {
      * Vérifie si une case la colone de la case fait ganer la partie
      * 
      * @param coup l'id de la case
-     * @return true si la colone de la case fait ganer la partie,
+     * @return true si la colone de la case fait gagner la partie,
      *         false sinon
      */
     private boolean verifieY(String coup) {
@@ -402,6 +414,8 @@ public class Grille2D extends Grille {
         return aligne; 
     }
 
+    
+
     /***
      * Vérifie si une case la ligne de la case fait ganer la partie
      * 
@@ -409,16 +423,16 @@ public class Grille2D extends Grille {
      * @return true si la ligne de la case fait ganer la partie,
      *         false sinon
      */
-    private boolean verifieX(String coup){
+    private boolean verifieX(String coup) {
         boolean aligne = true;
         int i = 0;
         int coordFixe = getXCase(coup);
         String val = this.grille[0][coordFixe].getValeur();
-        
-        do{
+
+        do {
             aligne = val.equals(this.grille[i][coordFixe].getValeur());
             i++;
-        }while(i<this.taille && aligne);
+        } while (i < this.taille && aligne);
         return aligne;
     }
 

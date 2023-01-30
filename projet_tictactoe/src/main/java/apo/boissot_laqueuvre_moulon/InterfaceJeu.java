@@ -17,6 +17,10 @@ public class InterfaceJeu {
 
     }
 
+    /***
+     * Rassemble tous les appelles des choix que doit faire l'utilisateur avant de
+     * lancer une partie.
+     */
     public void choixPartie() {
         Scanner scanner = new Scanner(System.in);
         boolean chargerSave = choixChargerSave(scanner);

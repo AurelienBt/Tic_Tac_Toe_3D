@@ -46,6 +46,14 @@ public abstract class Grille {
     public abstract void placer(String joueur, String coordone);
 
     /***
+     * Place un symbole de joueur à la case dont l'id est coordone si c'est possible
+     * 
+     * @param joueur   1 ou 2, pour joueur 1 ou joueur 2
+     * @param coordone les coordonnées de la case sous forme [z,y,x] ou [y,x]
+     */
+    public abstract void jouerCoup(int joueur, int[] coordone);
+
+    /***
      * 
      * @param input l'input saisie par le joueur
      * @return true si l'input est valide, false sinon
@@ -58,9 +66,9 @@ public abstract class Grille {
      *              ex : "a1" "9"
      * @return true si le coup est valide, false sinon
      */
-    public abstract boolean verifierCoup(String input);
+    public abstract boolean verifierCoup(String coup);
 
-    public abstract String validerCoup(String input, Scanner scanner);
+    public abstract String validerCoup(String coup, Scanner scanner);
 
     /***
      * 

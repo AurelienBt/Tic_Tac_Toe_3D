@@ -75,6 +75,10 @@ public class Jeu {
         else jouerPartie(true, scanner);
     }
 
+    /***
+     * 
+     * @param scanner
+     */
     public void partie(Scanner scanner) {
         // Initialisation des paramètres
         switch (modeJeu) {
@@ -154,6 +158,7 @@ public class Jeu {
         // Fin de partie
     }
 
+    
     private String jouerTour(boolean tourJ1, Scanner scanner) {
         return jouerTour(tourJ1, scanner, "");
     }
@@ -163,6 +168,7 @@ public class Jeu {
         String text = "Choisissez coordonée";
         String input = "";
         boolean coupValide = false;
+
         this.grille.afficher();
         if (tourJ1) {
             if (IA) {
