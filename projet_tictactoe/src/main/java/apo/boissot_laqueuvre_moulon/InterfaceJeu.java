@@ -64,7 +64,7 @@ public class InterfaceJeu {
 
     private boolean choixChargerSave(Scanner scanner) {
         File f = new File("save.txt");
-        if(f.exists() && !f.isDirectory()) { 
+        if(f.exists() && !f.isDirectory() && f.length() > 0) { 
             int choix = -1;
             boolean inputCorrect = false;
             do {

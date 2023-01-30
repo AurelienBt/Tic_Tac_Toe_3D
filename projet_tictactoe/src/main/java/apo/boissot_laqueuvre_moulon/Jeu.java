@@ -53,7 +53,7 @@ public class Jeu {
                 this.j2 = new JoueurHumain();
                 break;
             case 1:
-                if (tourJ1) { // A REMPLACER
+                if (tourJ1) { // A REMPLACER TODO
                     this.j1 = new JoueurHumain();
                     this.j2 = new JoueurHumain();
                 } else {
@@ -66,13 +66,25 @@ public class Jeu {
                 this.j2 = new JoueurHumain();
                 break;
         }
+        boolean erreurCoup = false;
         for(int i = 1; i<sauvegarde.size(); i++) {
             coup = sauvegarde.get(i).split(" ");
-            this.grille.placer(coup[0], coup[1]);
-            this.sauvegardePartie += sauvegarde.get(i) + "\n";
+            if(coup.length == 2 && this.grille.verifierCoup(coup[1])) {
+                this.grille.placer(coup[0], coup[1]);
+                this.sauvegardePartie += sauvegarde.get(i) + "\n";
+            }
+            else {
+                erreurCoup = true;
+                break;
+            }
         }
-        if(coup[0].compareTo("X") == 0) jouerPartie(false, scanner);
-        else jouerPartie(true, scanner);
+        if(erreurCoup) {
+            System.out.println("Erreur lors du chargement de la sauvegarde.");
+        }
+        else {
+            if(coup[0].compareTo("X") == 0) jouerPartie(false, scanner);
+            else jouerPartie(true, scanner);
+        }
     }
 
     /***
@@ -116,7 +128,7 @@ public class Jeu {
                 this.j2 = new JoueurHumain();
                 break;
             case 1:
-                if (tourJ1) { // A REMPLACER
+                if (tourJ1) { // A REMPLACER TODO
                     this.j1 = new JoueurHumain();
                     this.j2 = new JoueurHumain();
                 } else {
@@ -164,7 +176,7 @@ public class Jeu {
     }
     
     private String jouerTour(boolean tourJ1, Scanner scanner, String prochainCoup) {
-        boolean IA = false; // A REMPLACER
+        boolean IA = false; // A REMPLACER TODO
         String text = "Choisissez coordonée";
         String input = "";
         boolean coupValide = false;
@@ -192,7 +204,7 @@ public class Jeu {
             }
             this.grille.placer("X", input);
             this.sauvegardePartie += "X "+ input + "\n";
-        } else { // A modif comme dans le if
+        } else {
             if (IA) {
                 System.out.println("Ordinateur :");
                 input = this.j2.choisirCoup("", scanner);
@@ -212,7 +224,6 @@ public class Jeu {
                 prochainCoup = grille.validerCoup(input, scanner);
                 if (prochainCoup.compareTo("")!=0) return jouerTour(tourJ1, scanner, prochainCoup);
             }
-            // this.grille.verifieCoup(input);
             this.grille.placer("O", input);
             this.sauvegardePartie += "O "+ input + "\n";
 
@@ -223,6 +234,7 @@ public class Jeu {
     private void sauvegarderPartie() { 
         try {
             FileWriter fw = new FileWriter("save.txt");
+            this.sauvegardePartie = this.sauvegardePartie.substring(0, this.sauvegardePartie.length()-1); // enlève le dernier saut de ligne
             fw.write(this.sauvegardePartie);
             fw.close();
             System.out.println("La partie a été sauvegardée avec succès");
