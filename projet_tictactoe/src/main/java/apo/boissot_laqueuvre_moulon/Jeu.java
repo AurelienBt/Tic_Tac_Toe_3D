@@ -23,6 +23,10 @@ public class Jeu {
         this.tailleGrille = tailleGrille;
     }
 
+    /***
+     * 
+     * @param scanner
+     */
     public void partie(Scanner scanner) {
         // Initialisation des paramètres
         switch (modeJeu) {

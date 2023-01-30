@@ -20,11 +20,10 @@ public class Grille3D extends Grille {
         this.grille = new Case[taille][taille][taille];
 
         Case c;
-
         for (int i = 0; i < this.taille; i++) {
             for (int j = 0; j < this.taille; j++) {
                 for (int k = 0; k < this.taille; k++) {
-                    c = new Case(i * this.taille + j + 1);
+                    c = new Case(j * this.taille + k + 1);
                     this.grille[i][j][k] = c;
                 }
             }
@@ -66,7 +65,8 @@ public class Grille3D extends Grille {
             for (int j = 0; j < this.taille; j++) {
                 System.out.print("|");
                 for (int k = 0; k < this.taille; k++) {
-                    System.out.print(this.grille[i][k][j].afficher(nbChiffresMax));
+                    System.out.print(this.grille[j][i][k].afficher(tailleEntier(this.taille * this.taille)));
+                    // System.out.print("[" + j + "] [" + i + " ] [" + k + "]");
                 }
                 System.out.print((j == this.taille - 1) ? "|" : "|        "); // gère la fin de ligne
             }
@@ -292,6 +292,9 @@ public class Grille3D extends Grille {
         System.out.println("z=1, y=0, x=1");
         c = getCoordonneesCase("b2");
         System.out.println("z=" + c[0] + ", y=" + c[1] + ", x=" + c[2]);
+        System.out.println("z=2, y=0, x=2");
+        c = getCoordonneesCase("c3");
+        System.out.println("z=" + c[0] + ", y=" + c[1] + ", x=" + c[2]);
         System.out.println("");
         System.out.println("");
 
@@ -320,14 +323,17 @@ public class Grille3D extends Grille {
         System.out.println("");
 
         // afficher et placer
-        placer("X", "1");
-        placer("O", "5");
-        placer("X", "9");
+        placer("X", "a1");
+        placer("O", "a5");
+        placer("X", "a9");
+        placer("X", "b9");
+        placer("X", "c2");
         this.grille[0][2][0].setSelectionnee(true);
         System.out.println("Une grille comme suis :");
-        System.out.println("| X  2 >3<|");
-        System.out.println("| 4  O  6 |");
-        System.out.println("| 7  8  X |");
+        System.out.println("    (a)                (b)                (c)");
+        System.out.println("| X  2  3 |        | 1  2  3 |        | 1  X  3 |");
+        System.out.println("| 4  O  6 |        | 4  5  6 |        | 4  5  6 |");
+        System.out.println("|>7< 8  X |        | 7  8  X |        | 7  8  9 |");
         System.out.println("");
         afficher();
         System.out.println("");
