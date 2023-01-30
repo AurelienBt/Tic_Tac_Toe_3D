@@ -117,12 +117,12 @@ public class Grille3D extends Grille {
     }
 
     /***
-     * Place un symbole de joueur à la case dont l'id est coordone si c'est possible
+     * Place un symbole de joueur à la case dont l'id est numeroCase si c'est possible
      * 
-     * @param joueur   le symbole du joueur
-     *                 ex : "O" , "X" ou autre
-     * @param coordone l'id de la case
-     *                 ex : "c1" "az69"
+     * @param joueur     le symbole du joueur
+     *                   ex : "O" , "X" ou autre
+     * @param numeroCase le numéro de la case
+     *                   ex : "1" "59"
      */
     public void placer(String joueur, String numeroCase) {
         if (verifierCoup(numeroCase)) {
@@ -230,7 +230,8 @@ public class Grille3D extends Grille {
         return true;
     }
 
-    public String validerCoup(String input, Scanner scanner) {
+    // TODO
+    public String validerCoup(String input, Scanner scanner) { 
         /*System.out.println();
         System.out.println("Appuyer sur Entrée pour valider votre coup, ou entrez un autre coup");
         int x = getXCase(input);
@@ -244,7 +245,7 @@ public class Grille3D extends Grille {
     }
 
     /***
-     * Un test unitaire de toute les fonctionnalité de Grille2D
+     * Un test unitaire de toute les fonctionnalité de Grille3D
      */
     public void testRegretion() {
         System.out.println("Test Regression pour une grille3D 3*3*3");

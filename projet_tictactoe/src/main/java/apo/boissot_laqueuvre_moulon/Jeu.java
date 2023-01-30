@@ -1,5 +1,8 @@
 package apo.boissot_laqueuvre_moulon;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -12,6 +15,7 @@ public class Jeu {
     private int quiCommence;
     private Grille grille;
     private int tailleGrille;
+    private String sauvegardePartie;
 
     private Joueur j1;
     private Joueur j2;
@@ -21,6 +25,54 @@ public class Jeu {
         this.protagonistes = protagonistes;
         this.quiCommence = quiCommence;
         this.tailleGrille = tailleGrille;
+
+        // Sauvegarde des paramètres de la partie dans le cas où le joueur voudrait sauvegarder
+        this.sauvegardePartie = Integer.toString(this.modeJeu) + " "
+                              + Integer.toString(this.protagonistes) + " "
+                              + Integer.toString(this.quiCommence) + " "
+                              + Integer.toString(this.tailleGrille) + "\n";
+    }
+
+    public void partie(Scanner scanner, ArrayList<String> sauvegarde) {
+        String[] coup = {"X", "1"};
+        switch (this.modeJeu) {
+            case 0:
+                this.grille = new Grille2D(this.tailleGrille);
+                break;
+            case 1 :
+                this.grille = new Grille3D(this.tailleGrille);
+                break;
+            default:
+                this.grille = new Grille2D(this.tailleGrille);
+                break;
+        }
+        boolean tourJ1 = false;
+        switch(this.protagonistes) {
+            case 0:
+                this.j1 = new JoueurHumain();
+                this.j2 = new JoueurHumain();
+                break;
+            case 1:
+                if (tourJ1) { // A REMPLACER
+                    this.j1 = new JoueurHumain();
+                    this.j2 = new JoueurHumain();
+                } else {
+                    this.j1 = new JoueurHumain();
+                    this.j2 = new JoueurHumain();
+                }
+                break;
+            default:
+                this.j1 = new JoueurHumain();
+                this.j2 = new JoueurHumain();
+                break;
+        }
+        for(int i = 1; i<sauvegarde.size(); i++) {
+            coup = sauvegarde.get(i).split(" ");
+            this.grille.placer(coup[0], coup[1]);
+            this.sauvegardePartie += sauvegarde.get(i) + "\n";
+        }
+        if(coup[0].compareTo("X") == 0) jouerPartie(false, scanner);
+        else jouerPartie(true, scanner);
     }
 
     public void partie(Scanner scanner) {
@@ -121,6 +173,10 @@ public class Jeu {
                     System.out.println("Joueur 1 :");
                     if(prochainCoup.compareTo("")==0) input = this.j1.choisirCoup(text, scanner);
                     else input = prochainCoup;
+                    if(input.compareTo("save")==0) {
+                        sauvegarderPartie();
+                        return jouerTour(tourJ1, scanner);
+                    }
                     prochainCoup = "";
                     text = "Coup invalide, recommencez svp";
                     coupValide = grille.verifierCoup(input);
@@ -129,6 +185,7 @@ public class Jeu {
                 if (prochainCoup.compareTo("")!=0) return jouerTour(tourJ1, scanner, prochainCoup);
             }
             this.grille.placer("X", input);
+            this.sauvegardePartie += "X "+ input + "\n";
         } else { // A modif comme dans le if
             if (IA) {
                 System.out.println("Ordinateur :");
@@ -138,6 +195,10 @@ public class Jeu {
                     System.out.println("Joueur 2 :");
                     if(prochainCoup.compareTo("")==0) input = this.j2.choisirCoup(text, scanner);
                     else input = prochainCoup;
+                    if(input.compareTo("save")==0) {
+                        sauvegarderPartie();
+                        return jouerTour(tourJ1, scanner);
+                    }
                     prochainCoup = "";
                     text = "Coup invalide, recommencez svp";
                     coupValide = grille.verifierCoup(input);
@@ -147,8 +208,21 @@ public class Jeu {
             }
             // this.grille.verifieCoup(input);
             this.grille.placer("O", input);
+            this.sauvegardePartie += "O "+ input + "\n";
 
         }
         return input;
+    }
+
+    private void sauvegarderPartie() { 
+        try {
+            FileWriter fw = new FileWriter("save.txt");
+            fw.write(this.sauvegardePartie);
+            fw.close();
+            System.out.println("La partie a été sauvegardée avec succès");
+          } catch (IOException e) {
+            System.out.println("Erreur lors de la sauvegarde de la partie :");
+            e.printStackTrace();
+          }
     }
 }

@@ -79,7 +79,17 @@ public class Grille2D extends Grille {
             }
         }
     }
-
+    
+    /***
+     * Permet de valider un coup avec Entrée ou de choisir un autre coup
+     * 
+     * @param input l'input saisi par le joueur
+     * 
+     * @param scanner permet de récupérer les input de l'utilisateur
+     * 
+     * @return String du choix du joueur : une chaine vide pour valider le coup
+     *         ou un input pour faire un autre coup
+     */
     public String validerCoup(String input, Scanner scanner) {
         System.out.println();
         System.out.println("Appuyer sur Entrée pour valider votre coup, ou entrez un autre coup");
