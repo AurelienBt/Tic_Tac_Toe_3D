@@ -111,4 +111,12 @@ public abstract class Grille {
         String nn = n + "";
         return nn.length();
     }
+
+    /***
+     * Sélectionne les cases passé en paramètre
+     * 
+     * @param alignement un array de int[] contenant la liste des coordonées des
+     *                   cases à mettre en valeur
+     */
+    protected abstract void mettreEnValeur(ArrayList<int[]> alignement);
 }

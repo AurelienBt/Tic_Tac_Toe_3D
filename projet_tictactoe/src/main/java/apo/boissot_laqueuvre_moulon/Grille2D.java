@@ -46,7 +46,6 @@ public class Grille2D extends Grille {
         }
     }
 
-
     /***
      * 
      * @param coup l'id de la case
@@ -314,9 +313,9 @@ public class Grille2D extends Grille {
         System.out.println("Ligne : true");
         System.out.println("Colonne : false");
         System.out.println("---------------------");
-        System.out.println("Diagonale : "+this.verifieDiagonale("2"));
-        System.out.println("Ligne : "+this.verifieY("2"));
-        System.out.println("Colonne : "+this.verifieX("2"));
+        System.out.println("Diagonale : " + this.verifieDiagonale("2"));
+        System.out.println("Ligne : " + this.verifieY("2"));
+        System.out.println("Colonne : " + this.verifieX("2"));
         System.out.println("=======================");
         System.out.println("=======================");
 
@@ -348,9 +347,6 @@ public class Grille2D extends Grille {
 
     }
 
-
-    
-
     /***
      * Vérifie si une case appartient à une diagonale, le cas échéant il vérifie si
      * la diagonale associée fait ganer la partie
@@ -360,6 +356,8 @@ public class Grille2D extends Grille {
      *         false sinon
      */
     private boolean verifieDiagonale(String coup) {
+        ArrayList<int[]> alignement = new ArrayList<int[]>();
+
         boolean gagnante = false;
         boolean aligne = true;
         int i = 0;
@@ -371,28 +369,60 @@ public class Grille2D extends Grille {
             String val = this.grille[0][0].getValeur();
             do {
                 aligne = val == this.grille[i][i].getValeur();
+
+                // ajout du coup pour la soluce gagnante
+                int[] coupAlignement = { i, i };
+                alignement.add(coupAlignement);
+
                 i++;
             } while (i < this.taille && aligne);
             gagnante = aligne;
         }
-        if (gagnante)
+        if (gagnante) {
+            mettreEnValeur(alignement);
             return true;
+        } else {
+            alignement.clear();
+        }
 
         // Diagonale numéro 2
         i = 0;
         if (coord[0] + coord[1] == this.taille - 1) {
             String val = this.grille[0][this.taille - 1].getValeur();
+
             do {
                 aligne = val == this.grille[i][taille - 1 - i].getValeur();
+
+                // ajout du coup pour la soluce gagnante
+                int[] coupAlignement = { i, taille - 1 - i };
+                alignement.add(coupAlignement);
+
                 i++;
             } while (i < this.taille && aligne);
             gagnante = aligne;
         }
-        return gagnante;
+        if (gagnante) {
+            mettreEnValeur(alignement);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /***
-     * Vérifie si une case la colone de la case fait ganer la partie
+     * Sélectionne les cases passé en paramètre
+     * 
+     * @param alignement un array de int[2] contenant la liste des coordonées des
+     *                   cases à mettre en valeur
+     */
+    protected void mettreEnValeur(ArrayList<int[]> alignement) {
+        for (int[] coup : alignement) {
+            this.grille[coup[0]][coup[1]].setSelectionnee(true);
+        }
+    }
+
+    /***
+     * Vérifie si la colone de la case fait ganer la partie
      * 
      * @param coup l'id de la case
      * @return true si la colone de la case fait gagner la partie,
@@ -402,15 +432,24 @@ public class Grille2D extends Grille {
         boolean aligne = true;
         int i = 0;
         int coordFixe = getYCase(coup);
+
+        ArrayList<int[]> alignement = new ArrayList<int[]>();
+
         String val = this.grille[coordFixe][0].getValeur();
-        do{
+        do {
+            // ajout du coup pour la soluce gagnante
+            int[] coupAlignement = { coordFixe, i };
+            alignement.add(coupAlignement);
+
             aligne = val.equals(this.grille[coordFixe][i].getValeur());
             i++;
-        }while(i<this.taille && aligne);
-        return aligne; 
-    }
+        } while (i < this.taille && aligne);
 
-    
+        if (aligne) {
+            mettreEnValeur(alignement);
+        }
+        return aligne;
+    }
 
     /***
      * Vérifie si une case la ligne de la case fait ganer la partie
@@ -423,12 +462,22 @@ public class Grille2D extends Grille {
         boolean aligne = true;
         int i = 0;
         int coordFixe = getXCase(coup);
-        String val = this.grille[0][coordFixe].getValeur();
 
+        ArrayList<int[]> alignement = new ArrayList<int[]>();
+
+        String val = this.grille[0][coordFixe].getValeur();
         do {
+            // ajout du coup pour la soluce gagnante
+            int[] coupAlignement = { i, coordFixe };
+            alignement.add(coupAlignement);
+
             aligne = val.equals(this.grille[i][coordFixe].getValeur());
             i++;
         } while (i < this.taille && aligne);
+
+        if (aligne) {
+            mettreEnValeur(alignement);
+        }
         return aligne;
     }
 

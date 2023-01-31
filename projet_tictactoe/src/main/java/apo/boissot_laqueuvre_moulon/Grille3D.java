@@ -131,7 +131,6 @@ public class Grille3D extends Grille {
         }
     }
 
-    // A faire
     /***
      * Verifie si la grille est gagnante. Pour alléger les calculs on regarde
      * uniquement en fct du dernier coup.
@@ -141,223 +140,400 @@ public class Grille3D extends Grille {
      * @return true si la grille est gagnante, false sinon
      */
     public boolean grilleGagnante(String coup) {
-        if(verifieDiagonale(coup)) return true;
-        if(verifieDiagPlanX(coup)) return true;
-        if(verifieDiagPlanY(coup)) return true;
-        if(verifieDiagPlanZ(coup)) return true;
-        if(verifieX(coup)) return true;
-        if(verifieY(coup)) return true;
-        if(verifieZ(coup)) return true;
-
+        if (verifieDiagonale(coup))
+            return true;
+        if (verifieDiagPlanX(coup))
+            return true;
+        if (verifieDiagPlanY(coup))
+            return true;
+        if (verifieDiagPlanZ(coup))
+            return true;
+        if (verifieX(coup))
+            return true;
+        if (verifieY(coup))
+            return true;
+        if (verifieZ(coup))
+            return true;
         return false;
     }
 
-    private boolean verifieDiagonale(String coup){
+    /***
+     * Vérifie si la diagonale de la case fait ganer la partie
+     * 
+     * @param coup l'id de la case du dernier coup
+     *             ex : "a1" "ez69"
+     * @return true si la grille est gagnante, false sinon
+     */
+    private boolean verifieDiagonale(String coup) {
+        ArrayList<int[]> alignement = new ArrayList<int[]>();
+
         boolean gagnante = false;
         boolean aligne = true;
-        int i=0;
+        int i = 0;
         int[] coord = getCoordonneesCase(coup);
-        // 4 gde Diagonale 
-        //Grande diagonale 1
-        if(coord[0]==coord[1] && coord[1]==coord[2]) { 
+        // 4 gde Diagonale
+        // Grande diagonale 1
+        if (coord[0] == coord[1] && coord[1] == coord[2]) {
             String val = this.grille[0][0][0].getValeur();
-            do{
+            do {
+                // ajout du coup pour la soluce gagnante
+                int[] coupAlignement = { i, i, i };
+                alignement.add(coupAlignement);
+
                 aligne = val == this.grille[i][i][i].getValeur();
                 i++;
-            }while(i<this.taille && aligne);
-            gagnante = aligne;            
+            } while (i < this.taille && aligne);
+            gagnante = aligne;
         }
-        if(gagnante) return true;
+        if (gagnante) {
+            mettreEnValeur(alignement);
+            return true;
+        } else {
+            alignement.clear();
+        }
 
-         
-        //diagonale haute droite
-        i=0;
-        String val = this.grille[0][0][this.taille-1].getValeur();
-        do{
-            aligne = val == this.grille[i][i][this.taille-1-i].getValeur();
+        // diagonale haute droite
+        i = 0;
+        String val = this.grille[0][0][this.taille - 1].getValeur();
+        do {
+            // ajout du coup pour la soluce gagnante
+            int[] coupAlignement = { i, i, this.taille - 1 - i };
+            alignement.add(coupAlignement);
+
+            aligne = val == this.grille[i][i][this.taille - 1 - i].getValeur();
             i++;
-        }while(i<this.taille && aligne);
+        } while (i < this.taille && aligne);
         gagnante = aligne;
 
-        if (gagnante) return true;
-        
-        //diagonale bas droite
-        i=0;      
-        val = this.grille[0][this.taille-1][this.taille-1].getValeur();
-        do{
-            aligne = val == this.grille[i][this.taille-1-i][this.taille-1-i].getValeur();
+        if (gagnante) {
+            mettreEnValeur(alignement);
+            return true;
+        } else {
+            alignement.clear();
+        }
+
+        // diagonale bas droite
+        i = 0;
+        val = this.grille[0][this.taille - 1][this.taille - 1].getValeur();
+        do {
+            aligne = val == this.grille[i][this.taille - 1 - i][this.taille - 1 - i].getValeur();
             i++;
-        }while(i<this.taille && aligne);
+        } while (i < this.taille && aligne);
         gagnante = aligne;
 
-        if (gagnante) return true;
+        if (gagnante)
+            return true;
 
-        //diagonale bas gauche
-        i=0;      
-        val = this.grille[0][this.taille-1][0].getValeur();
-        do{
-            aligne = val == this.grille[i][this.taille-1-i][i].getValeur();
+        // diagonale bas gauche
+        i = 0;
+        val = this.grille[0][this.taille - 1][0].getValeur();
+        do {
+            aligne = val == this.grille[i][this.taille - 1 - i][i].getValeur();
             i++;
-        }while(i<this.taille && aligne);
+        } while (i < this.taille && aligne);
         gagnante = aligne;
 
+        if (gagnante)
+            mettreEnValeur(alignement);
         return gagnante;
     }
 
+    /***
+     * Sélectionne les cases passé en paramètre
+     * 
+     * @param alignement un array de int[3] contenant la liste des coordonées des
+     *                   cases à mettre en valeur
+     */
+    protected void mettreEnValeur(ArrayList<int[]> alignement) {
+        for (int[] coup : alignement) {
+            this.grille[coup[0]][coup[1]][coup[2]].setSelectionnee(true);
+        }
+    }
 
+    /***
+     * Vérifie la diagonal sur le plan X de la case fait ganer la partie
+     * 
+     * @param coup l'id de la case du dernier coup
+     *             ex : "a1" "ez69"
+     * @return true si la grille est gagnante, false sinon
+     */
+    private boolean verifieDiagPlanX(String coup) {
+        ArrayList<int[]> alignement = new ArrayList<int[]>();
 
-    private boolean verifieDiagPlanX(String coup){
         boolean aligne = true;
         boolean gagnante = false;
         int i = 0;
         int[] coord = getCoordonneesCase(coup);
         int coordX = coord[2];
 
-        //z==y
-        if(coord[0] == coord[1]) { 
+        // z==y
+        if (coord[0] == coord[1]) {
             String val = this.grille[0][0][coordX].getValeur();
-            do{
+            do {
+                // ajout du coup pour la soluce gagnante
+                int[] coupAlignement = { i, i, coordX };
+                alignement.add(coupAlignement);
+
                 aligne = val == this.grille[i][i][coordX].getValeur();
                 i++;
-            }while(i<this.taille && aligne);
-            gagnante = aligne;            
+            } while (i < this.taille && aligne);
+            gagnante = aligne;
         }
-        if(gagnante) return true;
+        if (gagnante) {
+            mettreEnValeur(alignement);
+            return true;
+        } else {
+            alignement.clear();
+        }
 
-        //z+y=t-1
-        if(coord[0] + coord[1] == this.taille-1){
-            i=0;
-            String val = this.grille[0][this.taille-1][coordX].getValeur();
-            do{
-                aligne = val == this.grille[i][taille-1-i][coordX].getValeur();
+        // z+y=t-1
+        if (coord[0] + coord[1] == this.taille - 1) {
+            i = 0;
+            String val = this.grille[0][this.taille - 1][coordX].getValeur();
+            do {
+                // ajout du coup pour la soluce gagnante
+                int[] coupAlignement = { i, taille - 1 - i, coordX };
+                alignement.add(coupAlignement);
+
+                aligne = val == this.grille[i][taille - 1 - i][coordX].getValeur();
                 i++;
-            }while(i<this.taille && aligne);
-            gagnante = aligne;  
+            } while (i < this.taille && aligne);
+            gagnante = aligne;
         }
 
+        if (gagnante)
+            mettreEnValeur(alignement);
         return gagnante;
     }
 
+    /***
+     * Vérifie la diagonal sur le plan Y de la case fait ganer la partie
+     * 
+     * @param coup l'id de la case du dernier coup
+     *             ex : "a1" "ez69"
+     * @return true si la grille est gagnante, false sinon
+     */
+    private boolean verifieDiagPlanY(String coup) {
+        ArrayList<int[]> alignement = new ArrayList<int[]>();
 
-    private boolean verifieDiagPlanY(String coup){
         boolean aligne = true;
         boolean gagnante = false;
         int i = 0;
         int[] coord = getCoordonneesCase(coup);
         int coordY = coord[1];
 
-        //x==z
-        if(coord[0] == coord[2]) { 
+        // x==z
+        if (coord[0] == coord[2]) {
             String val = this.grille[0][coordY][0].getValeur();
-            do{
+            do {
+                // ajout du coup pour la soluce gagnante
+                int[] coupAlignement = { i, coordY, i };
+                alignement.add(coupAlignement);
+
                 aligne = val == this.grille[i][coordY][i].getValeur();
                 i++;
-            }while(i<this.taille && aligne);
-            gagnante = aligne;            
+            } while (i < this.taille && aligne);
+            gagnante = aligne;
         }
-        if(gagnante) return true;
+        if (gagnante) {
+            mettreEnValeur(alignement);
+            return true;
+        } else {
+            alignement.clear();
+        }
 
-        //x+z=t-1
-        if(coord[0] + coord[1] == this.taille-1){
-            i=0;
-            String val = this.grille[0][coordY][this.taille-1].getValeur();
-            do{
-                aligne = val == this.grille[i][coordY][taille-1-i].getValeur();
+        // x+z=t-1
+        if (coord[0] + coord[1] == this.taille - 1) {
+            i = 0;
+            String val = this.grille[0][coordY][this.taille - 1].getValeur();
+            do {
+                // ajout du coup pour la soluce gagnante
+                int[] coupAlignement = { i, coordY, taille - 1 - i };
+                alignement.add(coupAlignement);
+
+                aligne = val == this.grille[i][coordY][taille - 1 - i].getValeur();
                 i++;
-            }while(i<this.taille && aligne);
-            gagnante = aligne;  
+            } while (i < this.taille && aligne);
+            gagnante = aligne;
         }
 
+        if (gagnante)
+            mettreEnValeur(alignement);
         return gagnante;
     }
 
-    private boolean verifieDiagPlanZ(String coup){
+    /***
+     * Vérifie la diagonal sur le plan Z de la case fait ganer la partie
+     * 
+     * @param coup l'id de la case du dernier coup
+     *             ex : "a1" "ez69"
+     * @return true si la grille est gagnante, false sinon
+     */
+    private boolean verifieDiagPlanZ(String coup) {
+        ArrayList<int[]> alignement = new ArrayList<int[]>();
+
         boolean aligne = true;
         boolean gagnante = false;
         int i = 0;
         int[] coord = getCoordonneesCase(coup);
         int coordZ = coord[0];
 
-        //y==x
-        if(coord[1] == coord[2]) { 
+        // y==x
+        if (coord[1] == coord[2]) {
             String val = this.grille[coordZ][0][0].getValeur();
-            do{
+            do {
+                // ajout du coup pour la soluce gagnante
+                int[] coupAlignement = { coordZ, i, i };
+                alignement.add(coupAlignement);
+
                 aligne = val == this.grille[coordZ][i][i].getValeur();
                 i++;
-            }while(i<this.taille && aligne);
-            gagnante = aligne;            
+            } while (i < this.taille && aligne);
+            gagnante = aligne;
         }
-        if(gagnante) return true;
+        if (gagnante) {
+            mettreEnValeur(alignement);
+            return true;
+        } else {
+            alignement.clear();
+        }
 
-        //z+y=t-1
-        if(coord[0] + coord[1] == this.taille-1){
-            i=0;
-            String val = this.grille[coordZ][0][this.taille-1].getValeur();
-            do{
-                aligne = val == this.grille[coordZ][i][taille-1-i].getValeur();
+        // z+y=t-1
+        if (coord[0] + coord[1] == this.taille - 1) {
+            i = 0;
+            String val = this.grille[coordZ][0][this.taille - 1].getValeur();
+            do {
+                // ajout du coup pour la soluce gagnante
+                int[] coupAlignement = { coordZ, i, taille - 1 - i };
+                alignement.add(coupAlignement);
+
+                aligne = val == this.grille[coordZ][i][taille - 1 - i].getValeur();
                 i++;
-            }while(i<this.taille && aligne);
-            gagnante = aligne;  
+            } while (i < this.taille && aligne);
+            gagnante = aligne;
         }
 
+        if (gagnante)
+            mettreEnValeur(alignement);
         return gagnante;
     }
 
-    private boolean verifieX(String coup){
+    /***
+     * Vérifie si la ligne de la case fait ganer la partie
+     * 
+     * @param coup l'id de la case du dernier coup
+     *             ex : "a1" "ez69"
+     * @return true si la grille est gagnante, false sinon
+     */
+    private boolean verifieX(String coup) {
+        ArrayList<int[]> alignement = new ArrayList<int[]>();
+
         boolean aligne = true;
         int i = 0;
         int YFixe = getYCase(coup);
         int ZFixe = getZCase(coup);
         String val = this.grille[ZFixe][YFixe][0].getValeur();
-        do{
+        do {
+            // ajout du coup pour la soluce gagnante
+            int[] coupAlignement = { ZFixe, YFixe, i };
+            alignement.add(coupAlignement);
+
             aligne = val.equals(this.grille[ZFixe][YFixe][i].getValeur());
             i++;
-        }while(i<this.taille && aligne);
-        return aligne; 
+        } while (i < this.taille && aligne);
+
+        if (aligne)
+            mettreEnValeur(alignement);
+        return aligne;
     }
 
-    private boolean verifieY(String coup){
+    /***
+     * Vérifie si la colone de la case fait ganer la partie
+     * 
+     * @param coup l'id de la case du dernier coup
+     *             ex : "a1" "ez69"
+     * @return true si la grille est gagnante, false sinon
+     */
+    private boolean verifieY(String coup) {
+        ArrayList<int[]> alignement = new ArrayList<int[]>();
+
         boolean aligne = true;
         int i = 0;
         int XFixe = getXCase(coup);
         int ZFixe = getZCase(coup);
         String val = this.grille[ZFixe][0][XFixe].getValeur();
-        
-        do{
+
+        do {
+            // ajout du coup pour la soluce gagnante
+            int[] coupAlignement = { ZFixe, i, XFixe };
+            alignement.add(coupAlignement);
+
             aligne = val.equals(this.grille[ZFixe][i][XFixe].getValeur());
             i++;
-        }while(i<this.taille && aligne);
+        } while (i < this.taille && aligne);
+        if (aligne)
+            mettreEnValeur(alignement);
         return aligne;
     }
 
-    private boolean verifieZ(String coup){
+    /***
+     * Vérifie si la profondeur de la case fait ganer la partie
+     * 
+     * @param coup l'id de la case du dernier coup
+     *             ex : "a1" "ez69"
+     * @return true si la grille est gagnante, false sinon
+     */
+    private boolean verifieZ(String coup) {
+        ArrayList<int[]> alignement = new ArrayList<int[]>();
+
         boolean aligne = true;
         int i = 0;
         int YFixe = getYCase(coup);
         int XFixe = getXCase(coup);
         String val = this.grille[0][YFixe][XFixe].getValeur();
-        
-        do{
+
+        do {
+            // ajout du coup pour la soluce gagnante
+            int[] coupAlignement = { i, YFixe, XFixe };
+            alignement.add(coupAlignement);
+
             aligne = val.equals(this.grille[i][YFixe][XFixe].getValeur());
             i++;
-        }while(i<this.taille && aligne);
+        } while (i < this.taille && aligne);
+        if (aligne)
+            mettreEnValeur(alignement);
         return aligne;
     }
 
-    private int getXCase(String coup){
+    /***
+     * 
+     * @param coup l'id de la case du dernier coup
+     *             ex : "a1" "ez69"
+     * @return l'abscice du coup
+     */
+    private int getXCase(String coup) {
         return getCoordonneesCase(coup)[2];
     }
 
-    private int getYCase(String coup){
+    /***
+     * 
+     * @param coup l'id de la case du dernier coup
+     *             ex : "a1" "ez69"
+     * @return l'ordonnée du coup
+     */
+    private int getYCase(String coup) {
         return getCoordonneesCase(coup)[1];
     }
 
-    private int getZCase(String coup){
+    /***
+     * 
+     * @param coup l'id de la case du dernier coup
+     *             ex : "a1" "ez69"
+     * @return la profondeur du coup
+     */
+    private int getZCase(String coup) {
         return getCoordonneesCase(coup)[0];
     }
-
-
-
 
     /***
      * 
@@ -537,23 +713,24 @@ public class Grille3D extends Grille {
         System.out.println("");
         System.out.println("");
 
-        /* 
-        // afficher et placer
-        placer("X", "a1");
-        placer("O", "a5");
-        placer("X", "a9");
-        placer("X", "b9");
-        placer("X", "c2");
-        this.grille[0][2][0].setSelectionnee(true);
-        System.out.println("Une grille comme suis :");
-        System.out.println("    (a)                (b)                (c)");
-        System.out.println("| X  2  3 |        | 1  2  3 |        | 1  X  3 |");
-        System.out.println("| 4  O  6 |        | 4  5  6 |        | 4  5  6 |");
-        System.out.println("|>7< 8  X |        | 7  8  X |        | 7  8  9 |");
-        System.out.println("");
-        afficher();
-        System.out.println("");
-        System.out.println("");*/
+        /*
+         * // afficher et placer
+         * placer("X", "a1");
+         * placer("O", "a5");
+         * placer("X", "a9");
+         * placer("X", "b9");
+         * placer("X", "c2");
+         * this.grille[0][2][0].setSelectionnee(true);
+         * System.out.println("Une grille comme suis :");
+         * System.out.println("    (a)                (b)                (c)");
+         * System.out.println("| X  2  3 |        | 1  2  3 |        | 1  X  3 |");
+         * System.out.println("| 4  O  6 |        | 4  5  6 |        | 4  5  6 |");
+         * System.out.println("|>7< 8  X |        | 7  8  X |        | 7  8  9 |");
+         * System.out.println("");
+         * afficher();
+         * System.out.println("");
+         * System.out.println("");
+         */
 
         // viderGrille
         viderGrille();
@@ -571,170 +748,165 @@ public class Grille3D extends Grille {
         System.out.println("");
         System.out.println("");
 
-        //Test vérification des victoires
-        //diag haute gauche
+        // Test vérification des victoires
+        // diag haute gauche
         viderGrille();
         placer("X", "a1");
         placer("X", "b5");
         placer("X", "c9");
         afficher();
-        System.out.println("Grille gagnante : "+grilleGagnante("b5"));
-        System.out.println("Diagonale : "+ verifieDiagonale("b5"));
+        System.out.println("Grille gagnante : " + grilleGagnante("b5"));
+        System.out.println("Diagonale : " + verifieDiagonale("b5"));
 
-        System.out.println("Diagonale plan X : "+ verifieDiagPlanX("b5"));
-        System.out.println("Diagonale plan Y : "+ verifieDiagPlanY("b5"));
-        System.out.println("Diagonale plan Z : "+ verifieDiagPlanZ("b5"));
-        System.out.println("X : "+ verifieX("b5"));
-        System.out.println("Y : "+ verifieY("b5"));
-        System.out.println("Z : "+ verifieZ("b5"));
+        System.out.println("Diagonale plan X : " + verifieDiagPlanX("b5"));
+        System.out.println("Diagonale plan Y : " + verifieDiagPlanY("b5"));
+        System.out.println("Diagonale plan Z : " + verifieDiagPlanZ("b5"));
+        System.out.println("X : " + verifieX("b5"));
+        System.out.println("Y : " + verifieY("b5"));
+        System.out.println("Z : " + verifieZ("b5"));
         System.out.println("=============================");
         System.out.println("=============================");
 
-        //diag haute droite
+        // diag haute droite
         viderGrille();
         System.out.println("Diagonale Haute Droite");
         placer("X", "a3");
         placer("X", "b5");
         placer("X", "c7");
         afficher();
-        System.out.println("Grille gagnante : "+grilleGagnante("b5"));
-        System.out.println("Diagonale : "+ verifieDiagonale("b5"));
+        System.out.println("Grille gagnante : " + grilleGagnante("b5"));
+        System.out.println("Diagonale : " + verifieDiagonale("b5"));
         System.out.println("=============================");
         System.out.println("=============================");
 
-        //diag basse gauche
+        // diag basse gauche
         viderGrille();
         System.out.println("Diagonale Basse Gauche");
         placer("X", "a7");
         placer("X", "b5");
         placer("X", "c3");
         afficher();
-        System.out.println("Grille gagnante : "+grilleGagnante("b5"));
-        System.out.println("Diagonale : "+ verifieDiagonale("b5"));
+        System.out.println("Grille gagnante : " + grilleGagnante("b5"));
+        System.out.println("Diagonale : " + verifieDiagonale("b5"));
         System.out.println("=============================");
         System.out.println("=============================");
 
-         //diag basse droite
-         viderGrille();
-         System.out.println("Diagonale Basse Droite");
-         placer("X", "a3");
-         placer("X", "b5");
-         placer("X", "c7");
-         afficher();
-         System.out.println("Grille gagnante : "+grilleGagnante("b5"));
-         System.out.println("Diagonale : "+ verifieDiagonale("b5"));
-         
+        // diag basse droite
+        viderGrille();
+        System.out.println("Diagonale Basse Droite");
+        placer("X", "a3");
+        placer("X", "b5");
+        placer("X", "c7");
+        afficher();
+        System.out.println("Grille gagnante : " + grilleGagnante("b5"));
+        System.out.println("Diagonale : " + verifieDiagonale("b5"));
+
         System.out.println("=============================");
         System.out.println("=============================");
- 
- 
-         
-        //DiagPlanX:Y
+
+        // DiagPlanX:Y
         viderGrille();
         System.out.println("Diagonale Plan x:y");
         placer("X", "a1");
         placer("X", "a5");
         placer("X", "a9");
         afficher();
-        System.out.println("Grille gagnante : "+grilleGagnante("a5"));
-        System.out.println("Diagonale : "+ verifieDiagonale("a5"));
- 
- 
-        System.out.println("Diagonale plan X : "+ verifieDiagPlanX("a5"));
-        System.out.println("Diagonale plan Y : "+ verifieDiagPlanY("a5"));
-        System.out.println("Diagonale plan Z : "+ verifieDiagPlanZ("a5"));
-        System.out.println("X : "+ verifieX("a5"));
-        System.out.println("Y : "+ verifieY("a5"));
-        System.out.println("Z : "+ verifieZ("a5"));
+        System.out.println("Grille gagnante : " + grilleGagnante("a5"));
+        System.out.println("Diagonale : " + verifieDiagonale("a5"));
+
+        System.out.println("Diagonale plan X : " + verifieDiagPlanX("a5"));
+        System.out.println("Diagonale plan Y : " + verifieDiagPlanY("a5"));
+        System.out.println("Diagonale plan Z : " + verifieDiagPlanZ("a5"));
+        System.out.println("X : " + verifieX("a5"));
+        System.out.println("Y : " + verifieY("a5"));
+        System.out.println("Z : " + verifieZ("a5"));
 
         System.out.println("=============================");
         System.out.println("=============================");
-        //DiagPlanY:Z
+        // DiagPlanY:Z
         viderGrille();
         System.out.println("Diagonale plan y:z");
         placer("X", "a1");
         placer("X", "b4");
         placer("X", "c7");
         afficher();
-        System.out.println("Grille gagnante : "+grilleGagnante("b4"));
-        //System.out.println("Diagonale : "+ verifieDiagonale("b4"));
-        
-        System.out.println("Diagonale plan X : "+ verifieDiagPlanX("b4"));
-        System.out.println("Diagonale plan Y : "+ verifieDiagPlanY("b4"));
-        System.out.println("Diagonale plan Z : "+ verifieDiagPlanZ("b4"));
-        
+        System.out.println("Grille gagnante : " + grilleGagnante("b4"));
+        // System.out.println("Diagonale : "+ verifieDiagonale("b4"));
+
+        System.out.println("Diagonale plan X : " + verifieDiagPlanX("b4"));
+        System.out.println("Diagonale plan Y : " + verifieDiagPlanY("b4"));
+        System.out.println("Diagonale plan Z : " + verifieDiagPlanZ("b4"));
+
         System.out.println("=============================");
         System.out.println("=============================");
 
-
-        //DiagPlanX:Z
+        // DiagPlanX:Z
         viderGrille();
         System.out.println("Diagonale plan x:z");
         placer("X", "a1");
         placer("X", "b2");
         placer("X", "c3");
         afficher();
-        System.out.println("Grille gagnante : "+grilleGagnante("b2"));
-        //System.out.println("Diagonale : "+ verifieDiagonale("b4"));
-        
-        System.out.println("Diagonale plan X : "+ verifieDiagPlanX("b2"));
-        System.out.println("Diagonale plan Y : "+ verifieDiagPlanY("b2"));
-        System.out.println("Diagonale plan Z : "+ verifieDiagPlanZ("b2"));
-        System.out.println("X : "+ verifieX("b2"));
-        System.out.println("Y : "+ verifieY("b2"));
-        System.out.println("Z : "+ verifieZ("b2"));
+        System.out.println("Grille gagnante : " + grilleGagnante("b2"));
+        // System.out.println("Diagonale : "+ verifieDiagonale("b4"));
+
+        System.out.println("Diagonale plan X : " + verifieDiagPlanX("b2"));
+        System.out.println("Diagonale plan Y : " + verifieDiagPlanY("b2"));
+        System.out.println("Diagonale plan Z : " + verifieDiagPlanZ("b2"));
+        System.out.println("X : " + verifieX("b2"));
+        System.out.println("Y : " + verifieY("b2"));
+        System.out.println("Z : " + verifieZ("b2"));
 
         System.out.println("=============================");
         System.out.println("=============================");
-        
-        //System.out.println("Diagonale plan X"+ verifieDiagPlanX("b5"));
-        //Ligne 
+
+        // System.out.println("Diagonale plan X"+ verifieDiagPlanX("b5"));
+        // Ligne
         viderGrille();
         System.out.println("Ligne");
         placer("X", "a1");
         placer("X", "a2");
         placer("X", "a3");
         afficher();
-        System.out.println("Grille gagnante : "+grilleGagnante("a2"));
-        //System.out.println("Diagonale : "+ verifieDiagonale("b4"));
-        
-        System.out.println("Diagonale plan X : "+ verifieDiagPlanX("a2"));
-        System.out.println("Diagonale plan Y : "+ verifieDiagPlanY("a2"));
-        System.out.println("Diagonale plan Z : "+ verifieDiagPlanZ("a2"));
-        System.out.println("Ligne : "+ verifieX("a2"));
-        System.out.println("Colonne : "+ verifieY("a2"));
-        System.out.println("Pronfodeur : "+ verifieZ("a2"));
+        System.out.println("Grille gagnante : " + grilleGagnante("a2"));
+        // System.out.println("Diagonale : "+ verifieDiagonale("b4"));
+
+        System.out.println("Diagonale plan X : " + verifieDiagPlanX("a2"));
+        System.out.println("Diagonale plan Y : " + verifieDiagPlanY("a2"));
+        System.out.println("Diagonale plan Z : " + verifieDiagPlanZ("a2"));
+        System.out.println("Ligne : " + verifieX("a2"));
+        System.out.println("Colonne : " + verifieY("a2"));
+        System.out.println("Pronfodeur : " + verifieZ("a2"));
         System.out.println("=============================");
         System.out.println("=============================");
 
-        //Colonne 
+        // Colonne
         viderGrille();
         System.out.println("Colonne");
         placer("X", "a1");
         placer("X", "a4");
         placer("X", "a7");
         afficher();
-        System.out.println("Grille gagnante : "+grilleGagnante("a4"));
-        System.out.println("Ligne : "+ verifieX("a4"));
-        System.out.println("Colonne : "+ verifieY("a4"));
-        System.out.println("Pronfodeur : "+ verifieZ("a4"));
+        System.out.println("Grille gagnante : " + grilleGagnante("a4"));
+        System.out.println("Ligne : " + verifieX("a4"));
+        System.out.println("Colonne : " + verifieY("a4"));
+        System.out.println("Pronfodeur : " + verifieZ("a4"));
         System.out.println("=============================");
         System.out.println("=============================");
 
-        //Profondeur 
+        // Profondeur
         viderGrille();
         System.out.println("Profondeur");
         placer("X", "a2");
         placer("X", "b2");
         placer("X", "c2");
         afficher();
-        System.out.println("Grille gagnante : "+grilleGagnante("a2"));
-        System.out.println("Ligne : "+ verifieX("a2"));
-        System.out.println("Colonne : "+ verifieY("a2"));
-        System.out.println("Pronfodeur : "+ verifieZ("a2"));
+        System.out.println("Grille gagnante : " + grilleGagnante("a2"));
+        System.out.println("Ligne : " + verifieX("a2"));
+        System.out.println("Colonne : " + verifieY("a2"));
+        System.out.println("Pronfodeur : " + verifieZ("a2"));
         System.out.println("=============================");
         System.out.println("=============================");
-
 
         System.out.println("=============================");
 

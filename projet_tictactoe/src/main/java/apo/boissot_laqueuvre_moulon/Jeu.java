@@ -33,11 +33,11 @@ public class Jeu {
             case 0:
                 this.grille = new Grille2D(this.tailleGrille);
                 break;
-            /*
-             * case 1 :
-             * this.grille = new Grille3D(this.tailleGrille);
-             * break;
-             */
+
+            case 1:
+                this.grille = new Grille3D(this.tailleGrille);
+                break;
+
             default:
                 this.grille = new Grille2D(this.tailleGrille);
                 break;
@@ -90,16 +90,19 @@ public class Jeu {
         while (partieEnCours && !this.grille.grilleEstPleine()) {
             String coup = jouerTour(tourJ1, scanner);
 
-            //Vérification de la grille
+            // Vérification de la grille
             partieEnCours = !this.grille.grilleGagnante(coup);
-            if(!partieEnCours){
-                if(tourJ1){
+            if (!partieEnCours) {
+                if (tourJ1) {
                     System.out.println("Le gagnant est Joueur 1");
+                    this.grille.afficher();
                 } else {
                     System.out.println("Le gagnant est joueur 2");
+                    this.grille.afficher();
                 }
             } else if (this.grille.grilleEstPleine()) {
                 System.out.println("Égalité !");
+                this.grille.afficher();
             }
             tourJ1 = !tourJ1;
         }
