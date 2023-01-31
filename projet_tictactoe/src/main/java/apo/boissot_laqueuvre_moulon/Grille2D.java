@@ -5,11 +5,15 @@ import java.util.Scanner;
 
 /***
  * Grille2D extends Grille
- * Représente une grille de morpion en 2 dimension de taille variable
+ * Représente une grille de morpion en 2 dimensions, de taille variable
  */
 public class Grille2D extends Grille {
     private Case grille[][];
 
+    /***
+     * Constructeur de la classe Grille2D, initialisant la grille avec des nombres
+     * @param taille
+     */
     public Grille2D(int taille) {
         super(taille);
 
@@ -17,7 +21,7 @@ public class Grille2D extends Grille {
     }
 
     /***
-     * Vide la grille en remplaçant toute les cases par des cases vides (avec leur
+     * Vide la grille en remplaçant toutes les cases par des cases vides (avec leur
      * numéro et pas des "X" "O")
      */
     public void viderGrille() {
@@ -47,7 +51,8 @@ public class Grille2D extends Grille {
     }
 
     /***
-     * 
+     * Vérification de la validité du coup joué par le joueur 
+     * (au niveau de la syntaxe et de la possibilité de le jouer dans la grille)
      * @param coup l'id de la case
      *             ex : "1" "69"
      * @return true si le coup est valide, false sinon
@@ -65,7 +70,7 @@ public class Grille2D extends Grille {
                 System.out.println("ERREUR ! Le numéro de case " + numeroCase + " est invalide");
                 return false;
             }
-            // On regarde si la case choisi est libre
+            // On regarde si la case choisie est libre
             else if (this.grille[y][x].estVide()) {
                 return true;
             } else {
@@ -76,11 +81,15 @@ public class Grille2D extends Grille {
     }
 
     /***
+     * Permet de valider un coup avec Entrée ou de choisir un autre coup
      * 
-     * @param coup    l'id de la case
-     *                ex : "1" "69"
-     * @param scanner
-     * @return une String a afficher pour la suite du jeu
+     * @param coup le coup saisi par le joueur
+     *             ex : "16", "8"
+     * 
+     * @param scanner permet de récupérer les inputs de l'utilisateur
+     * 
+     * @return String du choix du joueur : une chaine vide pour valider le coup
+     *         ou un input pour faire un autre coup
      */
     public String validerCoup(String coup, Scanner scanner) {
         System.out.println();
@@ -95,12 +104,12 @@ public class Grille2D extends Grille {
     }
 
     /***
-     * Place un symbole de joueur à la case dont l'id est coordone si c'est possible
+     * Place un symbole de joueur à la case numeroCase si c'est possible
      * 
-     * @param joueur   le symbole du joueur
-     *                 ex : "O" , "X" ou autre
-     * @param coordone l'id de la case
-     *                 ex : "3" "19"
+     * @param joueur le symbole du joueur
+     *               ex : "O" , "X" ou autre
+     * @param numeroCase l'ID de la case
+     *                   ex : "3" "19"
      */
     public void placer(String joueur, String numeroCase) {
         if (verifierCoup(numeroCase)) {
@@ -109,7 +118,7 @@ public class Grille2D extends Grille {
     }
 
     /***
-     * 
+     * Renvoie la liste des coup possibles
      * @return tableau contenant la liste des coups valides possible
      *         chaque coup est représenté par un tableau de 2 entiers [y,x]
      */
@@ -132,8 +141,8 @@ public class Grille2D extends Grille {
     }
 
     /***
-     * 
-     * @param input l'input saisie par le joueur
+     * Vérifie que la syntaxe de l'input proposé par le joueur est correcte
+     * @param input l'input saisi par le joueur
      * @return true si l'input est valide, false sinon
      */
     public boolean verifierInput(String input) {
@@ -160,7 +169,7 @@ public class Grille2D extends Grille {
     }
 
     /***
-     * 
+     * Vérifie si la grille est pleine ou non
      * @return true si la grille est pleine, false sinon
      */
     public boolean grilleEstPleine() {
@@ -174,8 +183,8 @@ public class Grille2D extends Grille {
     }
 
     /***
-     * Verifie si la grille est gagnante. Pour alléger les calculs on regarde
-     * uniquement en fct du dernier coup.
+     * Vérifie si la grille est gagnante. Pour alléger les calculs on regarde
+     * uniquement en fonction du dernier coup joué
      * 
      * @param coup l'id de la case du dernier coup
      *             ex : "3" "89"
@@ -193,18 +202,18 @@ public class Grille2D extends Grille {
     }
 
     /***
-     * Place un symbole de joueur à la case dont l'id est coordone si c'est possible
+     * Place un symbole de joueur à la case dont l'id est coordonee si c'est possible
      * 
      * @param joueur   1 ou 2, pour joueur 1 ou joueur 2
-     * @param coordone les coordonnées de la case sous forme [y,x]
+     * @param coordonee les coordonnées de la case sous forme [y,x]
      */
-    public void jouerCoup(int joueur, int[] coordone) {
+    public void jouerCoup(int joueur, int[] coordonee) {
         String[] symbole = { "X", "O" };
-        this.grille[coordone[0]][coordone[1]].setValeur(symbole[joueur - 1]);
+        this.grille[coordonee[0]][coordonee[1]].setValeur(symbole[joueur - 1]);
     }
 
     /***
-     * Un test unitaire de toute les fonctionnalité de Grille2D
+     * Un test unitaire de toutes les fonctionnalités de Grille2D
      */
     public void testRegretion() {
         System.out.println("Test Regression pour une grille2D 3*3");
@@ -349,10 +358,10 @@ public class Grille2D extends Grille {
 
     /***
      * Vérifie si une case appartient à une diagonale, le cas échéant il vérifie si
-     * la diagonale associée fait ganer la partie
+     * la diagonale associée fait gagner la partie
      * 
      * @param coup l'id de la case
-     * @return true si la case appartient à une diagonale qui fait ganer la partie,
+     * @return true si la case appartient à une diagonale qui fait gagner la partie,
      *         false sinon
      */
     private boolean verifieDiagonale(String coup) {
@@ -422,7 +431,11 @@ public class Grille2D extends Grille {
     }
 
     /***
+<<<<<<< HEAD
      * Vérifie si la colone de la case fait ganer la partie
+=======
+     * Vérifie si la colonne dont la case fait partie fait gagner la partie
+>>>>>>> f5283dd9a93e8d740f3d7ae87fa8a815a6a73615
      * 
      * @param coup l'id de la case
      * @return true si la colone de la case fait gagner la partie,
@@ -452,10 +465,10 @@ public class Grille2D extends Grille {
     }
 
     /***
-     * Vérifie si une case la ligne de la case fait ganer la partie
+     * Vérifie si la ligne dont la case fait partie fait gagner la partie
      * 
      * @param coup l'id de la case
-     * @return true si la ligne de la case fait ganer la partie,
+     * @return true si la ligne de la case fait gagner la partie,
      *         false sinon
      */
     private boolean verifieX(String coup) {
@@ -484,7 +497,7 @@ public class Grille2D extends Grille {
     /***
      * Transforme l'id d'une case en ses coordonnées x et y
      * 
-     * @param coup l'id de la case
+     * @param coup l'id de la case (ex: "6", "12")
      * @return un tableau de 2 entiers [x, y]
      */
     private int[] convertCoup(String coup) {
@@ -498,7 +511,7 @@ public class Grille2D extends Grille {
     }
 
     /***
-     * 
+     * Renvoie la ligne à laquelle appartient la case
      * @param numeroCase l'id de la case
      * @return l'ordonnée de la case
      */
@@ -509,9 +522,9 @@ public class Grille2D extends Grille {
     }
 
     /***
-     * 
+     * Renvoie la colonne à laquelle appartient la case
      * @param numeroCase l'id de la case
-     * @return l'abcsisse de la case
+     * @return l'abscisse de la case
      */
     private int getXCase(String numeroCase) {
         int numero = Integer.valueOf(numeroCase) - 1;
