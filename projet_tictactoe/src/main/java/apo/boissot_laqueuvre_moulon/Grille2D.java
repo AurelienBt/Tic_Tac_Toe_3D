@@ -12,6 +12,7 @@ public class Grille2D extends Grille {
 
     /***
      * Constructeur de la classe Grille2D, initialisant la grille avec des nombres
+     * 
      * @param taille
      */
     public Grille2D(int taille) {
@@ -51,8 +52,9 @@ public class Grille2D extends Grille {
     }
 
     /***
-     * Vérification de la validité du coup joué par le joueur 
+     * Vérification de la validité du coup joué par le joueur
      * (au niveau de la syntaxe et de la possibilité de le jouer dans la grille)
+     * 
      * @param coup l'id de la case
      *             ex : "1" "69"
      * @return true si le coup est valide, false sinon
@@ -83,8 +85,8 @@ public class Grille2D extends Grille {
     /***
      * Permet de valider un coup avec Entrée ou de choisir un autre coup
      * 
-     * @param coup le coup saisi par le joueur
-     *             ex : "16", "8"
+     * @param coup    le coup saisi par le joueur
+     *                ex : "16", "8"
      * 
      * @param scanner permet de récupérer les inputs de l'utilisateur
      * 
@@ -106,8 +108,8 @@ public class Grille2D extends Grille {
     /***
      * Place un symbole de joueur à la case numeroCase si c'est possible
      * 
-     * @param joueur le symbole du joueur
-     *               ex : "O" , "X" ou autre
+     * @param joueur     le symbole du joueur
+     *                   ex : "O" , "X" ou autre
      * @param numeroCase l'ID de la case
      *                   ex : "3" "19"
      */
@@ -119,6 +121,7 @@ public class Grille2D extends Grille {
 
     /***
      * Renvoie la liste des coup possibles
+     * 
      * @return tableau contenant la liste des coups valides possible
      *         chaque coup est représenté par un tableau de 2 entiers [y,x]
      */
@@ -142,6 +145,7 @@ public class Grille2D extends Grille {
 
     /***
      * Vérifie que la syntaxe de l'input proposé par le joueur est correcte
+     * 
      * @param input l'input saisi par le joueur
      * @return true si l'input est valide, false sinon
      */
@@ -170,6 +174,7 @@ public class Grille2D extends Grille {
 
     /***
      * Vérifie si la grille est pleine ou non
+     * 
      * @return true si la grille est pleine, false sinon
      */
     public boolean grilleEstPleine() {
@@ -202,9 +207,10 @@ public class Grille2D extends Grille {
     }
 
     /***
-     * Place un symbole de joueur à la case dont l'id est coordonee si c'est possible
+     * Place un symbole de joueur à la case dont l'id est coordonee si c'est
+     * possible
      * 
-     * @param joueur   1 ou 2, pour joueur 1 ou joueur 2
+     * @param joueur    1 ou 2, pour joueur 1 ou joueur 2
      * @param coordonee les coordonnées de la case sous forme [y,x]
      */
     public void jouerCoup(int joueur, int[] coordonee) {
@@ -431,11 +437,7 @@ public class Grille2D extends Grille {
     }
 
     /***
-<<<<<<< HEAD
      * Vérifie si la colone de la case fait ganer la partie
-=======
-     * Vérifie si la colonne dont la case fait partie fait gagner la partie
->>>>>>> f5283dd9a93e8d740f3d7ae87fa8a815a6a73615
      * 
      * @param coup l'id de la case
      * @return true si la colone de la case fait gagner la partie,
@@ -512,6 +514,7 @@ public class Grille2D extends Grille {
 
     /***
      * Renvoie la ligne à laquelle appartient la case
+     * 
      * @param numeroCase l'id de la case
      * @return l'ordonnée de la case
      */
@@ -523,6 +526,7 @@ public class Grille2D extends Grille {
 
     /***
      * Renvoie la colonne à laquelle appartient la case
+     * 
      * @param numeroCase l'id de la case
      * @return l'abscisse de la case
      */
