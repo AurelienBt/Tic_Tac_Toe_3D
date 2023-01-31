@@ -6,6 +6,10 @@ import java.util.Scanner;
 public class Grille3D extends Grille {
     private Case grille[][][];
 
+    /***
+     * Constructeur de la classe Grille2D, initialisant la grille avec des nombres
+     * @param taille
+     */
     public Grille3D(int taille) {
         super(taille);
 
@@ -75,7 +79,7 @@ public class Grille3D extends Grille {
     }
 
     /***
-     * 
+     * Ranvoie la liste des coups possibles
      * @return tableau contenant la liste des coups valides possible
      *         chaque coup est représenté par un tableau de 3 entiers [z,y,x]
      */
@@ -101,7 +105,7 @@ public class Grille3D extends Grille {
     }
 
     /***
-     * 
+     * Vérifie si la grille est pleine ou non
      * @return true si la grille est pleine, false sinon
      */
     public boolean grilleEstPleine() {
@@ -131,7 +135,7 @@ public class Grille3D extends Grille {
         }
     }
 
-    // A faire
+    // A faire TODO ?
     /***
      * Verifie si la grille est gagnante. Pour alléger les calculs on regarde
      * uniquement en fct du dernier coup.
@@ -152,6 +156,7 @@ public class Grille3D extends Grille {
         return false;
     }
 
+    // TODO fin docu
     private boolean verifieDiagonale(String coup){
         boolean gagnante = false;
         boolean aligne = true;
@@ -360,7 +365,8 @@ public class Grille3D extends Grille {
 
 
     /***
-     * 
+     * Vérification de la validité du coup joué par le joueur 
+     * (au niveau de la syntaxe et de la possibilité de le jouer dans la grille)
      * @param coup l'id de la case
      *             ex : "a1" "ez69"
      * @return true si le coup est valide, false sinon
@@ -388,18 +394,18 @@ public class Grille3D extends Grille {
     }
 
     /***
-     * Place un symbole de joueur à la case dont l'id est coordone si c'est possible
+     * Place un symbole de joueur à la case dont l'id est coordonee si c'est possible
      * 
      * @param joueur   1 ou 2, pour joueur 1 ou joueur 2
-     * @param coordone les coordonnées de la case sous forme [y,x]
+     * @param coordonee les coordonnées de la case sous forme [y,x]
      */
-    public void jouerCoup(int joueur, int[] coordone) {
+    public void jouerCoup(int joueur, int[] coordonee) {
         String[] symbole = { "X", "O" };
-        this.grille[coordone[0]][coordone[1]][coordone[2]].setValeur(symbole[joueur - 1]);
+        this.grille[coordonee[0]][coordonee[1]][coordonee[2]].setValeur(symbole[joueur - 1]);
     }
 
     /***
-     * 
+     * Permet de valider un coup avec Entrée ou de choisir un autre coup
      * @param input l'input saisie par le joueur
      * @return true si l'input est valide, false sinon
      */
@@ -427,7 +433,7 @@ public class Grille3D extends Grille {
             z += lettres.charAt(j) - 97;
         }
 
-        // On vérifie que la profondeur indiquer par le goupe de lettre soit dans le
+        // On vérifie que la profondeur indiquée par le groupe de lettre soit dans le
         // tableau
         if (z < 0 || z > taille) {
             System.out.println("ERREUR ! Les lettres " + lettres + " ne sont invalides");
@@ -457,6 +463,17 @@ public class Grille3D extends Grille {
     }
 
     // TODO
+    /***
+     * Permet de valider un coup avec Entrée ou de choisir un autre coup
+     * 
+     * @param coup le coup saisi par le joueur
+     *             ex : "a16", "b8"
+     * 
+     * @param scanner permet de récupérer les inputs de l'utilisateur
+     * 
+     * @return String du choix du joueur : une chaine vide pour valider le coup
+     *         ou un input pour faire un autre coup
+     */
     public String validerCoup(String input, Scanner scanner) { 
         /*System.out.println();
         System.out.println("Appuyer sur Entrée pour valider votre coup, ou entrez un autre coup");
@@ -471,7 +488,7 @@ public class Grille3D extends Grille {
     }
 
     /***
-     * Un test unitaire de toute les fonctionnalité de Grille3D
+     * Un test unitaire de toutes les fonctionnalités de Grille3D
      */
     public void testRegretion() {
         System.out.println("Test Regression pour une grille3D 3*3*3");
@@ -738,7 +755,7 @@ public class Grille3D extends Grille {
     }
 
     /***
-     * Renvoie les lettres de l'id d'une case qui à pour profondeur nb
+     * Renvoie les lettres de l'id d'une case qui a pour profondeur nb
      * ex : 3 donne 'c' et 30 donne 'ad'
      * 
      * @param nb la profondeur de la case
@@ -755,7 +772,7 @@ public class Grille3D extends Grille {
     }
 
     /***
-     * 
+     * Renvoie les coordonnées correspondant à un numéro de case
      * @param numeroCase l'id de la case
      *                   ex : "a1" "ez69"
      * @return un tableau de 3 entiers représenté les coordonnées de la case [z,y,x]

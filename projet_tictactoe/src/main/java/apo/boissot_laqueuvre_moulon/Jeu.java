@@ -7,7 +7,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 /***
- * La clas Jeu centralise toute la logique d'une partie de morpion.
+ * La classe Jeu centralise toute la logique d'une partie de morpion.
  */
 public class Jeu {
     private int modeJeu;
@@ -20,6 +20,13 @@ public class Jeu {
     private Joueur j1;
     private Joueur j2;
 
+    /***
+     * Constructeur permettant d'initaliser tous les paramètres importants de la partie
+     * @param modeJeu Mode de jeu de la partie : 0 : 2D, 1 : 3D
+     * @param protagonistes Types de joueurs : 0 : joueur VS joueur, 1 : joueur VS IA, 2 : IA VS IA
+     * @param quiCommence Indique quel joueur commence à jouer : 0 : aléatoire, 1 : joueur 1, 2 : joueur 2
+     * @param tailleGrille Taille de la grille de jeu (minimum 3)
+     */
     public Jeu(int modeJeu, int protagonistes, int quiCommence, int tailleGrille) {
         this.modeJeu = modeJeu;
         this.protagonistes = protagonistes;
@@ -33,6 +40,13 @@ public class Jeu {
                               + Integer.toString(this.tailleGrille) + "\n";
     }
 
+    /***
+     * Gère le lancement de la partie à partir d'une sauvegarde en instanciant 
+     * les classes nécessaires : Grille (2D ou 3D) et les joueurs, et en remplissant la grille 
+     * avec les coups dejà réalisés
+     * @param scanner Scanner utilisé pour demander les inputs de l'utilisateur
+     * @param sauvegarde Tableau de String contenant la sauvegarde précédemment chargée
+     */
     public void partie(Scanner scanner, ArrayList<String> sauvegarde) {
         String[] coup = {"X", "1"};
         switch (this.modeJeu) {
@@ -66,6 +80,8 @@ public class Jeu {
                 this.j2 = new JoueurHumain();
                 break;
         }
+
+        // Remplissage de la grille à partir de la sauvegarde
         boolean erreurCoup = false;
         for(int i = 1; i<sauvegarde.size(); i++) {
             coup = sauvegarde.get(i).split(" ");
@@ -82,14 +98,15 @@ public class Jeu {
             System.out.println("Erreur lors du chargement de la sauvegarde.");
         }
         else {
+            // Lancement de la partie
             if(coup[0].compareTo("X") == 0) jouerPartie(false, scanner);
             else jouerPartie(true, scanner);
         }
     }
 
     /***
-     * 
-     * @param scanner
+     * Gère le lancement de la partie en instanciant les classes nécessaires : Grille (2D ou 3D) et les joueurs
+     * @param scanner Scanner utilisé pour demander les inputs de l'utilisateur
      */
     public void partie(Scanner scanner) {
         // Initialisation des paramètres
@@ -145,7 +162,13 @@ public class Jeu {
 
         jouerPartie(tourJ1, scanner);
     }
-
+    
+    /***
+     * Fonction contenant la boucle d'application du jeu de morpion, 
+     * gère l'enchainement des tours des joueurs et la vérification de la victoire de l'un des joueurs
+     * @param tourJ1 Booléen indiquant si c'est au tour du joueur 1 de placer un pion ou non
+     * @param scanner Scanner utilisé pour demander les inputs de l'utilisateur
+     */
     private void jouerPartie(boolean tourJ1, Scanner scanner) {
         // Initialisation
         boolean partieEnCours = true;
@@ -170,11 +193,23 @@ public class Jeu {
         // Fin de partie
     }
 
-    
+    /***
+     * Gère le déroulement du tour d'un joueur en faisant appel à une fonction auxiliaire prenant en paramètre le prochain coup
+     * @param tourJ1 Booléen indiquant si c'est au tour du joueur 1 de placer un pion ou non
+     * @param scanner Scanner utilisé pour demander les inputs de l'utilisateur
+     * @return String contenant le coup joué par le joueur
+     */
     private String jouerTour(boolean tourJ1, Scanner scanner) {
         return jouerTour(tourJ1, scanner, "");
     }
     
+    /***
+     * Gère le déroulement du tour d'un joueur avec le choix de son coup et s'il souhaite sauvegarder sa partie ou non
+     * @param tourJ1 Booléen indiquant si c'est au tour du joueur 1 de placer un pion ou non
+     * @param scanner Scanner utilisé pour demander les inputs de l'utilisateur
+     * @param prochainCoup String du prochain coup joué par le joueur (si non nul, ne demande pas d'input à l'utilisateur)
+     * @return String contenant le coup joué par le joueur
+     */
     private String jouerTour(boolean tourJ1, Scanner scanner, String prochainCoup) {
         boolean IA = false; // A REMPLACER TODO
         String text = "Choisissez coordonée";
@@ -182,6 +217,8 @@ public class Jeu {
         boolean coupValide = false;
 
         this.grille.afficher();
+
+        // Tour du joueur 1
         if (tourJ1) {
             if (IA) {
                 System.out.println("Ordinateur :");
@@ -204,6 +241,8 @@ public class Jeu {
             }
             this.grille.placer("X", input);
             this.sauvegardePartie += "X "+ input + "\n";
+        
+        // Tour du joueur 2
         } else {
             if (IA) {
                 System.out.println("Ordinateur :");
@@ -231,6 +270,9 @@ public class Jeu {
         return input;
     }
 
+    /***
+     * Sauvegarde la partie (les paramètres de la partie ainsi que les coups joués) dans un fichier texte save.txt
+     */
     private void sauvegarderPartie() { 
         try {
             FileWriter fw = new FileWriter("save.txt");

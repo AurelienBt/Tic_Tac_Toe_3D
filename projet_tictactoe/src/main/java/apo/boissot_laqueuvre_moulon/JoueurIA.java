@@ -29,6 +29,12 @@ public class JoueurIA extends Joueur {
         this.grille = grille;
     }
 
+    /***
+     * Renvoie le prochain coup joué par l'IA
+     * @param text Texte à afficher dans la console 
+     * @param scanner Scanner utilisé pour demander les inputs de l'utilisateur
+     * @return String correspondant au coup choisi par l'IA
+     */
     public String choisirCoup(String text, Scanner scanner) {
         int[] coupAJouer = score(this.grille, this.maxDepth, true);
         return coordEnCoup(coupAJouer);
@@ -95,7 +101,7 @@ public class JoueurIA extends Joueur {
      * 
      * @param grille_virt grille de jeu
      * @param max_depth   profondeur max, se décrémente entre les appels récusrsifs
-     * @param minimizer   indique silminmax doit renvoyer le max ou le min,
+     * @param minimizer   indique si le minmax doit renvoyer le max ou le min,
      *                    s'inverse entre chaque appel
      * @return
      */
