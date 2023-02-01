@@ -19,6 +19,8 @@ public class Jeu {
 
     private Joueur j1;
     private Joueur j2;
+    private boolean IAj1;
+    private boolean IAj2; 
 
     /***
      * Constructeur permettant d'initaliser tous les paramètres importants de la
@@ -124,11 +126,11 @@ public class Jeu {
             case 0:
                 this.grille = new Grille2D(this.tailleGrille);
                 break;
-
-            case 1:
+            
+            case 1 :
                 this.grille = new Grille3D(this.tailleGrille);
                 break;
-
+            
             default:
                 this.grille = new Grille2D(this.tailleGrille);
                 break;
@@ -153,16 +155,13 @@ public class Jeu {
             case 0:
                 this.j1 = new JoueurHumain();
                 this.j2 = new JoueurHumain();
+                this.IAj1 = this.IAj2 = false;
                 break;
             case 1:
-                if (tourJ1) { // A REMPLACER TODO
-
-                    this.j1 = new JoueurHumain();
-                    this.j2 = new JoueurHumain();
-                } else {
-                    this.j1 = new JoueurHumain();
-                    this.j2 = new JoueurHumain();
-                }
+                this.j1 = new JoueurHumain();
+                this.IAj1 = false;
+                this.j2 = new JoueurIA(5, this.grille);
+                this.IAj2 = true;
                 break;
             default:
                 this.j1 = new JoueurHumain();
@@ -235,7 +234,6 @@ public class Jeu {
      * @return String contenant le coup joué par le joueur
      */
     private String jouerTour(boolean tourJ1, Scanner scanner, String prochainCoup) {
-        boolean IA = false; // A REMPLACER TODO
         String text = "Choisissez coordonée";
         String input = "";
         boolean coupValide = false;
@@ -244,7 +242,7 @@ public class Jeu {
 
         // Tour du joueur 1
         if (tourJ1) {
-            if (IA) {
+            if (IAj1) {
                 System.out.println("Ordinateur :");
                 input = this.j1.choisirCoup("", scanner);
             } else {
@@ -271,7 +269,7 @@ public class Jeu {
 
             // Tour du joueur 2
         } else {
-            if (IA) {
+            if (IAj2) {
                 System.out.println("Ordinateur :");
                 input = this.j2.choisirCoup("", scanner);
             } else {

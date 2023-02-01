@@ -17,4 +17,9 @@ public class JoueurHumain extends Joueur {
         choix = scanner.nextLine();
         return choix;
     }
-}   
+   
+
+    public boolean estIA(){
+        return false;
+    }
+}

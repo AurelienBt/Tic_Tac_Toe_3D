@@ -101,7 +101,21 @@ public abstract class Grille {
     public abstract boolean grilleGagnante(String coup);
 
     /***
-     * Vérifie si la grille est pleine ou non
+     * Return la case d'une coordonée du tableau
+     * @param coord coordonée de la case {z,y,x} ou {y,x}
+     * @return la case
+     */
+    public abstract Case getCase(int[] coord);
+
+    /***
+     * 
+     * @param tmp grille tampon, copie de la première grille
+     */
+    public abstract void getCopy(Grille tmp);
+    public abstract boolean is2D();
+
+    /***
+     * 
      * @return true si la grille est pleine, false sinon
      */
     public abstract boolean grilleEstPleine();
