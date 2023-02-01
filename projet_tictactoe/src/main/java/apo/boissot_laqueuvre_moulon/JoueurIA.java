@@ -9,15 +9,32 @@ public class JoueurIA extends Joueur {
     int maxDepth;
     Grille grille;
 
+    /***
+     * unique onstructeur de JoueurIA
+     * 
+     * @param maxDepth la profondeur maximale de minmax
+     * @param grille   la grille surlaquelle effectuer minmax
+     */
     JoueurIA(int maxDepth, Grille grille) {
         this.maxDepth = maxDepth;
         this.grille = grille;
     }
 
+    /***
+     * Mettre à jour la grille à utiliser pour le minmax
+     * 
+     * @param grille nouvelle grille
+     */
     public void setGrille(Grille grille) {
         this.grille = grille;
     }
 
+    /***
+     * Renvoie le prochain coup joué par l'IA
+     * @param text Texte à afficher dans la console 
+     * @param scanner Scanner utilisé pour demander les inputs de l'utilisateur
+     * @return String correspondant au coup choisi par l'IA
+     */
     public String choisirCoup(String text, Scanner scanner) {
         int[] coupAJouer = score(this.grille, this.maxDepth, true);
         return coordEnCoup(coupAJouer);
@@ -94,7 +111,7 @@ public class JoueurIA extends Joueur {
      * 
      * @param grille_virt grille de jeu
      * @param max_depth   profondeur max, se décrémente entre les appels récusrsifs
-     * @param minimizer   indique silminmax doit renvoyer le max ou le min,
+     * @param minimizer   indique si le minmax doit renvoyer le max ou le min,
      *                    s'inverse entre chaque appel
      * @return
      */
@@ -144,6 +161,31 @@ public class JoueurIA extends Joueur {
     }
 
     /***
+     * Un test unitaire de toute les fonctionnalité de Grille2D
+     */
+    public void testRegretion() {
+        System.out.println("Test Regression pour un JoueurIA");
+
+        // getLettre
+        System.out.println("a " + getLettre(0));
+        System.out.println("d " + getLettre(3));
+        System.out.println("ae " + getLettre(30));
+        System.out.println("z " + getLettre(25));
+        System.out.println("");
+        System.out.println("");
+
+        // coordEnCoup
+        int[] tab = { 0, 0, 0 };
+        System.out.println("a1 " + coordEnCoup(tab));
+        tab[0] = 2;
+        tab[1] = 2;
+        tab[2] = 2;
+        System.out.println("c9 " + coordEnCoup(tab));
+        System.out.println("");
+        System.out.println("");
+    }
+
+    /***
      * Transforme des coordonnées en coup
      * 
      * @param coord les coordonnées sous la forme [z,y,x] ou [y,x]
@@ -166,7 +208,7 @@ public class JoueurIA extends Joueur {
 
     /***
      * Renvoie les lettres de l'id d'une case qui à pour profondeur nb
-     * ex : 3 donne 'c' et 30 donne 'ad'
+     * ex : 3 donne 'd' et 30 donne 'ae'
      * 
      * @param nb la profondeur de la case
      * @return les lettres de l'id de la case
