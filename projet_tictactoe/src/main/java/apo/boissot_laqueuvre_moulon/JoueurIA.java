@@ -23,6 +23,10 @@ public class JoueurIA extends Joueur {
         return coordEnCoup(coupAJouer);
     }
 
+    public boolean estIA(){
+        return true;
+    }
+
     /***
      * Liste et associe à chaque coup possible un score déterminé par l'algorithme
      * minmax
@@ -35,7 +39,13 @@ public class JoueurIA extends Joueur {
      */
 
     private int[] score(Grille grille, int max_depth, boolean minimizer) {
-        Grille grille_tampon = grille;
+        Grille grille_tampon;
+        if (grille.is2D()){
+            grille_tampon = new Grille2D(grille.getTaille());
+        } else{
+            grille_tampon = new Grille3D(grille.getTaille());
+        }
+        grille_tampon.getCopy(grille);
         int scoreTampon = 0;
         int scoreJouer = 0;
         ArrayList<int[]> listeCoup = grille.listerCoupPossible();
@@ -71,7 +81,7 @@ public class JoueurIA extends Joueur {
                     liste_coup_jouable.add(coup);
                 }
             }
-            grille_tampon = grille;
+            grille_tampon.getCopy(grille);
         }
 
         // On mélange aléatoirement la liste
@@ -106,9 +116,16 @@ public class JoueurIA extends Joueur {
         else {
             ArrayList<int[]> listeCoup = grille_virt.listerCoupPossible();
             Grille grille_tmp;
+            if (grille.is2D()){
+                grille_tmp = new Grille2D(grille.getTaille());
+            } else{
+                grille_tmp = new Grille3D(grille.getTaille());
+            }
+            
+
 
             for (int i = 0; i < listeCoup.size(); i++) {
-                grille_tmp = grille_virt;
+                grille_tmp.getCopy(grille);
                 if (minimizer) {
                     grille_tmp.jouerCoup(1, listeCoup.get(i));
                 } else {
@@ -116,7 +133,8 @@ public class JoueurIA extends Joueur {
                 }
                 liste.add(minmax(grille_tmp, max_depth - 1, !minimizer, coordEnCoup(listeCoup.get(i))));
             }
-
+            System.out.println(liste);
+            if(liste.isEmpty()) return 0;
             if (minimizer) {
                 return Collections.max(liste);
             } else {

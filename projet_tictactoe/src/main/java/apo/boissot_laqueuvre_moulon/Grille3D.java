@@ -152,6 +152,28 @@ public class Grille3D extends Grille {
         return false;
     }
 
+    public Case getCase(int[] coord){
+        return (this.grille[coord[0]][coord[1]][coord[2]]);
+    }
+
+    public void getCopy(Grille tmp){
+        int[] coord = new int[3];
+        for (int i = 0; i < this.taille; i++) {
+            for (int j = 0; j < this.taille; j++) {
+                for(int k = 0; k<this.taille; k++){
+                    coord[0] = i;
+                    coord[1] = j;
+                    coord[2] = k;
+                    this.grille[i][j][k] = tmp.getCase(coord);
+                }
+            }
+        }
+    }
+
+    public boolean is2D(){ 
+        return false;
+    }
+
     private boolean verifieDiagonale(String coup){
         boolean gagnante = false;
         boolean aligne = true;

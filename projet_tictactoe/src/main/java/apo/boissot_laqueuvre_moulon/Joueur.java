@@ -4,4 +4,5 @@ import java.util.Scanner;
 
 public abstract class Joueur {
     public abstract String choisirCoup(String text, Scanner scanner);
+    public abstract boolean estIA();
 }

@@ -46,6 +46,24 @@ public class Grille2D extends Grille {
         }
     }
 
+    public Case getCase(int[] coord){
+        return (this.grille[coord[0]][coord[1]]);
+    }
+
+    public void getCopy(Grille tmp){
+        int[] coord = new int[2];
+        for (int i = 0; i < this.taille; i++) {
+            for (int j = 0; j < this.taille; j++) {
+                coord[0] = i;
+                coord[1] = j;
+                this.grille[i][j] = tmp.getCase(coord);
+            }
+        }
+    }
+
+    public boolean is2D(){
+        return true;
+    }
 
     /***
      * 
@@ -128,7 +146,6 @@ public class Grille2D extends Grille {
                 }
             }
         }
-
         return coupPossible;
     }
 
