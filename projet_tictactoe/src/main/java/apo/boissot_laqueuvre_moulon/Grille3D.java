@@ -187,7 +187,16 @@ public class Grille3D extends Grille {
         return false;
     }
 
-    private boolean verifieDiagonale(String coup){
+    /***
+     * Vérifie si la diagonale de la case fait ganer la partie
+     * 
+     * @param coup l'id de la case du dernier coup
+     *             ex : "a1" "ez69"
+     * @return true si la grille est gagnante, false sinon
+     */
+    private boolean verifieDiagonale(String coup) {
+        ArrayList<int[]> alignement = new ArrayList<int[]>();
+
         boolean gagnante = false;
         boolean aligne = true;
         int i = 0;
