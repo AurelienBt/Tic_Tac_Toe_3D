@@ -661,7 +661,7 @@ public class Grille3D extends Grille {
     /***
      * Permet de valider un coup avec Entrée ou de choisir un autre coup
      * 
-     * @param coup    le coup saisi par le joueur
+     * @param input   le coup saisi par le joueur
      *                ex : "a16", "b8"
      * 
      * @param scanner permet de récupérer les inputs de l'utilisateur
