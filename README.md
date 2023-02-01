@@ -13,9 +13,9 @@ Dans une console, placez vous dans le dossier */projet tictactoe/*
 
 - **Pour compiler le code utiliser les commandes :**
 ```
-	mvn compile
-	mvn package
-	mvn install
+mvn compile
+mvn package
+mvn install
 ```
 
 - **Pour lancer le programme utiliser la commande :**
