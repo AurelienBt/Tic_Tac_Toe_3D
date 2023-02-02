@@ -22,4 +22,6 @@ public class JoueurHumain extends Joueur {
     public boolean estIA(){
         return false;
     }
+
+    public void setGrille(Grille grille){}
 }

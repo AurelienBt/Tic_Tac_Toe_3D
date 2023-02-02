@@ -61,7 +61,8 @@ public class Grille2D extends Grille {
             for (int j = 0; j < this.taille; j++) {
                 coord[0] = i;
                 coord[1] = j;
-                this.grille[i][j] = tmp.getCase(coord);
+                Case tmpCase = new Case (tmp.getCase(coord));
+                this.grille[i][j] = tmpCase;
             }
         }
     }
@@ -82,7 +83,7 @@ public class Grille2D extends Grille {
         if (!verifierInput(coup)) {
             return false;
         } else {
-            int numeroCase = Integer.valueOf(coup) - 1;
+            int numeroCase = Integer.valueOf(coup);
             int x = getXCase(coup);
             int y = getYCase(coup);
 
@@ -147,11 +148,11 @@ public class Grille2D extends Grille {
     public ArrayList<int[]> listerCoupPossible() {
         ArrayList<int[]> coupPossible = new ArrayList<int[]>();
 
-        int c[] = { -1, -1 };
 
         for (int i = 0; i < this.taille; i++) {
             for (int j = 0; j < this.taille; j++) {
                 if (this.grille[i][j].estVide()) {
+                    int c[] = { -1, -1 };
                     c[0] = i;
                     c[1] = j;
                     coupPossible.add(c);
@@ -394,9 +395,7 @@ public class Grille2D extends Grille {
         boolean gagnante = false;
         boolean aligne = true;
         int i = 0;
-        System.out.println(coup);
         int[] coord = convertCoup(coup);
-        System.out.println(coord[0] + "     " + coord[1]);
         // Diagonale numéro 1
         if (coord[0] == coord[1]) {
             String val = this.grille[0][0].getValeur();

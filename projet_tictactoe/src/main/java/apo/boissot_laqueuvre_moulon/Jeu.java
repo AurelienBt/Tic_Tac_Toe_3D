@@ -160,16 +160,21 @@ public class Jeu {
             case 1:
                 this.j1 = new JoueurHumain();
                 this.IAj1 = false;
-                this.j2 = new JoueurIA(5, this.grille);
+                this.j2 = new JoueurIA(3, this.grille);
                 this.IAj2 = true;
                 break;
+            case 2:
+                this.j1 = new JoueurIA(3, this.grille);
+                this.IAj1 = true;
+                this.j2 = new JoueurIA(3, this.grille);
+                this.IAj2 = true;
+                break;
+
             default:
                 this.j1 = new JoueurHumain();
                 this.j2 = new JoueurHumain();
                 break;
-
         }
-
         jouerPartie(tourJ1, scanner);
     }
 
@@ -244,6 +249,7 @@ public class Jeu {
         if (tourJ1) {
             if (IAj1) {
                 System.out.println("Ordinateur :");
+                this.j1.setGrille(this.grille);
                 input = this.j1.choisirCoup("", scanner);
             } else {
                 do {
@@ -271,6 +277,7 @@ public class Jeu {
         } else {
             if (IAj2) {
                 System.out.println("Ordinateur :");
+                this.j1.setGrille(this.grille);
                 input = this.j2.choisirCoup("", scanner);
             } else {
                 do {

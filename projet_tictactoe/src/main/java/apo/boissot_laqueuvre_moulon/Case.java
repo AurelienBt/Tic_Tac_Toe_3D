@@ -29,6 +29,12 @@ public class Case {
         this.estVide = true;
     }
 
+    public Case(Case c){
+        this.valeur = c.getValeur();
+        this.estSelectionnee = false;
+        this.estVide = c.estVide();
+    }
+
     /***
      * Vérifie si une grille est vide ou non
      * @return true si la case est vide, false sinon
@@ -36,6 +42,7 @@ public class Case {
     public boolean estVide() {
         return this.estVide;
     }
+
 
     /***
      * Permet de sélectionner ou déselectionner une Case. 

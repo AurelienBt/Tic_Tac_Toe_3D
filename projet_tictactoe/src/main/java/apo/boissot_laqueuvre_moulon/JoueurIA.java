@@ -26,7 +26,7 @@ public class JoueurIA extends Joueur {
      * @param grille nouvelle grille
      */
     public void setGrille(Grille grille) {
-        this.grille = grille;
+        this.grille.getCopy(grille);
     }
 
     /***
@@ -37,6 +37,7 @@ public class JoueurIA extends Joueur {
      */
     public String choisirCoup(String text, Scanner scanner) {
         int[] coupAJouer = score(this.grille, this.maxDepth, true);
+        System.out.println(coupAJouer);
         return coordEnCoup(coupAJouer);
     }
 
@@ -72,7 +73,7 @@ public class JoueurIA extends Joueur {
             int[] coup = listeCoup.get(i);
 
             if (minimizer) {
-                grille_tampon.jouerCoup(1, coup);
+                grille_tampon.jouerCoup(2, coup);
                 scoreTampon = minmax(grille_tampon, max_depth, !minimizer, coordEnCoup(coup));
                 if (i == 0) {
                     scoreJouer = scoreTampon;
@@ -85,7 +86,7 @@ public class JoueurIA extends Joueur {
                     liste_coup_jouable.add(coup);
                 }
             } else {
-                grille_tampon.jouerCoup(2, coup);
+                grille_tampon.jouerCoup(1, coup);
                 scoreTampon = minmax(grille_tampon, max_depth, !minimizer, coordEnCoup(coup));
                 if (i == 0) {
                     scoreJouer = scoreTampon;
@@ -119,43 +120,50 @@ public class JoueurIA extends Joueur {
         ArrayList<Integer> liste = new ArrayList<Integer>();
 
         // Conditions d'arrets
-        if (coup != null && grille_virt.grilleGagnante(coup)) {
+        //System.out.println(coup);
+        //grille_virt.afficher();
+        if (grille_virt.grilleGagnante(coup)) {
+            //grille_virt.afficher();
             if (minimizer) {
-                return 100 * max_depth;
-            } else {
                 return -100 * max_depth;
+            } else {
+                return 100 * max_depth;
             }
-        } else if (max_depth == 0) {
+        } else if (grille_virt.grilleEstPleine() || max_depth == 0) {
+            
             return 0;
         }
 
         // Boucle d'application
         else {
             ArrayList<int[]> listeCoup = grille_virt.listerCoupPossible();
-            Grille grille_tmp;
-            if (grille.is2D()){
-                grille_tmp = new Grille2D(grille.getTaille());
-            } else{
-                grille_tmp = new Grille3D(grille.getTaille());
-            }
+            
             
 
 
             for (int i = 0; i < listeCoup.size(); i++) {
-                grille_tmp.getCopy(grille);
+                Grille grille_tmp;
+                if (grille.is2D()){
+                    grille_tmp = new Grille2D(grille.getTaille());
+                } else{
+                    grille_tmp = new Grille3D(grille.getTaille());
+                }
+                grille_tmp.getCopy(grille_virt);
                 if (minimizer) {
-                    grille_tmp.jouerCoup(1, listeCoup.get(i));
-                } else {
                     grille_tmp.jouerCoup(2, listeCoup.get(i));
+                } else {
+                    grille_tmp.jouerCoup(1, listeCoup.get(i));
                 }
                 liste.add(minmax(grille_tmp, max_depth - 1, !minimizer, coordEnCoup(listeCoup.get(i))));
             }
-            System.out.println(liste);
+            //System.out.println(liste);
             if(liste.isEmpty()) return 0;
             if (minimizer) {
-                return Collections.max(liste);
+                int max = Collections.max(liste);
+                return max;
             } else {
-                return Collections.min(liste);
+                int min = Collections.min(liste);
+                return min;
             }
         }
     }
@@ -175,12 +183,12 @@ public class JoueurIA extends Joueur {
         System.out.println("");
 
         // coordEnCoup
-        int[] tab = { 0, 0, 0 };
+        int[] tab = { 0, 1, 1};
         System.out.println("a1 " + coordEnCoup(tab));
-        tab[0] = 2;
-        tab[1] = 2;
+        tab[0] = 0;
+        tab[1] = 1;
         tab[2] = 2;
-        System.out.println("c9 " + coordEnCoup(tab));
+        System.out.println("a9 " + coordEnCoup(tab));
         System.out.println("");
         System.out.println("");
     }

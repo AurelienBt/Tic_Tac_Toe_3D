@@ -88,12 +88,12 @@ public class Grille3D extends Grille {
     public ArrayList<int[]> listerCoupPossible() {
         ArrayList<int[]> coupPossible = new ArrayList<int[]>();
 
-        int c[] = { -1, -1, -1 };
 
         for (int i = 0; i < this.taille; i++) {
             for (int j = 0; j < this.taille; j++) {
                 for (int k = 0; k < this.taille; k++) {
                     if (this.grille[i][j][k].estVide()) {
+                        int c[] = { -1, -1, -1 };
                         c[0] = i;
                         c[1] = j;
                         c[2] = k;
@@ -177,7 +177,8 @@ public class Grille3D extends Grille {
                     coord[0] = i;
                     coord[1] = j;
                     coord[2] = k;
-                    this.grille[i][j][k] = tmp.getCase(coord);
+                    Case tmpCase = new Case (tmp.getCase(coord));
+                    this.grille[i][j][k] = tmpCase;
                 }
             }
         }

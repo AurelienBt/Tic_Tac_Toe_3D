@@ -14,5 +14,6 @@ public abstract class Joueur {
      * @return String correspondant au coup choisi par le joueur
      */
     public abstract String choisirCoup(String text, Scanner scanner);
+    public abstract void setGrille(Grille grille);
     public abstract boolean estIA();
 }
