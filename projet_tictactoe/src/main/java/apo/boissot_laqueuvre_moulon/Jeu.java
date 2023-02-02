@@ -10,16 +10,55 @@ import java.util.Scanner;
  * La classe Jeu centralise toute la logique d'une partie de morpion.
  */
 public class Jeu {
+    /***
+     * Mode de jeu de la partie : 0 pour un jeu en 2D, 1 pour 3D
+     */
     private int modeJeu;
+
+    /***
+     * Joueurs de la partie : 0 pour deux joueurs humains, 1 pour humain contre IA, 2 pour deux IA
+     */
     private int protagonistes;
+
+    /***
+     * Choix de qui joue le premier : 0 pour aléatoire, 1 pour le joueur 1, 2 pour le joueur 2
+     */
     private int quiCommence;
+
+    /***
+     * Grille dans laquelle on joue (2D ou 3D)
+     */
     private Grille grille;
+
+    /***
+     * Taille de la grille (supérieure à 3)
+     */
     private int tailleGrille;
+
+    /***
+     * String contenant la sauvegarde de la partie en cours 
+     * (les paramètres de la partie et les coups joués jusqu'à présent)
+     */
     private String sauvegardePartie;
 
+    /***
+     * Joueur 1 de la partie
+     */
     private Joueur j1;
+
+    /***
+     * Joueur 2 de la partie
+     */
     private Joueur j2;
+
+    /***
+     * Indique si le joueur 1 est une IA ou non
+     */
     private boolean IAj1;
+
+    /***
+     * Indique si le joueur 2 est une IA ou non
+     */
     private boolean IAj2; 
 
     /***
@@ -39,8 +78,7 @@ public class Jeu {
         this.quiCommence = quiCommence;
         this.tailleGrille = tailleGrille;
 
-        // Sauvegarde des paramètres de la partie dans le cas où le joueur voudrait
-        // sauvegarder
+        // Sauvegarde des paramètres de la partie dans le cas où le joueur voudrait sauvegarder
         this.sauvegardePartie = Integer.toString(this.modeJeu) + " "
                 + Integer.toString(this.protagonistes) + " "
                 + Integer.toString(this.quiCommence) + " "
@@ -175,6 +213,8 @@ public class Jeu {
                 this.j2 = new JoueurHumain();
                 break;
         }
+
+        // lancement de la partie
         jouerPartie(tourJ1, scanner);
     }
 
@@ -273,7 +313,7 @@ public class Jeu {
             this.grille.placer("X", input);
             this.sauvegardePartie += "X " + input + "\n";
 
-            // Tour du joueur 2
+        // Tour du joueur 2
         } else {
             if (IAj2) {
                 System.out.println("Ordinateur :");
@@ -312,6 +352,7 @@ public class Jeu {
     private void sauvegarderPartie() {
         try {
             FileWriter fw = new FileWriter("save.txt");
+            
             // enlève le dernier saut de ligne
             this.sauvegardePartie = this.sauvegardePartie.substring(0, this.sauvegardePartie.length() - 1);
             fw.write(this.sauvegardePartie);
@@ -319,7 +360,6 @@ public class Jeu {
             System.out.println("La partie a été sauvegardée avec succès");
         } catch (IOException e) {
             System.out.println("Erreur lors de la sauvegarde de la partie :");
-            e.printStackTrace();
         }
     }
 

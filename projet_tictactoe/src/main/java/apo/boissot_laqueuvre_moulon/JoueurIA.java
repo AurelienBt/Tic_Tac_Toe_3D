@@ -6,14 +6,21 @@ import java.util.ArrayList;
 
 public class JoueurIA extends Joueur {
 
+    /***
+     * Profondeur maximale à laquelle on descend pour le MinMax
+     */
     int maxDepth;
+
+    /***
+     * Grille utilisée pour le MinMax
+     */
     Grille grille;
 
     /***
-     * unique onstructeur de JoueurIA
+     * unique constructeur de JoueurIA
      * 
      * @param maxDepth la profondeur maximale de minmax
-     * @param grille   la grille surlaquelle effectuer minmax
+     * @param grille   la grille sur laquelle effectuer minmax
      */
     JoueurIA(int maxDepth, Grille grille) {
         this.maxDepth = maxDepth;
@@ -26,7 +33,7 @@ public class JoueurIA extends Joueur {
      * @param grille nouvelle grille
      */
     public void setGrille(Grille grille) {
-        this.grille.getCopy(grille);
+        this.grille.copierGrille(grille);
     }
 
     /***
@@ -39,10 +46,6 @@ public class JoueurIA extends Joueur {
         int[] coupAJouer = score(this.grille, this.maxDepth, true);
         System.out.println(coupAJouer);
         return coordEnCoup(coupAJouer);
-    }
-
-    public boolean estIA(){
-        return true;
     }
 
     /***
@@ -63,7 +66,7 @@ public class JoueurIA extends Joueur {
         } else{
             grille_tampon = new Grille3D(grille.getTaille());
         }
-        grille_tampon.getCopy(grille);
+        grille_tampon.copierGrille(grille);
         int scoreTampon = 0;
         int scoreJouer = 0;
         ArrayList<int[]> listeCoup = grille.listerCoupPossible();
@@ -99,7 +102,7 @@ public class JoueurIA extends Joueur {
                     liste_coup_jouable.add(coup);
                 }
             }
-            grille_tampon.getCopy(grille);
+            grille_tampon.copierGrille(grille);
         }
 
         // On mélange aléatoirement la liste
@@ -120,10 +123,7 @@ public class JoueurIA extends Joueur {
         ArrayList<Integer> liste = new ArrayList<Integer>();
 
         // Conditions d'arrets
-        //System.out.println(coup);
-        //grille_virt.afficher();
         if (grille_virt.grilleGagnante(coup)) {
-            //grille_virt.afficher();
             if (minimizer) {
                 return -100 * max_depth;
             } else {
@@ -138,9 +138,6 @@ public class JoueurIA extends Joueur {
         else {
             ArrayList<int[]> listeCoup = grille_virt.listerCoupPossible();
             
-            
-
-
             for (int i = 0; i < listeCoup.size(); i++) {
                 Grille grille_tmp;
                 if (grille.is2D()){
@@ -148,7 +145,7 @@ public class JoueurIA extends Joueur {
                 } else{
                     grille_tmp = new Grille3D(grille.getTaille());
                 }
-                grille_tmp.getCopy(grille_virt);
+                grille_tmp.copierGrille(grille_virt);
                 if (minimizer) {
                     grille_tmp.jouerCoup(2, listeCoup.get(i));
                 } else {
@@ -156,7 +153,6 @@ public class JoueurIA extends Joueur {
                 }
                 liste.add(minmax(grille_tmp, max_depth - 1, !minimizer, coordEnCoup(listeCoup.get(i))));
             }
-            //System.out.println(liste);
             if(liste.isEmpty()) return 0;
             if (minimizer) {
                 int max = Collections.max(liste);
@@ -166,31 +162,6 @@ public class JoueurIA extends Joueur {
                 return min;
             }
         }
-    }
-
-    /***
-     * Un test unitaire de toute les fonctionnalité de Grille2D
-     */
-    public void testRegretion() {
-        System.out.println("Test Regression pour un JoueurIA");
-
-        // getLettre
-        System.out.println("a " + getLettre(0));
-        System.out.println("d " + getLettre(3));
-        System.out.println("ae " + getLettre(30));
-        System.out.println("z " + getLettre(25));
-        System.out.println("");
-        System.out.println("");
-
-        // coordEnCoup
-        int[] tab = { 0, 1, 1};
-        System.out.println("a1 " + coordEnCoup(tab));
-        tab[0] = 0;
-        tab[1] = 1;
-        tab[2] = 2;
-        System.out.println("a9 " + coordEnCoup(tab));
-        System.out.println("");
-        System.out.println("");
     }
 
     /***
@@ -229,5 +200,30 @@ public class JoueurIA extends Joueur {
                 return String.valueOf((char) (nb / 26 - 1 + 'a')) + String.valueOf((char) (nb % 26 + 'a'));
         } else
             return null;
+    }
+
+    /***
+     * Un test unitaire de toutes les fonctionnalité de JoueurIA
+     */
+    public void testRegretion() {
+        System.out.println("Test Regression pour un JoueurIA");
+
+        // getLettre
+        System.out.println("a " + getLettre(0));
+        System.out.println("d " + getLettre(3));
+        System.out.println("ae " + getLettre(30));
+        System.out.println("z " + getLettre(25));
+        System.out.println("");
+        System.out.println("");
+
+        // coordEnCoup
+        int[] tab = { 0, 1, 1};
+        System.out.println("a1 " + coordEnCoup(tab));
+        tab[0] = 0;
+        tab[1] = 1;
+        tab[2] = 2;
+        System.out.println("a9 " + coordEnCoup(tab));
+        System.out.println("");
+        System.out.println("");
     }
 }
