@@ -666,7 +666,6 @@ public class Grille3D extends Grille {
         return true;
     }
 
-    // TODO
     /***
      * Permet de valider un coup avec Entrée ou de choisir un autre coup
      * 
@@ -679,20 +678,16 @@ public class Grille3D extends Grille {
      *         ou un input pour faire un autre coup
      */
     public String validerCoup(String input, Scanner scanner) {
-        /*
-         * System.out.println();
-         * System.out.
-         * println("Appuyer sur Entrée pour valider votre coup, ou entrez un autre coup"
-         * );
-         * int x = getXCase(input);
-         * int y = getYCase(input);
-         * grille[y][x].setSelectionnee(true);
-         * afficher();
-         * String choix = scanner.nextLine();
-         * if (choix != "") grille[y][x].setSelectionnee(false);
-         * return choix;
-         */
-        return "";
+        System.out.println();
+        System.out.println("Appuyer sur Entrée pour valider votre coup, ou entrez un autre coup");
+        int x = getXCase(input);
+        int y = getYCase(input);
+        int z = getZCase(input);
+        grille[z][y][x].setSelectionnee(true);
+        afficher();
+        String choix = scanner.nextLine();
+        grille[z][y][x].setSelectionnee(false);
+        return choix;
     }
 
     /***
