@@ -21,13 +21,13 @@
 
 \renewcommand{\contentsname}{Table des matières}
 \tableofcontents
-
+\newpage
 
 \section{Structure de l'archive}
 \begin{itemize}
     \item Les classes .java sont dans le dossier \textit{ /projet\_tictactoe/src/main/java/apo/boissot\_laqueuvre\_moulon}
     \item La documentation est dans le dossier \textit{ /Javadoc}
-    \item Les diagrammes UML sont dans le dossier \textit{ /Diagramme UML}
+    \item Les diagrammes UML sont dans le dossier \textit{ /Rapport/Diagramme UML}
 \end{itemize}
 
 
@@ -41,7 +41,7 @@ Après avoir pris connaissance du sujet, nous avons décidé de mettre en commun
  Nous avons rapidement choisi d'utiliser les outils qui nous étaient familiers, à savoir :
  \begin{itemize}
     \item Visual Studio Code \textit{comme IDE}
-    \item Java 8 \textit{pour la version de java}
+    \item Java 8 \textit{comme version de java car c'est la version que nous connaissons le mieux et que nous n'avons pas besoin des nouveautés introduits par les versions postérieures}
     \item GitHub \textit{pour le travail collaboratif et le versioning}
     \item StarUML \textit{pour créer les diagrammes UML}
 \end{itemize}
@@ -138,9 +138,9 @@ Lors de sa prochaine partie, un message s'affichera lui demandant s'il souhaite 
 \end{itemize}
 
 
-\subsubsection{Intelligence artificielle \hfill 2 points}
-En plus du mode humain contre humain, notre programme propose un mode humain contre ordinateur et ordinateur contre ordinateur. \\
-Afin de faire une IA capable de jouer, nous avons implémenté l'algorithme minimax.\\
+\subsubsection{Intelligence artificielle 2D et 3D\hfill 2 points}
+En plus du mode humain contre humain, notre programme propose un mode humain contre ordinateur.\\
+Afin de faire une IA capable de jouer, nous avons implémenté l'algorithme minimax pour des parties en 2D et en 3D.\\
 
 \subsection{Extensions techniques}
 \subsubsection{Compilation automatisée \hfill 1 point}
@@ -165,29 +165,32 @@ le répertoire git utilisé est public et accessible ici : \\ \href{https://gith
 Des tests unitaires vérifiant la bonne exécution des méthodes principales de nos classes on été inmplémentés sous la forme de fonction testRegression().\\
 Chaque classe possède une telle fonction qui effectue et affiche des test de toutes les méthodes. Ces fonctions sont tenues à jour tout au long du développement de l'application pour s'assurer que les nouvelles fonctions ne "cassent" pas les anciennes.\\
 
+\newpage
 
 \section{Diagrammes UML}
 
 \subsection{Diagramme de cas d'utilisation}
 \begin{figure}[h]
     \centering
-    \includegraphics{Images/Diagramme de class.png}
+    \includegraphics[scale=0.5]{Diagramme UML/Diagramme cas d'utilisation.png}
     \caption{Diagramme de cas d'utilisation}
     \label{fig:Diagramme de cas d'utilisation}
 \end{figure}
 
+\newpage
 \subsection{Diagramme de classe}
 \begin{figure}[h]
     \centering
-    \includegraphics{Images/Diagramme de class.png}
+    \includegraphics[scale=0.35]{Diagramme UML/Diagramme de classe.png}
     \caption{Diagramme de classe}
     \label{fig:Diagramme de classe}
 \end{figure}
 
+\newpage
 \subsection{Diagramme de séquence}
 \begin{figure}[h]
     \centering
-    \includegraphics{Images/Diagramme de class.png}
+    \includegraphics[scale=0.36]{Diagramme UML/Diagramme de sequence.png}
     \caption{Diagramme de séquence}
     \label{fig:Diagramme de séquence}
 \end{figure}
