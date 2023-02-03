@@ -108,20 +108,16 @@ public class Jeu {
                 this.grille = new Grille2D(this.tailleGrille);
                 break;
         }
-        boolean tourJ1 = false;
         switch (this.protagonistes) {
             case 0:
                 this.j1 = new JoueurHumain();
                 this.j2 = new JoueurHumain();
                 break;
             case 1:
-                if (tourJ1) { // A REMPLACER TODO
-                    this.j1 = new JoueurHumain();
-                    this.j2 = new JoueurHumain();
-                } else {
-                    this.j1 = new JoueurHumain();
-                    this.j2 = new JoueurHumain();
-                }
+                this.j1 = new JoueurHumain();
+                this.IAj1 = false;
+                this.j2 = new JoueurIA(3, this.grille);
+                this.IAj2 = true;
                 break;
             default:
                 this.j1 = new JoueurHumain();
@@ -201,13 +197,6 @@ public class Jeu {
                 this.j2 = new JoueurIA(3, this.grille);
                 this.IAj2 = true;
                 break;
-            case 2:
-                this.j1 = new JoueurIA(3, this.grille);
-                this.IAj1 = true;
-                this.j2 = new JoueurIA(3, this.grille);
-                this.IAj2 = true;
-                break;
-
             default:
                 this.j1 = new JoueurHumain();
                 this.j2 = new JoueurHumain();

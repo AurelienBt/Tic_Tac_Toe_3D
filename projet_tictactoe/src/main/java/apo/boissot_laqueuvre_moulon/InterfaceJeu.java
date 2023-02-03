@@ -141,10 +141,9 @@ public class InterfaceJeu {
             System.out.println("Veuillez choisir les joueurs de la partie : ");
             System.out.println("0 : Joueur vs Joueur");
             System.out.println("1 : Joueur vs IA");
-            System.out.println("2 : IA vs IA");
             if (scanner.hasNextInt()) {
                 choix = scanner.nextInt();
-                if (choix == 0 || choix == 1 || choix == 2)
+                if (choix == 0 || choix == 1)
                     inputCorrect = true;
             } else
                 scanner.nextLine();

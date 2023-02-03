@@ -46,6 +46,7 @@ public class Grille2D extends Grille {
      * Affiche la grille dans la console
      */
     public void afficher() {
+        System.out.println();
         for (int i = 0; i < this.taille; i++) {
             System.out.print("|");
             for (int j = 0; j < this.taille; j++) {
@@ -53,6 +54,7 @@ public class Grille2D extends Grille {
             }
             System.out.println("|");
         }
+        System.out.println();
     }
 
     /***

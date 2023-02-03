@@ -44,7 +44,6 @@ public class JoueurIA extends Joueur {
      */
     public String choisirCoup(String text, Scanner scanner) {
         int[] coupAJouer = score(this.grille, this.maxDepth, true);
-        System.out.println(coupAJouer);
         return coordEnCoup(coupAJouer);
     }
 

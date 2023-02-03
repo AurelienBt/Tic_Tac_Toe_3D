@@ -43,6 +43,7 @@ public class Grille3D extends Grille {
      * Affiche la grille dans la console
      */
     public void afficher() {
+        System.out.println();
 
         // Affichage en-tête
         int nbChiffresMax = tailleEntier(this.taille * this.taille);
@@ -81,6 +82,8 @@ public class Grille3D extends Grille {
             }
             System.out.println();
         }
+
+        System.out.println();
     }
 
     /***
