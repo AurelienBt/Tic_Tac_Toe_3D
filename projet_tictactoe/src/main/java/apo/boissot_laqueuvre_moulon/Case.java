@@ -5,8 +5,21 @@ package apo.boissot_laqueuvre_moulon;
  */
 public class Case {
 
+    /***
+     * Valeur contenue dans la case : 
+     * "O" ou "X" si la case à déjà été jouée,
+     * sinon, la valeur de la case : "5", "12"
+     */
     private String valeur;
+
+    /***
+     * Spécifie si la case est en mode sélectionnée (">X<" au lieu de "X") ou non 
+     */
     private boolean estSelectionnee;
+
+    /***
+     * Indique si une case est vide, c'est à dire que sa valeur correspond à sa position et non à un symbole : "X" ou "O"
+     */
     private boolean estVide;
     
     /*** 
@@ -19,7 +32,7 @@ public class Case {
     }
 
     /***
-     * Constructeur de la classe Case initialisant la case avec une  valeur donnée
+     * Constructeur de la classe Case initialisant la case avec une valeur donnée
      * @param valeur contenu de la case à la création, un entier qui représente
      *               l'id de la case pour que le joueur puisse la choisir
      */
@@ -27,6 +40,16 @@ public class Case {
         this.valeur = Integer.toString(valeur);
         this.estSelectionnee = false;
         this.estVide = true;
+    }
+
+    /***
+     * Constructeur par copie de la classe Case
+     * @param c case dont on copie la valeur
+     */
+    public Case(Case c){
+        this.valeur = c.getValeur();
+        this.estSelectionnee = false;
+        this.estVide = c.estVide();
     }
 
     /***
@@ -40,7 +63,7 @@ public class Case {
     /***
      * Permet de sélectionner ou déselectionner une Case. 
      * Une Case sélectionnée sera mise en valeur lors de l'affichage : >X< au lieu de X
-     * Utile pour montrer la case choisi par le joueur ou la combinaison gagnante
+     * Utile pour montrer la case choisie par le joueur ou la combinaison gagnante
      * 
      * @param select true pour sélectionner la case, false pour la désélectionner
      */
@@ -57,7 +80,7 @@ public class Case {
     }
 
     /***
-     * Renvoie un String permettant d'afficehr la case
+     * Renvoie un String permettant d'afficher la case
      * @param tailleMax La longueur (en nombre de caractère) du plus grand numéro de
      *                  case (pour centrer la case)
      * @return Un String prêt à être affiché avec le bon format et la mise en
@@ -71,7 +94,7 @@ public class Case {
         String espaceAvant = "";
         String espaceApres = "";
 
-        // On calcule combien d'espaces nécessaire 
+        // On calcule combien d'espaces sont nécessaires
         for (int i = 0; i < tailleMax - this.valeur.length(); i++) {
             if (i % 2 == 0) {
                 espaceApres = espaceApres + espace;

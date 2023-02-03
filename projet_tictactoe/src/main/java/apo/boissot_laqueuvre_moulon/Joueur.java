@@ -14,5 +14,11 @@ public abstract class Joueur {
      * @return String correspondant au coup choisi par le joueur
      */
     public abstract String choisirCoup(String text, Scanner scanner);
-    public abstract boolean estIA();
+
+    /***
+     * Met à jour la grille utilisée pour le MinMax
+     * @param grille grille dont on copie les valeurs dans la grille actuelle
+     */
+    public abstract void setGrille(Grille grille);
+
 }

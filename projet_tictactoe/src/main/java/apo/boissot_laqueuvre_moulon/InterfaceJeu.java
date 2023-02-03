@@ -11,6 +11,9 @@ import java.util.Scanner;
  */
 public class InterfaceJeu {
 
+    /***
+     * Constructeur par défaut de la classe InterfaceJeu
+     */
     public InterfaceJeu() {
 
     }

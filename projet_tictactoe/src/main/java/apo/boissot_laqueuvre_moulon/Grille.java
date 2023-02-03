@@ -39,10 +39,9 @@ public abstract class Grille {
     public abstract void viderGrille();
 
     /***
-     * Place un symbole de joueur à la case dont l'id est coordonee si c'est possible
+     * Place un symbole du joueur à la case dont l'id est coordonee si c'est possible
      * 
-     * @param joueur le symbole du joueur
-     *               ex : "O" , "X" ou autre
+     * @param joueur le symbole du joueur : "O" ou "X"
      * @param coordonee l'id de la case
      *                  ex : "a1" "9"
      */
@@ -108,10 +107,15 @@ public abstract class Grille {
     public abstract Case getCase(int[] coord);
 
     /***
-     * 
-     * @param tmp grille tampon, copie de la première grille
+     * Copie la grille en paramètre dans la grille actuelle
+     * @param tmp grille tampon dont on copie les valeurs
      */
-    public abstract void getCopy(Grille tmp);
+    public abstract void copierGrille(Grille tmp);
+
+    /***
+     * Indique si la grille actuelle est de dimension 2 ou non
+     * @return booléen indiquant si la grille est 2D ou non
+     */
     public abstract boolean is2D();
 
     /***
@@ -139,7 +143,7 @@ public abstract class Grille {
     }
 
     /***
-     * Sélectionne les cases passé en paramètre
+     * Sélectionne les cases passée en paramètre
      * 
      * @param alignement un array de int[] contenant la liste des coordonées des
      *                   cases à mettre en valeur

@@ -17,9 +17,10 @@ public class JoueurHumain extends Joueur {
         choix = scanner.nextLine();
         return choix;
     }
-   
 
-    public boolean estIA(){
-        return false;
-    }
+    /***
+     * Fonction utilisée uniquement par le JoueurIA, 
+     * mais nous sommes obligés de la définir pour des raisons de downcasting de Joueur
+     */
+    public void setGrille(Grille grille){}
 }

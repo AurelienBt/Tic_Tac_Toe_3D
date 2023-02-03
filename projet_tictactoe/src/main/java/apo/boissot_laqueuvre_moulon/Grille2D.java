@@ -8,6 +8,10 @@ import java.util.Scanner;
  * Représente une grille de morpion en 2 dimensions, de taille variable
  */
 public class Grille2D extends Grille {
+
+    /***
+     * Tableau de Case de deux dimensions pour contenir la grille de jeu
+     */
     private Case grille[][];
 
     /***
@@ -51,21 +55,34 @@ public class Grille2D extends Grille {
         }
     }
 
+    /***
+     * Renvoie la case corresondant à une coordonnée passée en paramètre
+     * @param coord Coordonnée dont on veut obtenir la case
+     * @return Case de la grille correspondant aux coordonnées
+     */
     public Case getCase(int[] coord){
         return (this.grille[coord[0]][coord[1]]);
     }
 
-    public void getCopy(Grille tmp){
+    /***
+     * Copie dans la grille actuelle la grille passée en paramètre
+     * @param tmp grille dont on va copier les valeurs
+     */
+    public void copierGrille(Grille tmp){
         int[] coord = new int[2];
         for (int i = 0; i < this.taille; i++) {
             for (int j = 0; j < this.taille; j++) {
                 coord[0] = i;
                 coord[1] = j;
-                this.grille[i][j] = tmp.getCase(coord);
+                Case tmpCase = new Case (tmp.getCase(coord));
+                this.grille[i][j] = tmpCase;
             }
         }
     }
 
+    /***
+     * Renvoie true puisque la grille est en 2D
+     */
     public boolean is2D(){
         return true;
     }
@@ -82,7 +99,7 @@ public class Grille2D extends Grille {
         if (!verifierInput(coup)) {
             return false;
         } else {
-            int numeroCase = Integer.valueOf(coup) - 1;
+            int numeroCase = Integer.valueOf(coup);
             int x = getXCase(coup);
             int y = getYCase(coup);
 
@@ -147,11 +164,11 @@ public class Grille2D extends Grille {
     public ArrayList<int[]> listerCoupPossible() {
         ArrayList<int[]> coupPossible = new ArrayList<int[]>();
 
-        int c[] = { -1, -1 };
 
         for (int i = 0; i < this.taille; i++) {
             for (int j = 0; j < this.taille; j++) {
                 if (this.grille[i][j].estVide()) {
+                    int c[] = { -1, -1 };
                     c[0] = i;
                     c[1] = j;
                     coupPossible.add(c);
@@ -237,150 +254,6 @@ public class Grille2D extends Grille {
     }
 
     /***
-     * Un test unitaire de toutes les fonctionnalités de Grille2D
-     */
-    public void testRegretion() {
-        System.out.println("Test Regression pour une grille2D 3*3");
-
-        // afficher
-        System.out.println("Une grille vide :");
-        afficher();
-        System.out.println("");
-        System.out.println("");
-
-        // verifierInput
-        System.out.println("Faux : " + verifierInput("a"));
-        System.out.println("Faux : " + verifierInput("2a"));
-        System.out.println("Faux : " + verifierInput(""));
-        System.out.println("Faux : " + verifierInput("111"));
-        System.out.println("Faux : " + verifierInput("0"));
-        System.out.println("Faux : " + verifierInput("-5"));
-        System.out.println("Vrai : " + verifierInput("1"));
-        System.out.println("Vrai : " + verifierInput("6"));
-        System.out.println("");
-        System.out.println("");
-
-        // verifieCoup
-        System.out.println("Vrai : " + verifierCoup("1"));
-        System.out.println("Vrai : " + verifierCoup("9"));
-        System.out.println("Vrai : " + verifierCoup("8"));
-
-        placer("X", "1");
-        placer("O", "5");
-        placer("X", "9");
-
-        System.out.println("Faux : " + verifierCoup("1"));
-        System.out.println("Faux : " + verifierCoup("5"));
-        System.out.println("Faux : " + verifierCoup("9"));
-        System.out.println("Faux : " + verifierCoup("800"));
-        System.out.println("Faux : " + verifierCoup("0"));
-        System.out.println("Faux : " + verifierCoup("-1"));
-        System.out.println("");
-        System.out.println("");
-
-        // afficher et placer
-        placer("X", "1");
-        placer("O", "5");
-        placer("X", "9");
-        this.grille[0][2].setSelectionnee(true);
-        System.out.println("Une grille comme suit :");
-        System.out.println("| X  2 >3<|");
-        System.out.println("| 4  O  6 |");
-        System.out.println("| 7  8  X |");
-        System.out.println("");
-        afficher();
-        System.out.println("");
-        System.out.println("");
-
-        // viderGrille
-        viderGrille();
-        System.out.println("Une grille vide :");
-        afficher();
-        System.out.println("");
-        System.out.println("");
-
-        viderGrille();
-        // Verifier Diagonale
-        placer("X", "1");
-        placer("X", "5");
-        placer("X", "9");
-        afficher();
-        System.out.println("Résultat attendu : ");
-        System.out.println("Diagonale : True");
-        System.out.println("Ligne : false");
-        System.out.println("Colonne : false");
-        System.out.println("---------------------");
-        System.out.println("Diagonale : " + this.verifieDiagonale("9"));
-        System.out.println("Ligne : " + this.verifieY("9"));
-        System.out.println("Colonne : " + this.verifieX("9"));
-        System.out.println("Grille gagnante : " + this.grilleGagnante("9"));
-        System.out.println("=======================");
-        System.out.println("=======================");
-
-        viderGrille();
-
-        // Verifier Diagonale inverse
-        placer("X", "3");
-        placer("X", "5");
-        placer("X", "7");
-        afficher();
-        System.out.println("Résultat attendu : ");
-        System.out.println("Diagonale : True");
-        System.out.println("Ligne : false");
-        System.out.println("Colonne : false");
-        System.out.println("---------------------");
-        System.out.println("Diagonale : " + this.verifieDiagonale("5"));
-        System.out.println("Ligne : " + this.verifieY("5"));
-        System.out.println("Colonne : " + this.verifieX("5"));
-        System.out.println("=======================");
-        System.out.println("=======================");
-
-        viderGrille();
-        // Verifier ligne
-        placer("X", "1");
-        placer("X", "2");
-        placer("X", "3");
-        afficher();
-        System.out.println("Résultat attendu : ");
-        System.out.println("Diagonale : false");
-        System.out.println("Ligne : true");
-        System.out.println("Colonne : false");
-        System.out.println("---------------------");
-        System.out.println("Diagonale : " + this.verifieDiagonale("2"));
-        System.out.println("Ligne : " + this.verifieY("2"));
-        System.out.println("Colonne : " + this.verifieX("2"));
-        System.out.println("=======================");
-        System.out.println("=======================");
-
-        viderGrille();
-        // Verifier colonne
-        placer("X", "1");
-        placer("X", "4");
-        placer("X", "7");
-        afficher();
-        System.out.println("Résultat attendu : ");
-        System.out.println("Diagonale : false");
-        System.out.println("Ligne : true");
-        System.out.println("Colonne : false");
-        System.out.println("---------------------");
-        System.out.println("Diagonale : " + this.verifieDiagonale("1"));
-        System.out.println("Ligne : " + this.verifieY("1"));
-        System.out.println("Colonne : " + this.verifieX("1"));
-        System.out.println("=======================");
-        System.out.println("=======================");
-
-        // tailleEntier
-        System.out.println("1 : " + tailleEntier(5));
-        System.out.println("2 : " + tailleEntier(50));
-        System.out.println("3 : " + tailleEntier(508));
-        System.out.println("3 : " + tailleEntier(100));
-        System.out.println("4 : " + tailleEntier(5555));
-        System.out.println("");
-        System.out.println("");
-
-    }
-
-    /***
      * Vérifie si une case appartient à une diagonale, le cas échéant il vérifie si
      * la diagonale associée fait gagner la partie
      * 
@@ -394,9 +267,7 @@ public class Grille2D extends Grille {
         boolean gagnante = false;
         boolean aligne = true;
         int i = 0;
-        System.out.println(coup);
         int[] coord = convertCoup(coup);
-        System.out.println(coord[0] + "     " + coord[1]);
         // Diagonale numéro 1
         if (coord[0] == coord[1]) {
             String val = this.grille[0][0].getValeur();
@@ -552,5 +423,149 @@ public class Grille2D extends Grille {
         int numero = Integer.valueOf(numeroCase) - 1;
         int x = numero % this.taille;
         return x;
+    }
+
+    /***
+     * Un test unitaire de toutes les fonctionnalités de Grille2D
+     */
+    public void testRegretion() {
+        System.out.println("Test Regression pour une grille2D 3*3");
+
+        // afficher
+        System.out.println("Une grille vide :");
+        afficher();
+        System.out.println("");
+        System.out.println("");
+
+        // verifierInput
+        System.out.println("Faux : " + verifierInput("a"));
+        System.out.println("Faux : " + verifierInput("2a"));
+        System.out.println("Faux : " + verifierInput(""));
+        System.out.println("Faux : " + verifierInput("111"));
+        System.out.println("Faux : " + verifierInput("0"));
+        System.out.println("Faux : " + verifierInput("-5"));
+        System.out.println("Vrai : " + verifierInput("1"));
+        System.out.println("Vrai : " + verifierInput("6"));
+        System.out.println("");
+        System.out.println("");
+
+        // verifieCoup
+        System.out.println("Vrai : " + verifierCoup("1"));
+        System.out.println("Vrai : " + verifierCoup("9"));
+        System.out.println("Vrai : " + verifierCoup("8"));
+
+        placer("X", "1");
+        placer("O", "5");
+        placer("X", "9");
+
+        System.out.println("Faux : " + verifierCoup("1"));
+        System.out.println("Faux : " + verifierCoup("5"));
+        System.out.println("Faux : " + verifierCoup("9"));
+        System.out.println("Faux : " + verifierCoup("800"));
+        System.out.println("Faux : " + verifierCoup("0"));
+        System.out.println("Faux : " + verifierCoup("-1"));
+        System.out.println("");
+        System.out.println("");
+
+        // afficher et placer
+        placer("X", "1");
+        placer("O", "5");
+        placer("X", "9");
+        this.grille[0][2].setSelectionnee(true);
+        System.out.println("Une grille comme suit :");
+        System.out.println("| X  2 >3<|");
+        System.out.println("| 4  O  6 |");
+        System.out.println("| 7  8  X |");
+        System.out.println("");
+        afficher();
+        System.out.println("");
+        System.out.println("");
+
+        // viderGrille
+        viderGrille();
+        System.out.println("Une grille vide :");
+        afficher();
+        System.out.println("");
+        System.out.println("");
+
+        viderGrille();
+        // Verifier Diagonale
+        placer("X", "1");
+        placer("X", "5");
+        placer("X", "9");
+        afficher();
+        System.out.println("Résultat attendu : ");
+        System.out.println("Diagonale : True");
+        System.out.println("Ligne : false");
+        System.out.println("Colonne : false");
+        System.out.println("---------------------");
+        System.out.println("Diagonale : " + this.verifieDiagonale("9"));
+        System.out.println("Ligne : " + this.verifieY("9"));
+        System.out.println("Colonne : " + this.verifieX("9"));
+        System.out.println("Grille gagnante : " + this.grilleGagnante("9"));
+        System.out.println("=======================");
+        System.out.println("=======================");
+
+        viderGrille();
+
+        // Verifier Diagonale inverse
+        placer("X", "3");
+        placer("X", "5");
+        placer("X", "7");
+        afficher();
+        System.out.println("Résultat attendu : ");
+        System.out.println("Diagonale : True");
+        System.out.println("Ligne : false");
+        System.out.println("Colonne : false");
+        System.out.println("---------------------");
+        System.out.println("Diagonale : " + this.verifieDiagonale("5"));
+        System.out.println("Ligne : " + this.verifieY("5"));
+        System.out.println("Colonne : " + this.verifieX("5"));
+        System.out.println("=======================");
+        System.out.println("=======================");
+
+        viderGrille();
+        // Verifier ligne
+        placer("X", "1");
+        placer("X", "2");
+        placer("X", "3");
+        afficher();
+        System.out.println("Résultat attendu : ");
+        System.out.println("Diagonale : false");
+        System.out.println("Ligne : true");
+        System.out.println("Colonne : false");
+        System.out.println("---------------------");
+        System.out.println("Diagonale : " + this.verifieDiagonale("2"));
+        System.out.println("Ligne : " + this.verifieY("2"));
+        System.out.println("Colonne : " + this.verifieX("2"));
+        System.out.println("=======================");
+        System.out.println("=======================");
+
+        viderGrille();
+        // Verifier colonne
+        placer("X", "1");
+        placer("X", "4");
+        placer("X", "7");
+        afficher();
+        System.out.println("Résultat attendu : ");
+        System.out.println("Diagonale : false");
+        System.out.println("Ligne : true");
+        System.out.println("Colonne : false");
+        System.out.println("---------------------");
+        System.out.println("Diagonale : " + this.verifieDiagonale("1"));
+        System.out.println("Ligne : " + this.verifieY("1"));
+        System.out.println("Colonne : " + this.verifieX("1"));
+        System.out.println("=======================");
+        System.out.println("=======================");
+
+        // tailleEntier
+        System.out.println("1 : " + tailleEntier(5));
+        System.out.println("2 : " + tailleEntier(50));
+        System.out.println("3 : " + tailleEntier(508));
+        System.out.println("3 : " + tailleEntier(100));
+        System.out.println("4 : " + tailleEntier(5555));
+        System.out.println("");
+        System.out.println("");
+
     }
 }
