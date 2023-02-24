@@ -1,6 +1,7 @@
 package apo.boissot_laqueuvre_moulon;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
 
 /***
@@ -274,7 +275,7 @@ public class Grille2D extends Grille {
         if (coord[0] == coord[1]) {
             String val = this.grille[0][0].getValeur();
             do {
-                aligne = val == this.grille[i][i].getValeur();
+                aligne = Objects.equals(val, this.grille[i][i].getValeur());
 
                 // ajout du coup pour la soluce gagnante
                 int[] coupAlignement = { i, i };
@@ -297,7 +298,7 @@ public class Grille2D extends Grille {
             String val = this.grille[0][this.taille - 1].getValeur();
 
             do {
-                aligne = val == this.grille[i][taille - 1 - i].getValeur();
+                aligne = Objects.equals(val, this.grille[i][taille - 1 - i].getValeur());
 
                 // ajout du coup pour la soluce gagnante
                 int[] coupAlignement = { i, taille - 1 - i };
